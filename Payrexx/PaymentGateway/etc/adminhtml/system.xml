@@ -18,7 +18,7 @@
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Title</label>
                 </field>
                 <field id="instance_name" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
