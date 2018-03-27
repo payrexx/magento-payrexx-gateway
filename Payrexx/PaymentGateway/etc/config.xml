@@ -17,6 +17,7 @@
                 <title>Payrexx</title>
                 <payment_action>authorize</payment_action> <!-- You can use another methor like capture  -->
                 <order_status>pending_payment</order_status> <!-- set default order status-->
+                <model>Payrexx\PaymentGateway\Model\PaymentMethod</model>
                 <sort_order>1</sort_order>
             </payrexx_payment>
         </payment>
