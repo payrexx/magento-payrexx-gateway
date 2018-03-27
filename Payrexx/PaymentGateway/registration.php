@@ -13,4 +13,3 @@
     'Payrexx_PaymentGateway',
     __DIR__
 );
-
