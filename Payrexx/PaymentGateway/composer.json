@@ -1,0 +1,14 @@
+{
+    "name": "Payrexx/PaymentGateway",
+    "description": "Integration with payrexx",
+    "require": {
+        "php": "7.0.2|7.0.4|~7.0.6|~7.1.0",
+        "payrexx/payrexx": "dev-master"
+    },
+    "type": "magento2-module",
+    "autoload": {
+        "psr-4": {
+            "Payrexx\\PaymentGateway\\": ""
+        }
+    }
+}
