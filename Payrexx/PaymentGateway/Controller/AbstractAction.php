@@ -50,6 +50,11 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     protected $configSettings;
 
     /**
+     * @var \Magento\Framework\Logger\Monolog
+     */
+    protected $logger;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\App\Action\Context              $context
@@ -58,6 +63,7 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
      * @param \Payrexx\PaymentGateway\Helper\Checkout            $checkoutHelper
      * @param \Magento\Directory\Model\CountryFactory            $countryFactory
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $configSettings
+     * @param \Magento\Framework\Logger\Monolog                  $logger
      */
     public function __construct(
         \Magento\Framework\App\Action\Context              $context,
@@ -65,7 +71,8 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         \Magento\Sales\Model\OrderFactory                  $orderFactory,
         \Payrexx\PaymentGateway\Helper\Checkout            $checkoutHelper,
         \Magento\Directory\Model\CountryFactory            $countryFactory,
-        \Magento\Framework\App\Config\ScopeConfigInterface $configSettings
+        \Magento\Framework\App\Config\ScopeConfigInterface $configSettings,
+        \Magento\Framework\Logger\Monolog                  $logger
     ) {
         parent::__construct($context);
         $this->context          = $context;
@@ -74,6 +81,7 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         $this->checkoutHelper   = $checkoutHelper;
         $this->countryFactory   = $countryFactory;
         $this->configSettings   = $configSettings;
+        $this->logger           = $logger;
         $this->registerPayrexxApi();
     }
 

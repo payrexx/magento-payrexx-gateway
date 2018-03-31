@@ -64,6 +64,9 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $response = $payrexx->getOne($gateway);
             $status   = $response->getStatus();
         } catch (\Payrexx\PayrexxException $e) {
+            $this->logger->addError(
+                'Payrexx Fetch Gateway : ' . json_encode($e->getMessage())
+            );
             return;
         }
 

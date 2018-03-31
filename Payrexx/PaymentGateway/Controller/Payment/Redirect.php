@@ -55,7 +55,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
      * Create Payrexx Gateway
      *
      * @param  \Magento\Sales\Model\Order $order The order related details
-     * @return \Payrexx\Models\Response\Gateway
+     * @return \Payrexx\Models\Response\Gateway|null
      */
     public function createPayrexxGateway($order)
     {
@@ -109,6 +109,9 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             // Create payrexx gateway
             return $payrexx->create($gateway);
         } catch (\Payrexx\PayrexxException $e) {
+            $this->logger->addError(
+                'Payrexx Gateway creation : ' . json_encode($e->getMessage())
+            );
             return;
         }
     }
