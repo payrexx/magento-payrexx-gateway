@@ -30,14 +30,18 @@
         <!-- ko template: getTemplate() --><!-- /ko -->
         <!--/ko-->
         <div class="payment-method-billing-address">
-         <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
-         <!-- ko template: getTemplate() --><!-- /ko -->
-         <!--/ko-->
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
         </div>
         <div class="checkout-agreements-block">
             <!-- ko foreach: $parent.getRegion('before-place-order') -->
                 <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
+        </div>
+        <div class="payment-method-note">
+            <!-- ko i18n: 'You will be redirected to the Payrexx website when you place an order.' -->
+            <!-- /ko -->
         </div>
         <div class="actions-toolbar">
             <div class="primary">
