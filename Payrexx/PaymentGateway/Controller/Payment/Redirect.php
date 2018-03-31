@@ -10,8 +10,8 @@
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
 /**
- * class \Payrexx\PaymentGateway\Controller\Payment\Redirect
- * Redirect controller to access from frontend
+ * Class \Payrexx\PaymentGateway\Controller\Payment\Redirect
+ * The Redirect controller is accessing from frontend
  */
 class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
 {
