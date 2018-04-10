@@ -18,7 +18,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
 {
     /**
      * Executes to receive post values from request.
-     * The order status has been updated if the payment is Successfull
+     * The order status has been updated if the payment is successful
      */
     public function execute()
     {
@@ -78,7 +78,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         }
 
         if ($status === 'confirmed') {
-            //Set the complete status when payment is completed.
+            // Set the complete status when payment is completed.
             $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING);
             $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
             $order->save();
@@ -99,7 +99,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $postHash = $transaction['invoice']['paymentLink']['hash'];
         $config   = $this->getPayrexxConfig();
         $hash     = hash_hmac('sha1', $postHash, $config['api_secret'], false);
-        // check hash value difference
+        // Check hash value difference
         if (strcasecmp($hash, $paymentHash) == 0) {
             return true;
         }
