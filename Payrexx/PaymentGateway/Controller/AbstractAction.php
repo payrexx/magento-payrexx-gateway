@@ -40,11 +40,6 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     protected $orderFactory;
 
     /**
-     * @var \Magento\Directory\Model\CountryFactory
-     */
-    protected $countryFactory;
-
-    /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     protected $configSettings;
@@ -61,7 +56,6 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
      * @param \Magento\Checkout\Model\Session                    $checkoutSession
      * @param \Magento\Sales\Model\OrderFactory                  $orderFactory
      * @param \Payrexx\PaymentGateway\Helper\Checkout            $checkoutHelper
-     * @param \Magento\Directory\Model\CountryFactory            $countryFactory
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $configSettings
      * @param \Magento\Framework\Logger\Monolog                  $logger
      */
@@ -70,7 +64,6 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         \Magento\Checkout\Model\Session                    $checkoutSession,
         \Magento\Sales\Model\OrderFactory                  $orderFactory,
         \Payrexx\PaymentGateway\Helper\Checkout            $checkoutHelper,
-        \Magento\Directory\Model\CountryFactory            $countryFactory,
         \Magento\Framework\App\Config\ScopeConfigInterface $configSettings,
         \Magento\Framework\Logger\Monolog                  $logger
     ) {
@@ -79,7 +72,6 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         $this->checkoutSession  = $checkoutSession;
         $this->orderFactory     = $orderFactory;
         $this->checkoutHelper   = $checkoutHelper;
-        $this->countryFactory   = $countryFactory;
         $this->configSettings   = $configSettings;
         $this->logger           = $logger;
         $this->registerPayrexxApi();

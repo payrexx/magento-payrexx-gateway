@@ -79,11 +79,6 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         $billingAddress = $order->getBillingAddress();
 
-        // Get country from country factory
-        $countryFactory = $this->countryFactory
-            ->create()
-            ->loadByCode($billingAddress->getCountryId());
-
         // Contact information which should be stored along with payment
         $fields = [
             'title'     => '',
@@ -93,7 +88,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             'street'    => implode(',', $billingAddress->getStreet()),
             'postcode'  => $billingAddress->getPostcode(),
             'place'     => $billingAddress->getRegion(),
-            'country'   => $countryFactory->getName(),
+            'country'   => $billingAddress->getCountryId(),
             'phone'     => $billingAddress->getTelephone(),
             'email'     => $billingAddress->getEmail()
         ];
