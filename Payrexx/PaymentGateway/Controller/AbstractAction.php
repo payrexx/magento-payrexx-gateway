@@ -17,12 +17,12 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     /**
      * Uses additional_information as storage
      */
-    const PAYMENT_GATEWAY_ID    = 'payrexx_gateway_id';
+    const PAYMENT_GATEWAY_ID = 'payrexx_gateway_id';
 
     /**
      * Uses additional_information as storage
      */
-    const PAYMENT_SECURITY_HASH  = 'payrexx_security_hash';
+    const PAYMENT_SECURITY_HASH = 'payrexx_security_hash';
 
     /**
      * @var \Magento\Framework\App\Action\Context
@@ -127,7 +127,7 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         $order = $this->orderFactory
             ->create()
             ->loadByIncrementId($orderId);
-        if (!$order->getId()) {
+        if (!$order || !$order->getId()) {
             return null;
         }
         return $order;

@@ -36,13 +36,13 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             return;
         }
 
-        $order   = $this->getOrderDetailByOrderId($orderId);
+        $order = $this->getOrderDetailByOrderId($orderId);
         if (!$order) {
             return;
         }
 
-        $payment    = $order->getPayment();
-        $gatewayId  = $payment->getAdditionalInformation(
+        $payment   = $order->getPayment();
+        $gatewayId = $payment->getAdditionalInformation(
             static::PAYMENT_GATEWAY_ID
         );
         $paymentHash = $payment->getAdditionalInformation(
@@ -100,7 +100,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $config   = $this->getPayrexxConfig();
         $hash     = hash_hmac('sha1', $postHash, $config['api_secret'], false);
         // Check hash value difference
-        if (strcasecmp($hash, $paymentHash) == 0) {
+        if (strcasecmp($hash, $paymentHash) === 0) {
             return true;
         }
         return false;

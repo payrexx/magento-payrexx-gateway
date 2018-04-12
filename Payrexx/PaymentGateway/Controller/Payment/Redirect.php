@@ -27,7 +27,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             return;
         }
 
-        $order   = $this->getOrderDetailByOrderId($orderId);
+        $order = $this->getOrderDetailByOrderId($orderId);
         if (!$order) {
             $this->redirectToCheckoutCart();
             return;
@@ -62,7 +62,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         // Create payrexx gateway object
         $gateway = new \Payrexx\Models\Request\Gateway();
 
-        $gateway->setPsp(array());
+        $gateway->setPsp([]);
         $gateway->setAmount($order->getGrandTotal() * 100);
         $gateway->setCurrency($order->getOrderCurrencyCode());
 
@@ -81,16 +81,15 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         // Contact information which should be stored along with payment
         $fields = [
-            'title'     => '',
-            'forename'  => $billingAddress->getFirstname(),
-            'surname'   => $billingAddress->getLastname(),
-            'company'   => $billingAddress->getCompany(),
-            'street'    => implode(',', $billingAddress->getStreet()),
-            'postcode'  => $billingAddress->getPostcode(),
-            'place'     => $billingAddress->getRegion(),
-            'country'   => $billingAddress->getCountryId(),
-            'phone'     => $billingAddress->getTelephone(),
-            'email'     => $billingAddress->getEmail()
+            'forename' => $billingAddress->getFirstname(),
+            'surname'  => $billingAddress->getLastname(),
+            'company'  => $billingAddress->getCompany(),
+            'street'   => implode(',', $billingAddress->getStreet()),
+            'postcode' => $billingAddress->getPostcode(),
+            'place'    => $billingAddress->getRegion(),
+            'country'  => $billingAddress->getCountryId(),
+            'phone'    => $billingAddress->getTelephone(),
+            'email'    => $billingAddress->getEmail()
         ];
 
         // Add contact information
