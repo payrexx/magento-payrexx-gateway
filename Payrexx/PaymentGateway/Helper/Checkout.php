@@ -41,7 +41,7 @@ class Checkout
         $order = $this->checkoutSession->getLastRealOrder();
         if (
             $order->getId() &&
-            $order->getState() != \Magento\Sales\Model\Order::STATE_CANCELED
+            $order->getState() !== \Magento\Sales\Model\Order::STATE_CANCELED
         ) {
             $order->registerCancellation($comment)->save();
             return true;
