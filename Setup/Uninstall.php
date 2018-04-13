@@ -21,8 +21,8 @@ class Uninstall implements UninstallInterface
     /**
      * Remove data that was created during module installation.
      *
-     * @param SchemaSetupInterface   $setup
-     * @param ModuleContextInterface $context
+     * @param SchemaSetupInterface   $setup   DataBase schema resource interface
+     * @param ModuleContextInterface $context Context of a module interface
      */
     public function uninstall(
         SchemaSetupInterface   $setup,

@@ -88,10 +88,10 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
     }
 
     /**
-     * Check the post has value is valid or not
+     * Check hash value is valid or not
      *
      * @param  array   $transaction Post Values
-     * @param  string  $paymentHash saved hash value
+     * @param  string  $paymentHash Saved hash value
      * @return boolean True if the hash values is equal, false otherwise
      */
     public function isValidHash($transaction, $paymentHash)

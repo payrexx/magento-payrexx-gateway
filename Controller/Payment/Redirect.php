@@ -139,22 +139,22 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
     /**
      * Set payment related information as additional info
      *
-     * @param \Magento\Payment\Model\Info       $payment  Payment related info
-     * @param \Payrexx\Models\Response\Gateway  $response Gateway response
+     * @param \Magento\Payment\Model\Info       $payment Payment related info
+     * @param \Payrexx\Models\Response\Gateway  $gateway Payrexx gateway
      */
-    public function setPaymentAdditionalInfo($payment, $response)
+    public function setPaymentAdditionalInfo($payment, $gateway)
     {
         // Generate security hash based on hash alogorithm.
         $hash = hash_hmac(
             'sha1',
-            $response->getHash(),
+            $gateway->getHash(),
             $this->getPayrexxConfig()['api_secret'],
             false
         );
 
         $payment->setAdditionalInformation(
             static::PAYMENT_GATEWAY_ID,
-            $response->getId()
+            $gateway->getId()
         );
 
         $payment->setAdditionalInformation(
