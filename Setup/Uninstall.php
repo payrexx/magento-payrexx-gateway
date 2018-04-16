@@ -25,7 +25,7 @@ class Uninstall implements UninstallInterface
      * @param ModuleContextInterface $context Context of a module interface
      */
     public function uninstall(
-        SchemaSetupInterface   $setup,
+        SchemaSetupInterface $setup,
         ModuleContextInterface $context
     ) {
         $setup->startSetup();

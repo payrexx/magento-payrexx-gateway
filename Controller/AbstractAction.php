@@ -60,12 +60,12 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
      * @param \Magento\Framework\Logger\Monolog                  $logger
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context              $context,
-        \Magento\Checkout\Model\Session                    $checkoutSession,
-        \Magento\Sales\Model\OrderFactory                  $orderFactory,
-        \Payrexx\PaymentGateway\Helper\Checkout            $checkoutHelper,
+        \Magento\Framework\App\Action\Context $context,
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Sales\Model\OrderFactory $orderFactory,
+        \Payrexx\PaymentGateway\Helper\Checkout $checkoutHelper,
         \Magento\Framework\App\Config\ScopeConfigInterface $configSettings,
-        \Magento\Framework\Logger\Monolog                  $logger
+        \Magento\Framework\Logger\Monolog $logger
     ) {
         parent::__construct($context);
         $this->context          = $context;

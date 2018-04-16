@@ -84,7 +84,6 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $order->save();
             return;
         }
-
     }
 
     /**
