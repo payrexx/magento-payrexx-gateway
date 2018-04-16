@@ -74,15 +74,6 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         $this->checkoutHelper   = $checkoutHelper;
         $this->configSettings   = $configSettings;
         $this->logger           = $logger;
-        $this->registerPayrexxApi();
-    }
-
-    /**
-     * Load Payrexx Api files
-     */
-    public function registerPayrexxApi()
-    {
-        require_once dirname(__DIR__) . '/vendor/autoload.php';
     }
 
     /**
