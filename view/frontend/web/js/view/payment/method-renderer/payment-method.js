@@ -4,7 +4,11 @@
  * Copyright © 2018 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @author SoftSolutions4U <info@softsolutions4u.com>
+ * @copyright   2018 PAYREXX AG
+ * @author      SoftSolutions4U <info@softsolutions4u.com>
+ * @package     magento2
+ * @subpackage  payrexx_payment_gateway
+ * @version     1.0.0
  */
 
 /*browser:true*/
