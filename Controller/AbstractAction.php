@@ -72,12 +72,12 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         \Magento\Framework\Logger\Monolog $logger
     ) {
         parent::__construct($context);
-        $this->context          = $context;
-        $this->checkoutSession  = $checkoutSession;
-        $this->orderFactory     = $orderFactory;
-        $this->checkoutHelper   = $checkoutHelper;
-        $this->configSettings   = $configSettings;
-        $this->logger           = $logger;
+        $this->context         = $context;
+        $this->checkoutSession = $checkoutSession;
+        $this->orderFactory    = $orderFactory;
+        $this->checkoutHelper  = $checkoutHelper;
+        $this->configSettings  = $configSettings;
+        $this->logger          = $logger;
     }
 
     /**
