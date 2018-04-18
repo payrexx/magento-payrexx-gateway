@@ -43,6 +43,8 @@ When using composer this will be installed automatically. To install manually, e
 $ composer require payrexx/payrexx
 ```
 
+**Note:** If composer needs username and password, refer http://devdocs.magento.com/guides/v2.2/install-gde/prereq/connect-auth.html
+
 ## 3. Magento Setup
    Run the commands from the Magento root directory.
 
