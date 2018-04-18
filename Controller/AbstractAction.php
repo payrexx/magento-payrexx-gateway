@@ -31,27 +31,27 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     /**
      * @var \Magento\Framework\App\Action\Context
      */
-    protected $context;
+    public $context;
 
     /**
      * @var \Magento\Checkout\Model\Session
      */
-    protected $checkoutSession;
+    public $checkoutSession;
 
     /**
      * @var \Magento\Sales\Model\OrderFactory
      */
-    protected $orderFactory;
+    public $orderFactory;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected $configSettings;
+    public $configSettings;
 
     /**
      * @var \Magento\Framework\Logger\Monolog
      */
-    protected $logger;
+    public $logger;
 
     /**
      * Constructor
@@ -97,6 +97,10 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
      */
     public function executeCancelAction()
     {
+        // Add error message show into user
+        $this->context->getMessageManager()->addError(
+            __('An error occurred while processing your payment. Please try again later.')
+        );
         if ($this->checkoutHelper->cancelCurrentOrder('')) {
             $this->checkoutHelper->restoreQuote();
         }

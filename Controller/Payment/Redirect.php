@@ -13,6 +13,8 @@
  */
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
+use Magento\Framework\App\ObjectManager;
+
 /**
  * Class \Payrexx\PaymentGateway\Controller\Payment\Redirect
  * The Redirect controller is accessing from frontend
@@ -24,6 +26,13 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
      */
     public function execute()
     {
+        // Check Payrexx library
+        if (!class_exists('\Payrexx\Payrexx')) {
+            $this->executeCancelAction();
+            $this->logger->addError('Payrexx: Payrexx library not installed');
+            return;
+        }
+
         // Get current order detail from checkoutsession object.
         $orderId = $this->checkoutSession->getLastRealOrderId();
         if (empty($orderId)) {
@@ -49,9 +58,6 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         // If any exception occured cancel the current order
         // Add the ordered product into cart
-        $this->context->getMessageManager()->addError(
-            __('An error occurred while processing your payment. Please try again later.')
-        );
         $this->executeCancelAction();
     }
 
@@ -61,10 +67,12 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
      * @param  \Magento\Sales\Model\Order $order The order related details
      * @return \Payrexx\Models\Response\Gateway|null
      */
-    public function createPayrexxGateway($order)
+    private function createPayrexxGateway($order)
     {
         // Create payrexx gateway object
-        $gateway = new \Payrexx\Models\Request\Gateway();
+        $gateway = ObjectManager::getInstance()->create(
+            '\Payrexx\Models\Request\Gateway'
+        );
 
         $gateway->setPsp([]);
         $gateway->setAmount($order->getGrandTotal() * 100);
@@ -120,9 +128,9 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
      * @param  string $url payment link
      * @return string
      */
-    public function resolvePayrexxUrl($url)
+    private function resolvePayrexxUrl($url)
     {
-        $resolver = $this->_objectManager->get(
+        $resolver = ObjectManager::getInstance()->get(
             '\Magento\Framework\Locale\ResolverInterface'
         );
 
@@ -146,7 +154,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
      * @param \Magento\Payment\Model\Info       $payment Payment related info
      * @param \Payrexx\Models\Response\Gateway  $gateway Payrexx gateway
      */
-    public function setPaymentAdditionalInfo($payment, $gateway)
+    private function setPaymentAdditionalInfo($payment, $gateway)
     {
         // Generate security hash based on hash alogorithm.
         $hash = hash_hmac(

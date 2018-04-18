@@ -13,6 +13,8 @@
  */
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
+use Magento\Framework\App\ObjectManager;
+
 /**
  * class \Payrexx\PaymentGateway\Controller\Payment\Webhook
  * After completed the payment, This class to get the response which is sent
@@ -62,7 +64,9 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         }
 
         $payrexx = $this->getPayrexxInstance();
-        $gateway = new \Payrexx\Models\Request\Gateway();
+        $gateway = ObjectManager::getInstance()->create(
+            '\Payrexx\Models\Request\Gateway'
+        );
         $gateway->setId($gatewayId);
         try {
             $response = $payrexx->getOne($gateway);
@@ -97,7 +101,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
      * @param  string  $paymentHash Saved hash value
      * @return boolean True if the hash values is equal, false otherwise
      */
-    public function isValidHash($transaction, $paymentHash)
+    private function isValidHash($transaction, $paymentHash)
     {
         $postHash = $transaction['invoice']['paymentLink']['hash'];
         $config   = $this->getPayrexxConfig();
