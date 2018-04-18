@@ -55,7 +55,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             static::PAYMENT_SECURITY_HASH
         );
 
-        $isValidHash = $this->isValidHash($post, $paymentHash);
+        $isValidHash = $this->isValidHash($transaction, $paymentHash);
         if (!$isValidHash) {
             // Set the fraud status when payment is frauded.
             $order->setState(\Magento\Sales\Model\Order::STATUS_FRAUD);
