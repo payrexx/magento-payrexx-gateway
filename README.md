@@ -5,45 +5,41 @@ A Magento plugin to accept payments with Payrexx.
 
 ## Support
 
-This module supports Magento 2 versions **2.2.***. It might work on more recent versions, but we cannot make any guarantees.
+This module supports Magento 2 and tested on the versions **2.2.2** & **2.2.3**. It might work on more recent versions in future, but we cannot make any guarantees.
 
 ## Preparation
 
 The usage of this module requires that you have obtained Payrexx REST API credentials. Please visit  [Payrexx](https://www.payrexx.com/) and retrieve your credentials.
 ## 1. Installation
 ### Manual install
-##### Clone this repository
-1. Locate the **/app/code** directory which should be under the magento root installation.
- 
-2. If the **code** folder is not there, create it.
-
-3. Change to the **code** folder and clone the Git repository (https://github.com/payrexx/magento-payrexx-gateway.git) into **code** specifying the local repository folder structure to be **Payrexx/PaymentGateway** 
-    ```bash
-    $ git clone https://github.com/payrexx/magento-payrexx-gateway.git Payrexx/PaymentGateway
-    ```
 
 ##### Download the module as "zip" archive
 
-1. Locate the **/app/code** directory which should be under the magento root installation.
+1. Locate the **/app/** directory which should be under the magento root installation.
 
-2. If the **code** folder is not there, create it.
+2. Create the folder structure **code/Payrexx/PaymentGateway/** inside the **app** folder.
 
-3. Create the folder structure **Payrexx/PaymentGateway/** inside the **code** folder. 
+   (i.e) **app-> code->Payrexx->PaymentGateway**
 
-4. Download the package from the github site (https://github.com/payrexx/magento-payrexx-gateway.git).
+3. Download the package from the github site (https://github.com/payrexx/magento-payrexx-gateway.git).
 
-5. Extract the zip contents to the **PaymentGateway** folder you just created. The README.md and all other files and folders should be under the **PaymentGateway** folder.
+4. Extract the zip contents to the **PaymentGateway** folder you just created. The README.md and all other files and folders should be under the **PaymentGateway** folder.
 
 ## 2. Requirements
 This extension requires the [Payrexx API library for PHP.](https://github.com/payrexx/payrexx-php)
 
-When using composer this will be installed automatically. To install manually, enter the following command in your Magento 2 root folder:
+If you don't already use Composer, then you probably should read the installation guide http://getcomposer.org/download/
+
+Enter the following command in your Magento root folder:
 
 ```
 $ composer require payrexx/payrexx
 ```
 
-**Note:** If composer needs username and password, refer http://devdocs.magento.com/guides/v2.2/install-gde/prereq/connect-auth.html
+**Note:**
+If composer needs username and password, refer http://devdocs.magento.com/guides/v2.2/install-gde/prereq/connect-auth.html
+
+While running composer, If could not login to `repo.magento.com`, Rename the file **auth.json.sample** into **auth.json** which is present inside Magento root directory and insert your public & private key in the  **auth.json**.
 
 ## 3. Magento Setup
    Run the commands from the Magento root directory.
