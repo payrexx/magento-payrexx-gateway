@@ -1,5 +1,5 @@
 {
-    "name": "pyx/payment-gateway",
+    "name": "payrexx/payment-gateway",
     "description": "Payrexx Payment Gateway module for Magento 2",
     "require": {
         "php": "~7.0.0|~7.1.0",
