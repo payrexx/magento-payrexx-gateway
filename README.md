@@ -10,9 +10,9 @@ This module supports Magento versions **2.2.2** & **2.2.3**.
 
 ## Preparation
 
-The usage of this module requires Payrexx REST API credentials. To obtain Payrexx REST API, Please create your account in [Payrexx](https://www.payrexx.com/).
+The usage of this module requires Payrexx REST API credentials. To obtain Payrexx REST API, please create your account in [Payrexx](https://www.payrexx.com/).
 ## 1. Installation
-### Manual install
+### Manual installation
 
 ##### Download the module as "zip" archive
 
@@ -27,7 +27,7 @@ The usage of this module requires Payrexx REST API credentials. To obtain Payrex
 4. Extract the zip contents to the **PaymentGateway** folder you just created. The README.md and all other files and folders is stored in **PaymentGateway** folder.
 
 ## 2. Requirements
-This extension requires the [Payrexx API library for PHP.](https://github.com/payrexx/payrexx-php)
+This extension requires [Payrexx API library for PHP.](https://github.com/payrexx/payrexx-php)
 
 If you are not familiar with Composer, then we suggest you read the installation guide http://getcomposer.org/download/
 
@@ -40,7 +40,7 @@ $ composer require payrexx/payrexx
 **Note:**
 If composer needs username and password, refer http://devdocs.magento.com/guides/v2.2/install-gde/prereq/connect-auth.html
 
-While running composer, If cannot login to `repo.magento.com`, rename the file **auth.json.sample** into **auth.json** which is present inside Magento root directory and enter the public & private key in the  **auth.json**.
+While running composer, if you cannot login to `repo.magento.com`, rename the file **auth.json.sample** into **auth.json** which is present inside Magento root directory and enter the public & private key in the  **auth.json**.
 
 ## 3. Magento Setup
    Run the commands from the Magento root directory.
@@ -62,7 +62,7 @@ $ php bin/magento setup:static-content:deploy
  To configure the module, log in to your Magento Admin panel.
 1. Go to **Stores** -> **Configuration** -> **Sales** -> **Payment methods** 
 
-2. Find and click on **Payrexx** Settings under **OTHER PAYMENT METHODS**
+2. Find and click on **Payrexx** under **OTHER PAYMENT METHODS**
 
 3. To configure your Payrexx Module Configuration, use the **Instance Name** and **API Secret**  obtained earlier while creating your account in Payrexx.
    (e.g. If you have registered the url as  https://testing123.payrexx.com your instance will be  ‘testing123’).
