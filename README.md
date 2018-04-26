@@ -26,23 +26,7 @@ The usage of this module requires Payrexx REST API credentials. To obtain Payrex
 
 4. Extract the zip contents to the **PaymentGateway** folder you just created. The README.md and all other files and folders is stored in **PaymentGateway** folder.
 
-## 2. Requirements
-This extension requires [Payrexx API library for PHP.](https://github.com/payrexx/payrexx-php)
-
-If you are not familiar with Composer, then we suggest you read the installation guide http://getcomposer.org/download/
-
-Enter the following command in your Magento root folder:
-
-```
-$ composer require payrexx/payrexx
-```
-
-**Note:**
-If composer needs username and password, refer http://devdocs.magento.com/guides/v2.2/install-gde/prereq/connect-auth.html
-
-While running composer, if you cannot login to `repo.magento.com`, rename the file **auth.json.sample** into **auth.json** which is present inside Magento root directory and enter the public & private key in the  **auth.json**.
-
-## 3. Magento Setup
+## 2. Magento Setup
    Run the commands from the Magento root directory.
 
 ```sh
@@ -57,7 +41,7 @@ If Magento is running in production mode, deploy static content:
 $ php bin/magento setup:static-content:deploy
    ```
 
-## 4. Configuration in Magento
+## 3. Configuration in Magento
 
  To configure the module, log in to your Magento Admin panel.
 1. Go to **Stores** -> **Configuration** -> **Sales** -> **Payment methods** 
@@ -69,7 +53,7 @@ $ php bin/magento setup:static-content:deploy
 
 4. Click **Save Config** to save the configuration values.
 
-## 5. Payrexx Configuration
+## 4. Payrexx Configuration
 
  To Configure the webhook URL in Payrexx, Log in your Payrexx account.
 

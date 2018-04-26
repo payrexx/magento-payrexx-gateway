@@ -26,13 +26,6 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
      */
     public function execute()
     {
-        // Check Payrexx library
-        if (!class_exists('\Payrexx\Payrexx')) {
-            $this->executeCancelAction();
-            $this->logger->addError('Payrexx: Payrexx library not installed');
-            return;
-        }
-
         // Get current order detail from checkoutsession object.
         $orderId = $this->checkoutSession->getLastRealOrderId();
         if (empty($orderId)) {

@@ -78,6 +78,7 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         $this->checkoutHelper  = $checkoutHelper;
         $this->configSettings  = $configSettings;
         $this->logger          = $logger;
+        spl_autoload_register(array($this, 'autoload'));
     }
 
     /**
@@ -144,5 +145,23 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
             $config['instance_name'],
             $config['api_secret']
         );
+    }
+
+    /**
+     * Include the required Payrexx library file
+     * 
+     * @param string $class className 
+     */
+    private function autoload($class)
+    {
+        if (strpos($class, 'Payrexx') !== 0) {
+            return;
+        }
+
+        $filePath  = dirname(__DIR__) . '/lib/';
+        $classFile = $filePath . str_replace('\\', '/', $class) . '.php';
+        if (file_exists($classFile)) {
+            require_once $classFile;
+        }
     }
 }
