@@ -149,8 +149,8 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
 
     /**
      * Include the required Payrexx library file
-     * 
-     * @param string $class className 
+     *
+     * @param string $class className
      */
     private function autoload($class)
     {

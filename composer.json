@@ -2,8 +2,7 @@
     "name": "payrexx/payment-gateway",
     "description": "Payrexx Payment Gateway module for Magento 2",
     "require": {
-        "php": "~7.0.0|~7.1.0",
-        "payrexx/payrexx": "@dev"
+        "php": "~7.0.0|~7.1.0"
     },
     "type": "magento2-module",
     "license": [
