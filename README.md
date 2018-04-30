@@ -27,19 +27,16 @@ The usage of this module requires Payrexx REST API credentials. To obtain Payrex
 4. Extract the zip contents to the **PaymentGateway** folder you just created. The README.md and all other files and folders is stored in **PaymentGateway** folder.
 
 ## 2. Magento Setup
-   Run the commands from the Magento root directory.
+Log in to your Magento Admin Panel.
 
-```sh
-$ php bin/magento module:enable Payrexx_PaymentGateway
-$ php bin/magento setup:upgrade
-$ php bin/magento setup:di:compile
-```
+1. Go to **SYSTEM** -> **Web Setup Wizard** -> Choose **Module Manager**
 
-If Magento is running in production mode, deploy static content:
+2. Find **Payrexx_PaymentGateway** and select **Enable** from the Select drop-down menu.
 
-```bash
-$ php bin/magento setup:static-content:deploy
-   ```
+3. Complete the Step 1: Readiness Check, Step 2: Create Backup, Step 3: Enable Module  
+   Please wait until the process is completed.  
+
+**Note:** It takes sometime for the process to complete.
 
 ## 3. Configuration in Magento
 
