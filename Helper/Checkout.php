@@ -21,7 +21,7 @@ class Checkout
     /**
      * @var \Magento\Checkout\Model\Session
      */
-    protected $checkoutSession;
+    public $checkoutSession;
 
     /**
      * Constructor
@@ -43,8 +43,7 @@ class Checkout
     public function cancelCurrentOrder($comment)
     {
         $order = $this->checkoutSession->getLastRealOrder();
-        if (
-            $order->getId() &&
+        if ($order->getId() &&
             $order->getState() !== \Magento\Sales\Model\Order::STATE_CANCELED
         ) {
             $order->registerCancellation($comment)->save();

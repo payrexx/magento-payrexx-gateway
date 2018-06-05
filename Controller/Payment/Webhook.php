@@ -78,8 +78,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             return;
         }
 
-        if (
-            $status !== $transaction['status'] ||
+        if ($status !== $transaction['status'] ||
             in_array($transaction['psp'], ['PrePayment', 'Invoice'])
         ) {
             return;

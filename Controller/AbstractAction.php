@@ -54,6 +54,11 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     public $logger;
 
     /**
+     * @var \Payrexx\Payrexx
+     */
+    public $payrexx;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\App\Action\Context              $context
@@ -69,7 +74,8 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         \Magento\Sales\Model\OrderFactory $orderFactory,
         \Payrexx\PaymentGateway\Helper\Checkout $checkoutHelper,
         \Magento\Framework\App\Config\ScopeConfigInterface $configSettings,
-        \Magento\Framework\Logger\Monolog $logger
+        \Magento\Framework\Logger\Monolog $logger,
+        \Payrexx\PayrexxFactory $payrexxFactory
     ) {
         parent::__construct($context);
         $this->context         = $context;
@@ -78,7 +84,7 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         $this->checkoutHelper  = $checkoutHelper;
         $this->configSettings  = $configSettings;
         $this->logger          = $logger;
-        spl_autoload_register(array($this, 'autoload'));
+        $this->payrexxFactory  = $payrexxFactory;
     }
 
     /**
@@ -141,27 +147,9 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     public function getPayrexxInstance()
     {
         $config = $this->getPayrexxConfig();
-        return new \Payrexx\Payrexx(
-            $config['instance_name'],
-            $config['api_secret']
-        );
-    }
-
-    /**
-     * Include the required Payrexx library file
-     *
-     * @param string $class className
-     */
-    private function autoload($class)
-    {
-        if (strpos($class, 'Payrexx') !== 0) {
-            return;
-        }
-
-        $filePath  = dirname(__DIR__) . '/lib/';
-        $classFile = $filePath . str_replace('\\', '/', $class) . '.php';
-        if (file_exists($classFile)) {
-            require_once $classFile;
-        }
+        return $this->payrexxFactory->create([
+            'instance'  => $config['instance_name'],
+            'apiSecret' => $config['api_secret']
+        ]);
     }
 }
