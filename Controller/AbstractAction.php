@@ -56,7 +56,7 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     /**
      * @var \Payrexx\Payrexx
      */
-    public $payrexx;
+    public $payrexxFactory;
 
     /**
      * Constructor
