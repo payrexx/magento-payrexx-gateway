@@ -29,7 +29,8 @@ class Platform implements \Magento\Framework\Data\OptionSourceInterface
     {
         return [
             'payrexx.com' => __('Payrexx'),
-            'shop-and-pay.com' => __('Shop and Pay')
+            'shop-and-pay.com' => __('Shop and Pay'),
+            'ideal-pay.ch' => __('Ideal Pay')
         ];
     }
 }
