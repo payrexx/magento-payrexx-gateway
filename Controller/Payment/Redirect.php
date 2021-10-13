@@ -135,7 +135,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         // Add current/default language into URL
         return preg_replace(
-            '/^(https:\/\/[a-z0-9.]+)\/(.*)$/',
+            '/^(https:\/\/[a-z0-9.\-]+)\/(.*)$/',
             '$1/'. $lang .'/$2',
             $url
         );
