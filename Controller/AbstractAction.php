@@ -147,9 +147,12 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     public function getPayrexxInstance()
     {
         $config = $this->getPayrexxConfig();
+        $platform = !empty($config['platform']) ? $config['platform'] : '';
         return $this->payrexxFactory->create([
             'instance'  => $config['instance_name'],
-            'apiSecret' => $config['api_secret']
+            'apiSecret' => $config['api_secret'],
+            '',
+            $platform
         ]);
     }
 }
