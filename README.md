@@ -5,7 +5,8 @@ A Payrexx plugin to accept payments in Magento.
 
 ## Support
 
-This module supports Magento versions **2.2.2** & **2.2.3**.  
+This module supports Magento versions **2.2.2**, **2.2.3** & **2.4.0**.
+
 *Note: It may work on future Magento releases, but performance cannot be guaranteed.*
 
 ## Preparation
@@ -43,6 +44,9 @@ If Composer needs username and password, refer http://devdocs.magento.com/guides
 While running Composer, If you can't login to `repo.magento.com`, rename the file **auth.json.sample** into **auth.json** which is present inside Magento root directory and insert your Public Key & Private Key in the  **auth.json**.
 
 ## 3. Magento Setup
+
+#### # Enable Extension Via Admin Web Setup Wizard
+
 Log in to your Magento Admin Panel.
 
 1. Go to **SYSTEM** -> **Web Setup Wizard** -> Choose **Module Manager**
@@ -50,7 +54,19 @@ Log in to your Magento Admin Panel.
 2. Find **Payrexx_PaymentGateway** and select **Enable** from the Select drop-down menu.
 
 3. Complete the Step 1: Readiness Check, Step 2: Create Backup, Step 3: Enable Module  
-   Please wait until the process is completed.  
+   Please wait until the process is completed.
+
+#### # Enable Extension via command line.
+
+Go to Magento root directory and execute the following commands
+
+```
+$ bin/magento setup:upgrade
+
+$ bin/magento setup:di:compile
+
+$ bin/magento cache:clean
+```
 
 **Note:** It takes sometime for the process to complete.
 
