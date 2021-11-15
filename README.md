@@ -84,11 +84,19 @@ $ bin/magento cache:clean
 
 ## 5. Payrexx Configuration
 
- To Configure the webhook URL in Payrexx, Log in your Payrexx account.
+To Configure the webhook URL in Payrexx, Log in your Payrexx account.
 
-1. Go to **settings** -> **API** --> Find **Webhook URL**
+1. Go to **settings** -> **API** -> Find **Webhook URL**
 
-2. Insert the URL to your shop and add /payrexx/payment/webhook
- (e.g. If your shop url is `http://www.example.com`, the Webhook URL will be `http://www.example.com/payrexx/payment/webhook`)
+2. Insert your shop URL with payrexx webhook ( `https://www.example.com/payrexx/payment/webhookv2` ).
+
+**Magento Version 2.2.X**
+
+The Webhook URL will be `https://www.example.com/payrexx/payment/webhook`
+
+**Magento Version 2.3.X and 2.4.X**
+
+The Webhook URL will be `http://www.example.com/payrexx/payment/webhookv2`
+
 
 ## Enjoy using Payrexx!!
