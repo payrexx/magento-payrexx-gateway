@@ -22,16 +22,6 @@ use Magento\Framework\App\ObjectManager;
  */
 class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
 {
-    public function createCsrfValidationException(RequestInterface $request): ?InvalidRequestException
-    {
-        return null;
-    }
-
-    public function validateForCsrf(RequestInterface $request): ?bool
-    {
-        return true;
-    }
-
     /**
      * Executes to receive post values from request.
      * The order status has been updated if the payment is successful
