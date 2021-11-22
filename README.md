@@ -5,7 +5,7 @@ A Payrexx plugin to accept payments in Magento.
 
 ## Support
 
-This module supports Magento versions **2.2.2**, **2.2.3** & **2.4.0**.  
+This module supports Magento versions **2.2.2**, **2.2.3**, **2.3.4** & **2.4.0**, **2.4.3**.  
 *Note: It may work on future Magento releases, but performance cannot be guaranteed.*
 
 ## Preparation
