@@ -30,21 +30,23 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
     {
         // Check payment getway response
         $post = $this->getRequest()->getPostValue();
-        if (empty($post) || empty($post['transaction'])) {
-            return;
+
+        $requestTransaction = $post['transaction'];
+        $requestTransactionStatus = $requestTransaction['status']['referenceId'];
+        $orderId = $requestTransaction['invoice']['referenceId'];
+
+        if (!$requestTransaction || !$requestTransactionStatus || !$orderId) {
+            throw new \Exception('Payrexx Webhook Data incomplete');
         }
 
-        $transaction = $post['transaction'];
-        $orderId     = $transaction['invoice']['referenceId'];
-
-        // Check transaction status
-        if (!$orderId || $transaction['status'] === 'waiting') {
+        // Nothing todo in case of transaction status waiting
+        if ($requestTransactionStatus === 'waiting') {
             return;
         }
 
         $order = $this->getOrderDetailByOrderId($orderId);
         if (!$order) {
-            return;
+            throw new \Exception('No order found with ID ' . $orderId);
         }
 
         $payment   = $order->getPayment();
@@ -54,34 +56,29 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $paymentHash = $payment->getAdditionalInformation(
             static::PAYMENT_SECURITY_HASH
         );
-
-        $isValidHash = $this->isValidHash($transaction, $paymentHash);
-        if (!$isValidHash) {
+        if (!$isValidHash = $this->isValidHash($requestTransaction, $paymentHash)) {
             // Set the fraud status when payment is frauded.
             $order->setState(\Magento\Sales\Model\Order::STATUS_FRAUD);
             $order->setStatus(\Magento\Sales\Model\Order::STATUS_FRAUD);
             $order->save();
+            throw new \Exception('Payment hash incorreect. Fraud suspect');
         }
 
-        $payrexx = $this->getPayrexxInstance();
-        $gateway = ObjectManager::getInstance()->create(
-            '\Payrexx\Models\Request\Gateway'
-        );
-        $gateway->setId($gatewayId);
         try {
+            $payrexx = $this->getPayrexxInstance();
+            $gateway = ObjectManager::getInstance()->create(
+                '\Payrexx\Models\Request\Gateway'
+            );
+            $gateway->setId($gatewayId);
+
             $response = $payrexx->getOne($gateway);
             $status   = $response->getStatus();
         } catch (\Payrexx\PayrexxException $e) {
-            $this->logger->addError(
-                'Payrexx Fetch Gateway : ' . json_encode($e->getMessage())
-            );
-            return;
+            throw new \Exception('No Payrexx Gateway found with ID: ' . $gatewayId);
         }
 
-        if ($status !== $transaction['status'] ||
-            in_array($transaction['psp'], ['PrePayment', 'Invoice'])
-        ) {
-            return;
+        if ($status !== $requestTransactionStatus) {
+            throw new \Exception('Corrupt webhook status');
         }
 
         if ($status === 'confirmed') {
