@@ -32,7 +32,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $post = $this->getRequest()->getPostValue();
 
         $requestTransaction = $post['transaction'];
-        $requestTransactionStatus = $requestTransaction['status']['referenceId'];
+        $requestTransactionStatus = $requestTransaction['status'];
         $orderId = $requestTransaction['invoice']['referenceId'];
 
         if (!$requestTransaction || !$requestTransactionStatus || !$orderId) {
