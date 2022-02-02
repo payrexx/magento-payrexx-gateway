@@ -151,8 +151,7 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         return $this->payrexxFactory->create([
             'instance'  => $config['instance_name'],
             'apiSecret' => $config['api_secret'],
-            '',
-            $platform
+            'apiBaseDomain' => $platform,
         ]);
     }
 }
