@@ -2,10 +2,10 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2021 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2022 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2021 PAYREXX AG
+ * @copyright   2022 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
@@ -30,7 +30,8 @@ class Platform implements \Magento\Framework\Data\OptionSourceInterface
         return [
             'payrexx.com' => __('Payrexx'),
             'shop-and-pay.com' => __('Shop and Pay'),
-            'ideal-pay.ch' => __('Ideal Pay')
+            'ideal-pay.ch' => __('Ideal Pay'),
+            'payzzter.com' => __('Payzzter'),
         ];
     }
 }
