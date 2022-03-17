@@ -24,6 +24,14 @@
                 <model>Payrexx\PaymentGateway\Model\PaymentMethod</model>
                 <sort_order>1</sort_order>
             </payrexx_payment>
+            <payrexx_mastercard_payment>
+                <active>0</active>
+                <title>Mastercard by Payrexx</title>
+                <payment_action>authorize</payment_action> <!-- You can use another methor like capture  -->
+                <order_status>pending_payment</order_status> <!-- set default order status-->
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodMastercard</model>
+                <sort_order>1</sort_order>
+            </payrexx_mastercard_payment>
         </payment>
     </default>
 </config>

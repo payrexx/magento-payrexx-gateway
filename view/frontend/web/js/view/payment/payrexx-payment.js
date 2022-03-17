@@ -22,6 +22,10 @@ define([
         {
             type: 'payrexx_payment',
             component: 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method'
+        },
+        {
+            type: 'payrexx_mastercard_payment',
+            component: 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method-mastercard'
         }
     );
 
