@@ -1,10 +1,10 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2018 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2022 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2018 PAYREXX AG
+ * @copyright   2022 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
@@ -24,8 +24,8 @@ define([
             component: 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method'
         },
         {
-            type: 'payrexx_mastercard_payment',
-            component: 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method-mastercard'
+            type: 'payrexx_payment_mastercard',
+            component: 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method'
         }
     );
 

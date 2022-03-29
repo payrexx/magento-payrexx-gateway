@@ -26,7 +26,7 @@ class PaymentMethodMastercard extends \Magento\Payment\Model\Method\AbstractMeth
     /**
      * @var string
      */
-    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_mastercard_payment';
+    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_mastercard';
 
     /**
      * Payment method code
