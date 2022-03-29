@@ -14,6 +14,7 @@
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
 use Magento\Framework\App\ObjectManager;
+use Payrexx\PaymentGateway\Model\PaymentMethod;
 
 /**
  * Class \Payrexx\PaymentGateway\Controller\Payment\Redirect
@@ -146,6 +147,13 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $gateway->addField($type, $value);
         }
 
+        // TO DO: Set PM
+        $payment = $order->getPayment();
+        $paymentMethod = $payment->getMethod();
+        if ($paymentMethod != PaymentMethod::PAYMENT_METHOD_PAYREXX_CODE) {
+            $pm = preg_replace('/^(payrexx_payment_)*(.*)/s', '$2', $paymentMethod);
+            // $gateway->setPm([$pm]); 
+        }
         try {
             // Create payrexx instance
             $payrexx = $this->getPayrexxInstance();
