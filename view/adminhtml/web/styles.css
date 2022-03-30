@@ -1,0 +1,9 @@
+.payrexx-payment-section .payrexx-payment-desc { display: inline-block; vertical-align: middle; width: 50%; font-weight: normal; }
+.payrexx-payment-section .button-container { float:right; }
+.payrexx-payment-section .payrexx-payment-logo {
+    display:inline-block;
+    vertical-align: middle;
+    margin: 0 20px 0 0px; width: 180px; height:60px; 
+    background-repeat: no-repeat; 
+    background-image: url('https://www.payrexx.com/site/templates/images/payrexx_rgb.svg');
+}

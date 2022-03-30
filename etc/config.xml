@@ -16,22 +16,50 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <payment>
-            <payrexx_payment>
-                <active>0</active>
-                <title>Payrexx</title>
-                <payment_action>authorize</payment_action> <!-- You can use another methor like capture  -->
-                <order_status>pending_payment</order_status> <!-- set default order status-->
-                <model>Payrexx\PaymentGateway\Model\PaymentMethod</model>
-                <sort_order>1</sort_order>
-            </payrexx_payment>
-            <payrexx_payment_mastercard>
-                <active>0</active>
-                <title>Mastercard by Payrexx</title>
-                <payment_action>authorize</payment_action> <!-- You can use another methor like capture  -->
-                <order_status>pending_payment</order_status> <!-- set default order status-->
-                <model>Payrexx\PaymentGateway\Model\PaymentMethodMastercard</model>
-                <sort_order>1</sort_order>
-            </payrexx_payment_mastercard>
+            <payrexx>
+                <payment_methods>
+                    <payrexx_payment>
+                        <active>0</active>
+                        <title>Payrexx</title>
+                        <payment_action>authorize</payment_action> <!-- You can use another method like capture  -->
+                        <order_status>pending_payment</order_status> <!-- set default order status-->
+                        <model>Payrexx\PaymentGateway\Model\PaymentMethod</model>
+                        <sort_order>1</sort_order>
+                    </payrexx_payment>
+                    <payrexx_payment_mastercard>
+                        <active>0</active>
+                        <title>Mastercard by Payrexx</title>
+                        <payment_action>authorize</payment_action> <!-- You can use another method like capture  -->
+                        <order_status>pending_payment</order_status> <!-- set default order status-->
+                        <model>Payrexx\PaymentGateway\Model\PaymentMethodMastercard</model>
+                        <sort_order>2</sort_order>
+                    </payrexx_payment_mastercard>
+                    <payrexx_payment_visa>
+                        <active>0</active>
+                        <title>Visa by Payrexx</title>
+                        <payment_action>authorize</payment_action> <!-- You can use another method like capture  -->
+                        <order_status>pending_payment</order_status> <!-- set default order status-->
+                        <model>Payrexx\PaymentGateway\Model\PaymentMethodVisa</model>
+                        <sort_order>3</sort_order>
+                    </payrexx_payment_visa>
+                    <payrexx_payment_apple-pay>
+                        <active>0</active>
+                        <title>ApplePay by Payrexx</title>
+                        <payment_action>authorize</payment_action> <!-- You can use another method like capture  -->
+                        <order_status>pending_payment</order_status> <!-- set default order status-->
+                        <model>Payrexx\PaymentGateway\Model\PaymentMethodApplePay</model>
+                        <sort_order>4</sort_order>
+                    </payrexx_payment_apple-pay>
+                    <payrexx_payment_maestro>
+                        <active>0</active>
+                        <title>Maestro by Payrexx</title>
+                        <payment_action>authorize</payment_action> <!-- You can use another method like capture  -->
+                        <order_status>pending_payment</order_status> <!-- set default order status-->
+                        <model>Payrexx\PaymentGateway\Model\PaymentMethod</model>
+                        <sort_order>5</sort_order>
+                    </payrexx_payment_maestro>
+                </payment_methods>
+            </payrexx>
         </payment>
     </default>
 </config>

@@ -26,7 +26,19 @@ define([
         {
             type: 'payrexx_payment_mastercard',
             component: 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method'
-        }
+        },
+        {
+            type: 'payrexx_payment_visa',
+            component: 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method'
+        },
+        {
+            type: 'payrexx_payment_apple-pay',
+            component: 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method'
+        },
+        {
+            type: 'payrexx_payment_maestro',
+            component: 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method'
+        },
     );
 
     /** Add view logic here if needed */

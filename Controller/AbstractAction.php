@@ -95,7 +95,7 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     public function getPayrexxConfig()
     {
         return $this->configSettings->getValue(
-            'payment/payrexx_payment'
+            'payment/payrexx/credentials'
         );
     }
 
