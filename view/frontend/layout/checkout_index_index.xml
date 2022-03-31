@@ -43,7 +43,7 @@
                                                                         <item name="payrexx_payment_visa" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
-                                                                        <item name="payrexx_payment_apple-pay" xsi:type="array">
+                                                                        <item name="payrexx_payment_apple_pay" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                          <item name="payrexx_payment_maestro" xsi:type="array">

@@ -32,7 +32,7 @@ define([
             component: 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method'
         },
         {
-            type: 'payrexx_payment_apple-pay',
+            type: 'payrexx_payment_apple_pay',
             component: 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method'
         },
         {

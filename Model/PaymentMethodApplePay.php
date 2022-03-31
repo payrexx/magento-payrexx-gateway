@@ -26,7 +26,7 @@ class PaymentMethodApplePay extends \Magento\Payment\Model\Method\AbstractMethod
     /**
      * @var string
      */
-    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_apple-pay';
+    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_apple_pay';
 
     /**
      * Payment method code

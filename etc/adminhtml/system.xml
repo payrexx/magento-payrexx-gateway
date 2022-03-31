@@ -25,12 +25,15 @@
                     <field id="platform" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
                         <label>Platform</label>
                         <source_model>Payrexx\PaymentGateway\Model\Config\Source\Platform</source_model>
+                        <config_path>payment/payrexx_payment/platform</config_path>
                     </field>
                     <field id="instance_name" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
                         <label>Instance Name</label>
+                        <config_path>payment/payrexx_payment/instance_name</config_path>
                     </field>
                     <field id="api_secret" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
                         <label>API Secret Key</label>
+                        <config_path>payment/payrexx_payment/api_secret</config_path>
                     </field>
                 </group>
                 <group id="payment_methods" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -40,13 +43,16 @@
                         <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                             <label>Enabled</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>payment/payrexx_payment/active</config_path>
                         </field>
                         <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                             <label>Title</label>
+                            <config_path>payment/payrexx_payment/title</config_path>
                         </field>
                         <field id="sort_order" translate="label" type="text" sortOrder="3" showInDefault="2" showInWebsite="1" showInStore="0">
                             <label>Sort Order</label>
                             <frontend_class>validate-number</frontend_class>
+                            <config_path>payment/payrexx_payment/sort_order</config_path>
                         </field>
                     </group>
                     <group id="payrexx_payment_mastercard" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -54,45 +60,50 @@
                         <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                             <label>Enabled</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>payment/payrexx_payment_mastercard/active</config_path>
                         </field>
                         <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                             <label>Title</label>
+                            <config_path>payment/payrexx_payment_mastercard/title</config_path>
                         </field>
                         <field id="sort_order" translate="label" type="text" sortOrder="3" showInDefault="2" showInWebsite="1" showInStore="0">
                             <label>Sort Order</label>
                             <frontend_class>validate-number</frontend_class>
+                            <config_path>payment/payrexx_payment_mastercard/sort_order</config_path>
                         </field>
-                        <field id="note" translate="label" type="label" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <label>Note: </label>
-                            <comment>The Instance Name and API Secret Key are mandatory on Payrexx</comment>
-                        </field>  
                     </group>
                     <group id="payrexx_payment_visa" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Visa by Payrexx</label>
                         <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                             <label>Enabled</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>payment/payrexx_payment_visa/active</config_path>
                         </field>
                         <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                             <label>Title</label>
+                            <config_path>payment/payrexx_payment_visa/title</config_path>
                         </field>
                         <field id="sort_order" translate="label" type="text" sortOrder="3" showInDefault="3" showInWebsite="1" showInStore="0">
                             <label>Sort Order</label>
                             <frontend_class>validate-number</frontend_class>
+                            <config_path>payment/payrexx_payment_visa/sort_order</config_path>
                         </field>
                     </group>
-                    <group id="payrexx_payment_apple-pay" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <group id="payrexx_payment_apple_pay" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>ApplePay by Payrexx</label>
                         <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                             <label>Enabled</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>payment/payrexx_payment_apple_pay/active</config_path>
                         </field>
                         <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                             <label>Title</label>
+                            <config_path>payment/payrexx_payment_apple_pay/title</config_path>
                         </field>
                         <field id="sort_order" translate="label" type="text" sortOrder="3" showInDefault="3" showInWebsite="1" showInStore="0">
                             <label>Sort Order</label>
                             <frontend_class>validate-number</frontend_class>
+                            <config_path>payment/payrexx_payment_apple_pay/sort_order</config_path>
                         </field>
                     </group>
                     <group id="payrexx_payment_maestro" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -100,13 +111,16 @@
                         <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                             <label>Enabled</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>payment/payrexx_payment_maestro/active</config_path>
                         </field>
                         <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                             <label>Title</label>
+                            <config_path>payment/payrexx_payment_maestro/title</config_path>
                         </field>
                         <field id="sort_order" translate="label" type="text" sortOrder="3" showInDefault="3" showInWebsite="1" showInStore="0">
                             <label>Sort Order</label>
                             <frontend_class>validate-number</frontend_class>
+                            <config_path>payment/payrexx_payment_maestro/sort_order</config_path>
                         </field>
                     </group>
                 </group>
