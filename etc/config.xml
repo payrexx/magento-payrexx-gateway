@@ -22,8 +22,16 @@
                 <payment_action>authorize</payment_action> <!-- You can use anothed method like capture  -->
                 <order_status>pending_payment</order_status> <!-- set default order status-->
                 <model>Payrexx\PaymentGateway\Model\PaymentMethod</model>
-                <sort_order>1</sort_order>
+                <sort_order>0</sort_order>
             </payrexx_payment>
+            <payrexx_payment_masterpass>
+                <active>0</active>
+                <title>Masterpass by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodMasterpass</model>
+                <sort_order>1</sort_order>
+            </payrexx_payment_masterpass>
             <payrexx_payment_mastercard>
                 <active>0</active>
                 <title>Mastercard by Payrexx</title>
@@ -56,6 +64,246 @@
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodMaestro</model>
                 <sort_order>5</sort_order>
             </payrexx_payment_maestro>
+            <payrexx_payment_jcb>
+                <active>0</active>
+                <title>Jcb by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodJcb</model>
+                <sort_order>6</sort_order>
+            </payrexx_payment_jcb>
+            <payrexx_payment_american_express>
+                <active>0</active>
+                <title>American Express by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodAmericanExpress</model>
+                <sort_order>7</sort_order>
+            </payrexx_payment_american_express>
+            <payrexx_payment_wirpay>
+                <active>0</active>
+                <title>Wirpay by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodWirpay</model>
+                <sort_order>8</sort_order>
+            </payrexx_payment_wirpay>
+            <payrexx_payment_paypal>
+                <active>0</active>
+                <title>Wirpay by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodPaypal</model>
+                <sort_order>9</sort_order>
+            </payrexx_payment_paypal>
+            <payrexx_payment_bitcoin>
+                <active>0</active>
+                <title>Bitcoin by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodBitcoin</model>
+                <sort_order>10</sort_order>
+            </payrexx_payment_bitcoin>
+            <payrexx_payment_sofortueberweisung>
+                <active>0</active>
+                <title>Sofortueberweisung by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodSofortueberweisung</model>
+                <sort_order>11</sort_order>
+            </payrexx_payment_sofortueberweisung>
+            <payrexx_payment_billpay>
+                <active>0</active>
+                <title>Billpay by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodBillpay</model>
+                <sort_order>12</sort_order>
+            </payrexx_payment_billpay>
+            <payrexx_payment_bonuscard>
+                <active>0</active>
+                <title>Bonuscard by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodBonuscard</model>
+                <sort_order>13</sort_order>
+            </payrexx_payment_bonuscard>
+            <payrexx_payment_cashu>
+                <active>0</active>
+                <title>Cashu by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodCashu</model>
+                <sort_order>14</sort_order>
+            </payrexx_payment_cashu>
+            <payrexx_payment_cb>
+                <active>0</active>
+                <title>Cb by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodCb</model>
+                <sort_order>15</sort_order>
+            </payrexx_payment_cb>
+            <payrexx_payment_diners_club>
+                <active>0</active>
+                <title>Diners Club by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodDinersClub</model>
+                <sort_order>16</sort_order>
+            </payrexx_payment_diners_club>
+            <payrexx_payment_direct_debit>
+                <active>0</active>
+                <title>Direct Debit by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodDirectDebit</model>
+                <sort_order>17</sort_order>
+            </payrexx_payment_direct_debit>
+            <payrexx_payment_discover>
+                <active>0</active>
+                <title>Discover by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodDiscover</model>
+                <sort_order>18</sort_order>
+            </payrexx_payment_discover>
+            <payrexx_payment_elv>
+                <active>0</active>
+                <title>Elv by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodElv</model>
+                <sort_order>19</sort_order>
+            </payrexx_payment_elv>
+            <payrexx_payment_ideal>
+                <active>0</active>
+                <title>Ideal by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodIdeal</model>
+                <sort_order>20</sort_order>
+            </payrexx_payment_ideal>
+            <payrexx_payment_invoice>
+                <active>0</active>
+                <title>Invoice by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodInvoice</model>
+                <sort_order>21</sort_order>
+            </payrexx_payment_invoice>
+            <payrexx_payment_myone>
+                <active>0</active>
+                <title>Myone by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodMyone</model>
+                <sort_order>22</sort_order>
+            </payrexx_payment_myone>
+            <payrexx_payment_paysafecard>
+                <active>0</active>
+                <title>Paysafecard by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodPaysafeCard</model>
+                <sort_order>23</sort_order>
+            </payrexx_payment_paysafecard>
+            <payrexx_payment_postfinance_card>
+                <active>0</active>
+                <title>Postfinance Card by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodPostfinanceCard</model>
+                <sort_order>24</sort_order>
+            </payrexx_payment_postfinance_card>
+            <payrexx_payment_postfinance_efinance>
+                <active>0</active>
+                <title>Postfinance Efinance by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodPostfinanceEfinance</model>
+                <sort_order>25</sort_order>
+            </payrexx_payment_postfinance_efinance>
+            <payrexx_payment_swissbilling>
+                <active>0</active>
+                <title>Swissbilling by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodSwissBilling</model>
+                <sort_order>26</sort_order>
+            </payrexx_payment_swissbilling>
+            <payrexx_payment_twint>
+                <active>0</active>
+                <title>Twint by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodTwint</model>
+                <sort_order>27</sort_order>
+            </payrexx_payment_twint>
+            <payrexx_payment_barzahlen>
+                <active>0</active>
+                <title>Barzahlen by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodBarzahlen</model>
+                <sort_order>28</sort_order>
+            </payrexx_payment_barzahlen>
+            <payrexx_payment_bancontact>
+                <active>0</active>
+                <title>Bancontact by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodBancontact</model>
+                <sort_order>29</sort_order>
+            </payrexx_payment_bancontact>
+            <payrexx_payment_giropay>
+                <active>0</active>
+                <title>Giropay by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodGiropay</model>
+                <sort_order>30</sort_order>
+            </payrexx_payment_giropay>
+            <payrexx_payment_eps>
+                <active>0</active>
+                <title>Eps by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodEps</model>
+                <sort_order>31</sort_order>
+            </payrexx_payment_eps>
+            <payrexx_payment_google_pay>
+                <active>0</active>
+                <title>Google Pay by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodGooglePay</model>
+                <sort_order>32</sort_order>
+            </payrexx_payment_google_pay>
+            <payrexx_payment_klarna_paynow>
+                <active>0</active>
+                <title>Klarna Paynow by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodKlarnaPaynow</model>
+                <sort_order>33</sort_order>
+            </payrexx_payment_klarna_paynow>
+            <payrexx_payment_klarna_paylater>
+                <active>0</active>
+                <title>Klarna Paylater by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodKlarnaPaylater</model>
+                <sort_order>34</sort_order>
+            </payrexx_payment_klarna_paylater>
+            <payrexx_payment_oney>
+                <active>0</active>
+                <title>Oney by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodOney</model>
+                <sort_order>35</sort_order>
+            </payrexx_payment_oney>
         </payment>
     </default>
 </config>
