@@ -225,21 +225,21 @@
                             <config_path>payment/payrexx_payment_bitcoin/sort_order</config_path>
                         </field>
                     </group>
-                    <group id="payrexx_payment_sofortueberweisung" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <group id="payrexx_payment_sofortueberweisung_de" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Sofortueberweisung by Payrexx</label>
                         <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                             <label>Enabled</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                            <config_path>payment/payrexx_payment_sofortueberweisung/active</config_path>
+                            <config_path>payment/payrexx_payment_sofortueberweisung_de/active</config_path>
                         </field>
                         <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                             <label>Title</label>
-                            <config_path>payment/payrexx_payment_sofortueberweisung/title</config_path>
+                            <config_path>payment/payrexx_payment_sofortueberweisung_de/title</config_path>
                         </field>
                         <field id="sort_order" translate="label" type="text" sortOrder="3" showInDefault="3" showInWebsite="1" showInStore="0">
                             <label>Sort Order</label>
                             <frontend_class>validate-number</frontend_class>
-                            <config_path>payment/payrexx_payment_sofortueberweisung/sort_order</config_path>
+                            <config_path>payment/payrexx_payment_sofortueberweisung_de/sort_order</config_path>
                         </field>
                     </group>
                     <group id="payrexx_payment_billpay" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">

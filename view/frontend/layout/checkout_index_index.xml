@@ -67,7 +67,7 @@
                                                                         <item name="payrexx_payment_bitcoin" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
-                                                                        <item name="payrexx_payment_sofortueberweisung" xsi:type="array">
+                                                                        <item name="payrexx_payment_sofortueberweisung_de" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                         <item name="payrexx_payment_billpay" xsi:type="array">

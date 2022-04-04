@@ -21,12 +21,12 @@ namespace Payrexx\PaymentGateway\Model;
  * @api
  * @since 100.0.2
  */
-class PaymentMethodSofortueberweisung extends \Magento\Payment\Model\Method\AbstractMethod
+class PaymentMethodSofortueberweisungDe extends \Magento\Payment\Model\Method\AbstractMethod
 {
     /**
      * @var string
      */
-    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_sofortueberweisung';
+    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_sofortueberweisung_de';
 
     /**
      * Payment method code
