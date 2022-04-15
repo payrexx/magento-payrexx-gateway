@@ -73,7 +73,7 @@
                                                                         <item name="payrexx_payment_billpay" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
-                                                                        <item name="payrexx_payment_bonuscard" xsi:type="array">
+                                                                        <item name="payrexx_payment_bonus" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                         <item name="payrexx_payment_cashu" xsi:type="array">

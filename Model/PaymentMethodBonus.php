@@ -21,12 +21,12 @@ namespace Payrexx\PaymentGateway\Model;
  * @api
  * @since 100.0.2
  */
-class PaymentMethodBonuscard extends \Magento\Payment\Model\Method\AbstractMethod
+class PaymentMethodBonus extends \Magento\Payment\Model\Method\AbstractMethod
 {
     /**
      * @var string
      */
-    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_bonuscard';
+    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_bonus';
 
     /**
      * Payment method code

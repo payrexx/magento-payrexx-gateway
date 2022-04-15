@@ -33,7 +33,7 @@ define([
         {type: 'payrexx_payment_bitcoin', component: componentJs},
         {type: 'payrexx_payment_sofortueberweisung_de', component: componentJs},
         {type: 'payrexx_payment_billpay', component: componentJs},
-        {type: 'payrexx_payment_bonuscard', component: componentJs},
+        {type: 'payrexx_payment_bonus', component: componentJs},
         {type: 'payrexx_payment_cashu', component: componentJs},
         {type: 'payrexx_payment_cb', component: componentJs},
         {type: 'payrexx_payment_diners_club', component: componentJs},
