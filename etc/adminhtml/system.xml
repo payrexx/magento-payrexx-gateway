@@ -19,7 +19,6 @@
             <group id="payrexx" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label><![CDATA[<div class="payrexx-payment-logo"></div><div class="payrexx-payment-desc">Payrexx enables you to handle worldwide customer payments safely and easily.<br/>Immediately accept Visa, Mastercard, PayPal, Apple Pay, Samsung Pay and further 200+ payment methods.</div>]]></label>
                 <fieldset_css>payrexx-payment-section</fieldset_css>
-                <frontend_model>Payrexx\PaymentGateway\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
                 <group id="credentials" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Required Settings</label>
                     <field id="platform" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
