@@ -151,6 +151,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $paymentMethod = $payment->getMethod();
         if ($paymentMethod != PaymentMethod::PAYMENT_METHOD_PAYREXX_CODE) {
             $pm = preg_replace('/^(payrexx_payment_)*(.*)/s', '$2', $paymentMethod);
+            $pm = str_replace('_', '-', $pm);
             $gateway->setPm([$pm]);
         }
         try {
