@@ -1,5 +1,4 @@
-.payrexx-payment-section .payrexx-payment-desc { display: inline-block; vertical-align: middle; width: 50%; font-weight: normal; }
-.payrexx-payment-section .button-container { float:right; }
+.payrexx-payment-section .payrexx-payment-desc { display: inline-block; vertical-align: top; width: 75%; font-size: 1.4rem; font-weight: normal;  }
 .payrexx-payment-section .payrexx-payment-logo {
     display:inline-block;
     vertical-align: middle;
