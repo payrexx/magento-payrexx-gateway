@@ -114,7 +114,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $basket[] = [
             'name' => 'Discount',
             'quantity' => 1,
-            'amount' => $order->getDiscountAmount() * -100,
+            'amount' => abs($order->getDiscountAmount()),
         ];
 
         // Tax
