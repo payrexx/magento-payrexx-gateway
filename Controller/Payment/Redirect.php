@@ -88,45 +88,42 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         $billingAddress = $order->getBillingAddress();
 
-        $basketAmount = 0;
         // products
         foreach ($order->getAllItems() as $product) {
-            $basketAmount += $product->getQtyOrdered() * $product->getPrice();
-            $basket[] = [
+            $baskets[] = [
                 'name' => $product->getName(),
                 'description' => $product->getDescription(),
                 'quantity' => $product->getQtyOrdered(),
-                'amount' => $product->getPrice() * 100,
+                'amount' => $product->getQtyOrdered() * $product->getPrice() * 100,
                 'sku' => $product->getSku(),
             ];
         }
 
         // Shipping
-        $basketAmount += $order->getShippingAmount(); 
-        $basket[] = [
+        $baskets[] = [
             'name' => 'Shipping',
             'quantity' => 1,
             'amount' => $order->getShippingAmount() * 100,
         ];
 
         // Discount
-        $basketAmount += $order->getDiscountAmount();
-        $basket[] = [
+        $baskets[] = [
             'name' => 'Discount',
             'quantity' => 1,
             'amount' => abs($order->getDiscountAmount()) * -100,
         ];
 
         // Tax
-        $basketAmount += $order->getTaxAmount();
-        $basket[] = [
+        $baskets[] = [
             'name' => 'Tax',
             'quantity' => 1,
             'amount' => $order->getTaxAmount() * 100,
         ];
 
-        if (number_format($basketAmount, 2, '.', '') === number_format($order->getGrandTotal(), 2, '.', '')) {
-            $gateway->setBasket($basket);
+        // verify basket items amount is to grand total
+        $basketAmount = array_sum(array_column($baskets,'amount'));
+        if ($basketAmount === $order->getGrandTotal() * 100) {
+            $gateway->setBasket($baskets);
         }
         // Contact information which should be stored along with payment
         $fields = [
@@ -213,4 +210,3 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $payment->save();
     }
 }
-                                               
