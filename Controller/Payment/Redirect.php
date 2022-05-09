@@ -94,7 +94,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 'name' => $product->getName(),
                 'description' => $product->getDescription(),
                 'quantity' => $product->getQtyOrdered(),
-                'amount' => $product->getQtyOrdered() * $product->getPrice() * 100,
+                'amount' => $product->getPrice() * 100,
                 'sku' => $product->getSku(),
             ];
         }
@@ -121,7 +121,10 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         ];
 
         // verify basket items amount is to grand total
-        $basketAmount = array_sum(array_column($baskets,'amount'));
+        $basketAmount = 0;
+        foreach ($baskets as $basket) {
+            $basketAmount += $basket['quantity'] * $basket['amount'];
+        }
         if ($basketAmount === $order->getGrandTotal() * 100) {
             $gateway->setBasket($baskets);
         }
