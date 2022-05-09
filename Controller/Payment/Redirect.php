@@ -96,7 +96,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 'name' => $product->getName(),
                 'description' => $product->getDescription(),
                 'quantity' => $product->getQtyOrdered(),
-                'amount' => $product->getPrice(),
+                'amount' => $product->getPrice() * 100,
                 'sku' => $product->getSku(),
             ];
         }
@@ -106,7 +106,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $basket[] = [
             'name' => 'Shipping',
             'quantity' => 1,
-            'amount' => $order->getShippingAmount(),
+            'amount' => $order->getShippingAmount() * 100,
         ];
 
         // Discount
@@ -114,7 +114,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $basket[] = [
             'name' => 'Discount',
             'quantity' => 1,
-            'amount' => abs($order->getDiscountAmount()),
+            'amount' => abs($order->getDiscountAmount()) * -100,
         ];
 
         // Tax
@@ -122,7 +122,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $basket[] = [
             'name' => 'Tax',
             'quantity' => 1,
-            'amount' => $order->getTaxAmount(),
+            'amount' => $order->getTaxAmount() * 100,
         ];
 
         if (number_format($basketAmount, 2, '.', '') === number_format($order->getGrandTotal(), 2, '.', '')) {
