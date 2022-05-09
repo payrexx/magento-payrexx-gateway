@@ -120,7 +120,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             'amount' => $order->getTaxAmount() * 100,
         ];
 
-        // verify basket items amount is to grand total
+        // verify basket items amount equal to grand total
         $basketAmount = 0;
         foreach ($baskets as $basket) {
             $basketAmount += $basket['quantity'] * $basket['amount'];
