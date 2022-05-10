@@ -88,6 +88,46 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         $billingAddress = $order->getBillingAddress();
 
+        // products
+        foreach ($order->getAllItems() as $product) {
+            $baskets[] = [
+                'name' => $product->getName(),
+                'description' => $product->getDescription(),
+                'quantity' => $product->getQtyOrdered(),
+                'amount' => $product->getPrice() * 100,
+                'sku' => $product->getSku(),
+            ];
+        }
+
+        // Shipping
+        $baskets[] = [
+            'name' => 'Shipping',
+            'quantity' => 1,
+            'amount' => $order->getShippingAmount() * 100,
+        ];
+
+        // Discount
+        $baskets[] = [
+            'name' => 'Discount',
+            'quantity' => 1,
+            'amount' => abs($order->getDiscountAmount()) * -100,
+        ];
+
+        // Tax
+        $baskets[] = [
+            'name' => 'Tax',
+            'quantity' => 1,
+            'amount' => $order->getTaxAmount() * 100,
+        ];
+
+        // verify basket items amount equal to grand total
+        $basketAmount = 0;
+        foreach ($baskets as $basket) {
+            $basketAmount += $basket['quantity'] * $basket['amount'];
+        }
+        if ($basketAmount === $order->getGrandTotal() * 100) {
+            $gateway->setBasket($baskets);
+        }
         // Contact information which should be stored along with payment
         $fields = [
             'forename' => $billingAddress->getFirstname(),
