@@ -14,6 +14,7 @@
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
 use Magento\Framework\App\ObjectManager;
+use Magento\Sales\Model\Order;
 
 /**
  * class \Payrexx\PaymentGateway\Controller\Payment\Webhook
@@ -42,16 +43,15 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             throw new \Exception('Payrexx Webhook Data incomplete');
         }
 
-        // Nothing todo in case of transaction status waiting
-        // if ($requestTransactionStatus === 'waiting') {
-        //     return;
-        // }
-
         $order = $this->getOrderDetailByOrderId($orderId);
         if (!$order) {
             throw new \Exception('No order found with ID ' . $orderId);
         }
 
+        // Do not change the order state for completed.
+        if ($order->getState() === Order::STATE_COMPLETE) {
+            return;
+        }
         $payment   = $order->getPayment();
         $gatewayId = $payment->getAdditionalInformation(
             static::PAYMENT_GATEWAY_ID
@@ -84,28 +84,32 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             throw new \Exception('Corrupt webhook status');
         }
 
+        $state = '';
         switch ($status) {
             case 'confirmed':
-                $state = \Magento\Sales\Model\Order::STATE_PROCESSING;
+                $state = Order::STATE_PROCESSING;
                 break;
             case 'cancelled':
             case 'declined':
             case 'error':
             case 'expired':
-                $state = \Magento\Sales\Model\Order::STATE_CANCELED;
+                $state = Order::STATE_CANCELED;
                 break;
             case 'refunded':
-                $state = \Magento\Sales\Model\Order::STATE_CLOSED;
+                $state = Order::STATE_CLOSED;
                 break;
             case 'waiting':
-                $state = \Magento\Sales\Model\Order::STATE_PENDING_PAYMENT;
+                $state = Order::STATE_PENDING_PAYMENT;
                 break;
             case 'partially-refunded':
                 $state = self::STATE_PAYREXX_PARTIAL_REFUND;
                 break;
         }
+        if (empty($state)) {
+            return;
+        }
         $order->setState($state);
-        $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
+        $order->setStatus($state);
         $order->save();
     }
 
