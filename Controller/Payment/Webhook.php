@@ -22,6 +22,9 @@ use Magento\Framework\App\ObjectManager;
  */
 class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
 {
+
+    const STATE_PAYREXX_PARTIAL_REFUND = 'payrexx_partial_refund';
+
     /**
      * Executes to receive post values from request.
      * The order status has been updated if the payment is successful
@@ -40,9 +43,9 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         }
 
         // Nothing todo in case of transaction status waiting
-        if ($requestTransactionStatus === 'waiting') {
-            return;
-        }
+        // if ($requestTransactionStatus === 'waiting') {
+        //     return;
+        // }
 
         $order = $this->getOrderDetailByOrderId($orderId);
         if (!$order) {
@@ -56,7 +59,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $paymentHash = $payment->getAdditionalInformation(
             static::PAYMENT_SECURITY_HASH
         );
-        if (!$isValidHash = $this->isValidHash($requestTransaction, $paymentHash)) {
+        if (!$this->isValidHash($requestTransaction, $paymentHash)) {
             // Set the fraud status when payment is frauded.
             $order->setState(\Magento\Sales\Model\Order::STATUS_FRAUD);
             $order->setStatus(\Magento\Sales\Model\Order::STATUS_FRAUD);
@@ -81,19 +84,33 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             throw new \Exception('Corrupt webhook status');
         }
 
-        if ($status !== 'confirmed') {
-            return;
+        switch ($status) {
+            case 'confirmed':
+                $state = \Magento\Sales\Model\Order::STATE_PROCESSING;
+                break;
+            case 'cancelled':
+            case 'declined':
+            case 'error':
+            case 'expired':
+                $state = \Magento\Sales\Model\Order::STATE_CANCELED;
+                break;
+            case 'refunded':
+                $state = \Magento\Sales\Model\Order::STATE_CLOSED;
+                break;
+            case 'waiting':
+                $state = \Magento\Sales\Model\Order::STATE_PENDING_PAYMENT;
+                break;
+            case 'partially-refunded':
+                $state = self::STATE_PAYREXX_PARTIAL_REFUND;
+                break;
         }
-
-        // Set the complete status when payment is completed.
-        $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING);
+        $order->setState($state);
         $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
         $order->save();
         $history = $order->addCommentToStatusHistory(
             'Status updated by Payrexx Webhook'
         );
         $history->save();
-        return;
     }
 
     /**
