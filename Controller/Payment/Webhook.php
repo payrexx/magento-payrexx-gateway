@@ -2,14 +2,14 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2018 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2022 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2018 PAYREXX AG
+ * @copyright   2022 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
- * @version     1.0.0
+ * @version     1.0.1
  */
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
@@ -103,6 +103,14 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 break;
             case 'partially-refunded':
                 $state = self::STATE_PAYREXX_PARTIAL_REFUND;
+                $orderStatusCollection = ObjectManager::getInstance()->create(
+                    '\Magento\Sales\Model\ResourceModel\Order\Status\Collection'
+                );
+                $orderStatusCollection = $orderStatusCollection->toOptionArray();
+                $payrexxPartialRefund = array_search($state, array_column($orderStatusCollection, 'value'));
+                if (!$payrexxPartialRefund) { // if custom order status does not exit.
+                    $state = Order::STATE_CLOSED;
+                }
                 break;
         }
         if (empty($state)) {
