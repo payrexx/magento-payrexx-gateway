@@ -2,19 +2,18 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2022 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2018 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2022 PAYREXX AG
+ * @copyright   2018 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
- * @version     1.0.1
+ * @version     1.0.0
  */
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
 use Magento\Framework\App\ObjectManager;
-use Magento\Sales\Model\Order;
 
 /**
  * class \Payrexx\PaymentGateway\Controller\Payment\Webhook
@@ -23,9 +22,6 @@ use Magento\Sales\Model\Order;
  */
 class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
 {
-
-    const STATE_PAYREXX_PARTIAL_REFUND = 'payrexx_partial_refund';
-
     /**
      * Executes to receive post values from request.
      * The order status has been updated if the payment is successful
@@ -43,15 +39,16 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             throw new \Exception('Payrexx Webhook Data incomplete');
         }
 
+        // Nothing todo in case of transaction status waiting
+        if ($requestTransactionStatus === 'waiting') {
+            return;
+        }
+
         $order = $this->getOrderDetailByOrderId($orderId);
         if (!$order) {
             throw new \Exception('No order found with ID ' . $orderId);
         }
 
-        // Do not change the order state for completed.
-        if ($order->getState() === Order::STATE_COMPLETE) {
-            return;
-        }
         $payment   = $order->getPayment();
         $gatewayId = $payment->getAdditionalInformation(
             static::PAYMENT_GATEWAY_ID
@@ -59,7 +56,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $paymentHash = $payment->getAdditionalInformation(
             static::PAYMENT_SECURITY_HASH
         );
-        if (!$this->isValidHash($requestTransaction, $paymentHash)) {
+        if (!$isValidHash = $this->isValidHash($requestTransaction, $paymentHash)) {
             // Set the fraud status when payment is frauded.
             $order->setState(\Magento\Sales\Model\Order::STATUS_FRAUD);
             $order->setStatus(\Magento\Sales\Model\Order::STATUS_FRAUD);
@@ -84,41 +81,13 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             throw new \Exception('Corrupt webhook status');
         }
 
-        $state = '';
-        switch ($status) {
-            case 'confirmed':
-                $state = Order::STATE_PROCESSING;
-                break;
-            case 'cancelled':
-            case 'declined':
-            case 'error':
-            case 'expired':
-                $state = Order::STATE_CANCELED;
-                break;
-            case 'refunded':
-                $state = Order::STATE_CLOSED;
-                break;
-            case 'waiting':
-                $state = Order::STATE_PENDING_PAYMENT;
-                break;
-            case 'partially-refunded':
-                $state = self::STATE_PAYREXX_PARTIAL_REFUND;
-                $orderStatusCollection = ObjectManager::getInstance()->create(
-                    '\Magento\Sales\Model\ResourceModel\Order\Status\Collection'
-                );
-                $orderStatusCollection = $orderStatusCollection->toOptionArray();
-                $payrexxPartialRefund = array_search($state, array_column($orderStatusCollection, 'value'));
-                if (!$payrexxPartialRefund) { // if custom order status does not exit.
-                    $state = Order::STATE_CLOSED;
-                }
-                break;
-        }
-        if (empty($state)) {
+        if ($status === 'confirmed') {
+            // Set the complete status when payment is completed.
+            $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING);
+            $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
+            $order->save();
             return;
         }
-        $order->setState($state);
-        $order->setStatus($state);
-        $order->save();
     }
 
     /**
