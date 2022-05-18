@@ -102,13 +102,17 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 $state = Order::STATE_PENDING_PAYMENT;
                 break;
             case 'partially-refunded':
-                $state = self::STATE_PAYREXX_PARTIAL_REFUND;
-                $orderStatusCollection = ObjectManager::getInstance()->create(
-                    '\Magento\Sales\Model\ResourceModel\Order\Status\Collection'
-                );
-                $orderStatusCollection = $orderStatusCollection->toOptionArray();
-                $payrexxPartialRefund = array_search($state, array_column($orderStatusCollection, 'value'));
-                if (!$payrexxPartialRefund) { // if custom order status does not exit.
+                try {
+                    $state = self::STATE_PAYREXX_PARTIAL_REFUND;
+                    $orderStatusCollection = ObjectManager::getInstance()->create(
+                        '\Magento\Sales\Model\ResourceModel\Order\Status\Collection'
+                    );
+                    $orderStatusCollection = $orderStatusCollection->toOptionArray();
+                    $payrexxPartialRefund = array_search($state, array_column($orderStatusCollection, 'value'));
+                    if (!$payrexxPartialRefund) { // if custom order status does not exit.
+                        $state = Order::STATE_CLOSED;
+                    }
+                } catch (\Exception $e) {
                     $state = Order::STATE_CLOSED;
                 }
                 break;
