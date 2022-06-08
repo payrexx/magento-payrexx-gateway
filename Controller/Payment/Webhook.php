@@ -15,6 +15,7 @@ namespace Payrexx\PaymentGateway\Controller\Payment;
 
 use Magento\Framework\App\ObjectManager;
 use Magento\Sales\Model\Order;
+use Payrexx\Models\Response\Transaction;
 
 /**
  * class \Payrexx\PaymentGateway\Controller\Payment\Webhook
@@ -86,22 +87,22 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         $state = '';
         switch ($status) {
-            case 'confirmed':
+            case Transaction::CONFIRMED:
                 $state = Order::STATE_PROCESSING;
                 break;
-            case 'cancelled':
-            case 'declined':
-            case 'error':
-            case 'expired':
+            case Transaction::CANCELLED:
+            case Transaction::DECLINED:
+            case Transaction::ERROR:
+            case Transaction::EXPIRED:
                 $state = Order::STATE_CANCELED;
                 break;
-            case 'refunded':
+            case Transaction::REFUNDED:
                 $state = Order::STATE_CLOSED;
                 break;
-            case 'waiting':
+            case Transaction::WAITING:
                 $state = Order::STATE_PENDING_PAYMENT;
                 break;
-            case 'partially-refunded':
+            case Transaction::PARTIALLY_REFUNDED:
                 try {
                     $state = self::STATE_PAYREXX_PARTIAL_REFUND;
                     $orderStatusCollection = ObjectManager::getInstance()->create(
