@@ -79,11 +79,11 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         );
         // Set failure page url to redirect after unsuccessfull payment
         $gateway->setFailedRedirectUrl(
-            $this->_url->getUrl('checkout/onepage/failure')
+            $this->_url->getUrl('payrexx/payment/failure')
         );
         // Set failure page url to redirect after unsuccessfull payment
         $gateway->setCancelRedirectUrl(
-            $this->_url->getUrl('checkout/onepage/failure')
+            $this->_url->getUrl('payrexx/payment/failure')
         );
 
         $billingAddress = $order->getBillingAddress();
