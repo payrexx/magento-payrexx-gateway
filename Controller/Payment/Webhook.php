@@ -88,6 +88,10 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $order->save();
             return;
         }
+        $history = $order->addCommentToStatusHistory(
+            'Status updated by Payrexx'
+        );
+        $history->save();
     }
 
     /**
