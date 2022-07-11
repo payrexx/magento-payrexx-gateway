@@ -49,10 +49,6 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             throw new \Exception('No order found with ID ' . $orderId);
         }
 
-        // Do not change the order state for completed.
-        if ($order->getState() === Order::STATE_COMPLETE) {
-            return;
-        }
         $payment   = $order->getPayment();
         $gatewayId = $payment->getAdditionalInformation(
             static::PAYMENT_GATEWAY_ID
