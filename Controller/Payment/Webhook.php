@@ -81,13 +81,19 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             throw new \Exception('Corrupt webhook status');
         }
 
-        if ($status === 'confirmed') {
-            // Set the complete status when payment is completed.
-            $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING);
-            $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
-            $order->save();
+        if ($status !== 'confirmed') {
             return;
         }
+
+        // Set the complete status when payment is completed.
+        $order->setState(\Magento\Sales\Model\Order::STATE_PROCESSING);
+        $order->setStatus(\Magento\Sales\Model\Order::STATE_PROCESSING);
+        $order->save();
+        $history = $order->addCommentToStatusHistory(
+            'Status updated by Payrexx Webhook'
+        );
+        $history->save();
+        return;
     }
 
     /**
