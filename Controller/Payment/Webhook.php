@@ -117,13 +117,14 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         if (empty($state)) {
             return;
         }
-        $order->setState($state);
-        $order->setStatus($state);
-        $order->save();
-        $history = $order->addCommentToStatusHistory(
-            'Status updated by Payrexx Webhook'
-        );
-        $history->save();
+        if ($this->isAllowedToChangeState($order->getState(), $state)) {
+            $order->setState($state);
+            $order->setStatus($state);
+            $order->save();
+            $order->addCommentToStatusHistory(
+                'Status updated by Payrexx Webhook'
+            );
+        }
     }
 
     /**
@@ -141,6 +142,38 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         // Check hash value difference
         if (strcasecmp($hash, $paymentHash) === 0) {
             return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check the transition is allowed or not
+     *
+     * @param string $oldState
+     * @param string $newState
+     * @return bool
+     */
+    private function isAllowedToChangeState($oldState, $newState)
+    {
+        switch($oldState) {
+            case Order::STATE_PENDING_PAYMENT:
+                return in_array($newState, [
+                    Order::STATE_PROCESSING,
+                    Order::STATE_CLOSED,
+                    Order::STATE_CANCELED,
+                ]);
+            case Order::STATE_PROCESSING:
+            case Order::STATE_COMPLETE:
+                return in_array($newState, [
+                    Order::STATE_CLOSED,
+                    self::STATE_PAYREXX_PARTIAL_REFUND,
+                ]);
+            case Order::STATE_CLOSED:
+                return false;
+            case Order::STATE_CANCELED:
+                return in_array($newState, [Order::STATE_PROCESSING]);
+            case self::STATE_PAYREXX_PARTIAL_REFUND:
+                return in_array($newState, [Order::STATE_CLOSED]);
         }
         return false;
     }
