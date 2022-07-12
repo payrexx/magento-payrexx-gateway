@@ -172,9 +172,14 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             case Order::STATE_CLOSED:
                 return false;
             case Order::STATE_CANCELED:
-                return in_array($newState, [Order::STATE_PROCESSING]);
+                return in_array($newState, [
+                    Order::STATE_PROCESSING,
+                    Order::STATE_PENDING_PAYMENT
+                ]);
             case self::STATE_PAYREXX_PARTIAL_REFUND:
-                return in_array($newState, [Order::STATE_CLOSED]);
+                return in_array($newState, [
+                    Order::STATE_CLOSED,
+                ]);
         }
         return false;
     }
