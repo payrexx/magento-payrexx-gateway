@@ -121,9 +121,10 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $order->setState($state);
             $order->setStatus($state);
             $order->save();
-            $order->addCommentToStatusHistory(
+            $history = $order->addCommentToStatusHistory(
                 'Status updated by Payrexx Webhook'
             );
+            $history->save();
         }
     }
 
@@ -155,7 +156,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
      */
     private function isAllowedToChangeState($oldState, $newState)
     {
-        switch($oldState) {
+        switch ($oldState) {
             case Order::STATE_PENDING_PAYMENT:
                 return in_array($newState, [
                     Order::STATE_PROCESSING,
