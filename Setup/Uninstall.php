@@ -37,7 +37,7 @@ class Uninstall implements UninstallInterface
         $configTable = $setup->getTable('core_config_data');
         $setup->getConnection()->delete(
             $configTable,
-            "`path` LIKE 'payment/payrexx_payment/%'"
+            "`path` LIKE 'payment/payrexx_payment%'"
         );
         $setup->endSetup();
     }
