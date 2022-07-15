@@ -30,12 +30,12 @@ class Failure extends \Magento\Framework\App\Action\Action
 
         $order = $checkoutSession->getLastRealOrder();
         $quote = $quoteFactory->create()->loadByIdWithoutStore($order->getQuoteId());
-        $this->messageManager->addWarningMessage('Your payrexx payment Failed.');
         if ($quote->getId()) {
             $quote->setIsActive(1)->setReservedOrderId(null)->save();
             $checkoutSession->replaceQuote($quote);
             $resultRedirect = $this->resultRedirectFactory->create();
             $resultRedirect->setPath('checkout/cart');
+            $this->messageManager->addWarningMessage('Your payrexx payment Failed.');
             return $resultRedirect;
         }
         return $this->_redirect('checkout/onepage/failure');
