@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Payrexx Payment Gateway
+ *
+ * Copyright © 2022 PAYREXX AG (https://www.payrexx.com)
+ * See LICENSE.txt for license details.
+ *
+ * @copyright   2022 PAYREXX AG
+ * @author      Payrexx <support@payrexx.com>
+ * @package     magento2
+ * @subpackage  payrexx_payment_gateway
+ * @version     1.0.1
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_predispatch_checkout_index_index">
+        <observer name="refill_quote_items" instance="Payrexx\PaymentGateway\Observer\RestoreCartObserver" />
+    </event>
+</config>
