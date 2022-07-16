@@ -147,8 +147,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 $invoiceSender->send($invoice);
 
                 $order->addCommentToStatusHistory(
-                    __('Notified customer about invoice creation #%1.', 
-                    $invoice->getId())
+                    __('Notified customer about invoice creation #%1.', $invoice->getId())
                 )->setIsCustomerNotified(true)->save();
             }
         }
