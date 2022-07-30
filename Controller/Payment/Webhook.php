@@ -133,9 +133,10 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 $transaction = ObjectManager::getInstance()->create(
                     '\Magento\Framework\DB\Transaction'
                 );
-                $invoiceSender = ObjectManager::getInstance()->create(
-                    '\Magento\Sales\Model\Order\Email\Sender\InvoiceSender'
-                );
+                // ToDo: Decide whether the invoice should be sent out or not and adapt code accordingly
+//                $invoiceSender = ObjectManager::getInstance()->create(
+//                    '\Magento\Sales\Model\Order\Email\Sender\InvoiceSender'
+//                );
                 $invoice = $invoiceService->prepareInvoice($order);
                 $invoice->register();
                 $invoice->save();
@@ -144,7 +145,8 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                         ->addObject($invoice)
                         ->addObject($invoice->getOrder());
                 $transactionSave->save();
-                $invoiceSender->send($invoice);
+
+//                $invoiceSender->send($invoice);
 
                 $order->addCommentToStatusHistory(
                     __('Notified customer about invoice creation #%1.', $invoice->getId())
