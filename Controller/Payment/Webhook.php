@@ -17,6 +17,10 @@ use Exception;
 use Magento\Framework\App\ObjectManager;
 use Magento\Sales\Model\Order;
 use Payrexx\Models\Response\Transaction;
+use Magento\Sales\Helper\Data as SalesData;
+use Magento\Sales\Model\Service\InvoiceService;
+use Magento\Framework\DB\Transaction as MagentoTransaction;
+use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
 
 /**
  * class \Payrexx\PaymentGateway\Controller\Payment\Webhook
@@ -135,30 +139,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $history->save();
 
         if ($state === Order::STATE_PROCESSING && $order->canInvoice()) {
-            $invoiceService = ObjectManager::getInstance()->create(
-                '\Magento\Sales\Model\Service\InvoiceService'
-            );
-            $transaction = ObjectManager::getInstance()->create(
-                '\Magento\Framework\DB\Transaction'
-            );
-            // ToDo: Decide whether the invoice should be sent out or not and adapt code accordingly
-//                $invoiceSender = ObjectManager::getInstance()->create(
-//                    '\Magento\Sales\Model\Order\Email\Sender\InvoiceSender'
-//                );
-            $invoice = $invoiceService->prepareInvoice($order);
-            $invoice->register();
-            $invoice->save();
-
-            $transactionSave = $transaction
-                ->addObject($invoice)
-                ->addObject($invoice->getOrder());
-            $transactionSave->save();
-
-//                $invoiceSender->send($invoice);
-
-            $order->addCommentToStatusHistory(
-                __('Notified customer about invoice creation #%1.', $invoice->getId())
-            )->setIsCustomerNotified(true)->save();
+            $this->createInvoice($order);
         }
         $this->sendResponse('Success: Webhook processed successfully!');
     }
@@ -198,6 +179,35 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 ]);
         }
         return false;
+    }
+
+    /**
+     * Create Invoice
+     *
+     * @param Order $order
+     */
+    private function createInvoice($order)
+    {
+        $salesData = \Magento\Framework\App\ObjectManager::getInstance()->get(SalesData::class);
+        $invoiceService = ObjectManager::getInstance()->create(InvoiceService::class);
+        $transaction = ObjectManager::getInstance()->create(MagentoTransaction::class);
+
+        // prepare invoice
+        $invoice = $invoiceService->prepareInvoice($order);
+        $invoice->register();
+        $invoice->save();
+
+        $transactionSave = $transaction->addObject($invoice)->addObject($invoice->getOrder());
+        $transactionSave->save();
+
+        // ToDo: Decide whether the invoice should be sent out or not and adapt code accordingly
+        // if ($salesData->canSendNewInvoiceEmail()) {
+        //     $invoiceSender = ObjectManager::getInstance()->create(InvoiceSender::class);
+        //     $invoiceSender->send($invoice);
+        // }
+        $order->addCommentToStatusHistory(
+            __('Notified customer about invoice creation #%1.', $invoice->getId())
+        )->setIsCustomerNotified(true)->save();
     }
 
     /**
