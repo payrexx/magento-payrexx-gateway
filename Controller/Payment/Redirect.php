@@ -201,23 +201,11 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
      */
     private function setPaymentAdditionalInfo($payment, $gateway)
     {
-        // Generate security hash based on hash alogorithm.
-        $hash = hash_hmac(
-            'sha1',
-            $gateway->getHash(),
-            $this->getPayrexxConfig()['api_secret'],
-            false
-        );
-
         $payment->setAdditionalInformation(
             static::PAYMENT_GATEWAY_ID,
             $gateway->getId()
         );
 
-        $payment->setAdditionalInformation(
-            static::PAYMENT_SECURITY_HASH,
-            $hash
-        );
         $payment->save();
     }
 }

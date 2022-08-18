@@ -13,6 +13,7 @@
  */
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
+use Exception;
 use Magento\Framework\App\ObjectManager;
 use Magento\Sales\Model\Order;
 use Payrexx\Models\Response\Transaction;
@@ -33,36 +34,38 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
      */
     public function execute()
     {
-        // Check payment getway response
-        $post = $this->getRequest()->getPostValue();
+        try {
+            $data = $this->getRequest()->getPostValue();
+            $this->processWebhook($data);
+        } catch(Exception $e) {
+            $this->sendResponse('Error: ' . $e->getMessage());
+        }
+    }
 
-        $requestTransaction = $post['transaction'];
-        $requestTransactionStatus = $requestTransaction['status'];
-        $orderId = $requestTransaction['invoice']['referenceId'];
+    /**
+     * Process webhook data
+     *
+     * @param array $data
+     */
+    private function processWebhook($data)
+    {
+        $requestTransaction = $data['transaction'] ?? false;
+        $requestTransactionStatus = $requestTransaction['status'] ?? false;
+        $orderId = $requestTransaction['invoice']['referenceId'] ?? false;
 
         if (!$requestTransaction || !$requestTransactionStatus || !$orderId) {
-            throw new \Exception('Payrexx Webhook Data incomplete');
+            $this->sendResponse('Error: Payrexx Webhook Data incomplete');
         }
 
         $order = $this->getOrderDetailByOrderId($orderId);
         if (!$order) {
-            throw new \Exception('No order found with ID ' . $orderId);
+            $this->sendResponse('Error: No order found with ID ' . $orderId);
         }
 
         $payment   = $order->getPayment();
         $gatewayId = $payment->getAdditionalInformation(
             static::PAYMENT_GATEWAY_ID
         );
-        $paymentHash = $payment->getAdditionalInformation(
-            static::PAYMENT_SECURITY_HASH
-        );
-        if (!$this->isValidHash($requestTransaction, $paymentHash)) {
-            // Set the fraud status when payment is frauded.
-            $order->setState(\Magento\Sales\Model\Order::STATUS_FRAUD);
-            $order->setStatus(\Magento\Sales\Model\Order::STATUS_FRAUD);
-            $order->save();
-            throw new \Exception('Payment hash incorreect. Fraud suspect');
-        }
 
         try {
             $payrexx = $this->getPayrexxInstance();
@@ -74,11 +77,11 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $response = $payrexx->getOne($gateway);
             $status   = $response->getStatus();
         } catch (\Payrexx\PayrexxException $e) {
-            throw new \Exception('No Payrexx Gateway found with ID: ' . $gatewayId);
+            $this->sendResponse('Error: No Payrexx Gateway found with ID: ' . $gatewayId);
         }
 
         if ($status !== $requestTransactionStatus) {
-            throw new \Exception('Corrupt webhook status');
+            $this->sendResponse('Error: Fraudulent transaction status');
         }
 
         $state = '';
@@ -115,63 +118,49 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 break;
         }
         if (empty($state)) {
-            return;
+            $this->sendResponse('Error: ' . $status . ' case not implemented');
         }
-        if ($this->isAllowedToChangeState($order->getState(), $state)) {
-            $order->setState($state);
-            $order->setStatus($state);
-            $order->save();
-            $history = $order->addCommentToStatusHistory(
-                'Status updated by Payrexx Webhook'
+        if (!$this->isAllowedToChangeState($order->getState(), $state)) {
+            $this->sendResponse(
+                'Error: Process not allowed. Order state in magento: ' . $order->getState()
             );
-            $history->save();
+        }
 
-            if ($state === Order::STATE_PROCESSING && $order->canInvoice()) {
-                $invoiceService = ObjectManager::getInstance()->create(
-                    '\Magento\Sales\Model\Service\InvoiceService'
-                );
-                $transaction = ObjectManager::getInstance()->create(
-                    '\Magento\Framework\DB\Transaction'
-                );
-                // ToDo: Decide whether the invoice should be sent out or not and adapt code accordingly
+        $order->setState($state);
+        $order->setStatus($state);
+        $order->save();
+        $history = $order->addCommentToStatusHistory(
+            'Status updated by Payrexx Webhook'
+        );
+        $history->save();
+
+        if ($state === Order::STATE_PROCESSING && $order->canInvoice()) {
+            $invoiceService = ObjectManager::getInstance()->create(
+                '\Magento\Sales\Model\Service\InvoiceService'
+            );
+            $transaction = ObjectManager::getInstance()->create(
+                '\Magento\Framework\DB\Transaction'
+            );
+            // ToDo: Decide whether the invoice should be sent out or not and adapt code accordingly
 //                $invoiceSender = ObjectManager::getInstance()->create(
 //                    '\Magento\Sales\Model\Order\Email\Sender\InvoiceSender'
 //                );
-                $invoice = $invoiceService->prepareInvoice($order);
-                $invoice->register();
-                $invoice->save();
+            $invoice = $invoiceService->prepareInvoice($order);
+            $invoice->register();
+            $invoice->save();
 
-                $transactionSave = $transaction
-                        ->addObject($invoice)
-                        ->addObject($invoice->getOrder());
-                $transactionSave->save();
+            $transactionSave = $transaction
+                ->addObject($invoice)
+                ->addObject($invoice->getOrder());
+            $transactionSave->save();
 
 //                $invoiceSender->send($invoice);
 
-                $order->addCommentToStatusHistory(
-                    __('Notified customer about invoice creation #%1.', $invoice->getId())
-                )->setIsCustomerNotified(true)->save();
-            }
+            $order->addCommentToStatusHistory(
+                __('Notified customer about invoice creation #%1.', $invoice->getId())
+            )->setIsCustomerNotified(true)->save();
         }
-    }
-
-    /**
-     * Check hash value is valid or not
-     *
-     * @param  array   $transaction Post Values
-     * @param  string  $paymentHash Saved hash value
-     * @return boolean True if the hash values is equal, false otherwise
-     */
-    private function isValidHash($transaction, $paymentHash)
-    {
-        $postHash = $transaction['invoice']['paymentLink']['hash'];
-        $config   = $this->getPayrexxConfig();
-        $hash     = hash_hmac('sha1', $postHash, $config['api_secret'], false);
-        // Check hash value difference
-        if (strcasecmp($hash, $paymentHash) === 0) {
-            return true;
-        }
-        return false;
+        $this->sendResponse('Success: Webhook processed successfully!');
     }
 
     /**
@@ -209,5 +198,23 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 ]);
         }
         return false;
+    }
+
+    /**
+     * Returns webhook response
+     *
+     * @param string     $message      success or error message
+     * @param array      $data         response data
+     * @param string|int $responseCode response code
+     */
+    private function sendResponse($message, $data = array(), $responseCode = 200)
+    {
+        $response['message'] = $message;
+        if (!empty($data)) {
+            $response['data'] = $data;
+        }
+        echo json_encode($response);
+        http_response_code($responseCode);
+        die();
     }
 }
