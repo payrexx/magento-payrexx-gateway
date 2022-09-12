@@ -41,8 +41,8 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         try {
             $data = $this->getRequest()->getPostValue();
             $this->processWebhook($data);
-        } catch(Exception $e) {
-            $this->sendResponse('Error: ' . $e->getMessage());
+        } catch (Exception $e) {
+            $this->sendResponse('Error: ' . $e->getMessage(), [], 500);
         }
     }
 
@@ -58,12 +58,12 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $orderId = $requestTransaction['invoice']['referenceId'] ?? false;
 
         if (!$requestTransaction || !$requestTransactionStatus || !$orderId) {
-            $this->sendResponse('Error: Payrexx Webhook Data incomplete');
+            $this->sendResponse('Data incomplete', [], 500);
         }
 
         $order = $this->getOrderDetailByOrderId($orderId);
         if (!$order) {
-            $this->sendResponse('Error: No order found with ID ' . $orderId);
+            $this->sendResponse('Malicious request', [], 404);
         }
 
         $payment   = $order->getPayment();
@@ -81,11 +81,11 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $response = $payrexx->getOne($gateway);
             $status   = $response->getStatus();
         } catch (\Payrexx\PayrexxException $e) {
-            $this->sendResponse('Error: No Payrexx Gateway found with ID: ' . $gatewayId);
+            $this->sendResponse('Gateway Not found', [], 500);
         }
 
         if ($status !== $requestTransactionStatus) {
-            $this->sendResponse('Error: Fraudulent transaction status');
+            $this->sendResponse('Fraudulent transaction status', [], 500);
         }
 
         $state = '';
@@ -122,11 +122,11 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 break;
         }
         if (empty($state)) {
-            $this->sendResponse('Error: ' . $status . ' case not implemented');
+            $this->sendResponse($status . ' case not implemented.');
         }
         if (!$this->isAllowedToChangeState($order->getState(), $state)) {
             $this->sendResponse(
-                'Error: Process not allowed. Order state in magento: ' . $order->getState()
+                'Status transition not allowed from ' . $order->getState()
             );
         }
 
