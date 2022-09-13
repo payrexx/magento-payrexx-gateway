@@ -61,7 +61,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $order->setState(\Magento\Sales\Model\Order::STATUS_FRAUD);
             $order->setStatus(\Magento\Sales\Model\Order::STATUS_FRAUD);
             $order->save();
-            throw new \Exception('Payment hash incorrect. Fraud suspect');
+            throw new \Exception('Payment hash incorreect. Fraud suspect');
         }
 
         try {
