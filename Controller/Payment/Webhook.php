@@ -71,8 +71,14 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             );
             $gateway->setId($gatewayId);
 
-            $response = $payrexx->getOne($gateway);
-            $status   = $response->getStatus();
+            $payrexxGateway = $payrexx->getOne($gateway);
+            $invoices = $payrexxGateway->getInvoices();
+            $invoice = end($invoices);
+
+            $transactions = $invoice['transactions'];
+            $transaction = end($transactions);
+
+            $status   = $transaction['status'];
         } catch (\Payrexx\PayrexxException $e) {
             throw new \Exception('No Payrexx Gateway found with ID: ' . $gatewayId);
         }
