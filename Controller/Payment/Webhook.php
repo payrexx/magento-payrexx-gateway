@@ -58,8 +58,8 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         );
         if (!$this->isValidHash($requestTransaction, $paymentHash)) {
             // Set the fraud status when payment is frauded.
-            $order->setState(\Magento\Sales\Model\Order::STATUS_FRAUD);
-            $order->setStatus(\Magento\Sales\Model\Order::STATUS_FRAUD);
+            $order->setState(Order::STATUS_FRAUD);
+            $order->setStatus(Order::STATUS_FRAUD);
             $order->save();
             throw new \Exception('Payment hash incorreect. Fraud suspect');
         }
@@ -71,8 +71,14 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             );
             $gateway->setId($gatewayId);
 
-            $response = $payrexx->getOne($gateway);
-            $status   = $response->getStatus();
+            $payrexxGateway = $payrexx->getOne($gateway);
+            $invoices = $payrexxGateway->getInvoices();
+            $invoice = end($invoices);
+
+            $transactions = $invoice['transactions'];
+            $transaction = end($transactions);
+
+            $status   = $transaction['status'];
         } catch (\Payrexx\PayrexxException $e) {
             throw new \Exception('No Payrexx Gateway found with ID: ' . $gatewayId);
         }
@@ -125,6 +131,33 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 'Status updated by Payrexx Webhook'
             );
             $history->save();
+
+            if ($state === Order::STATE_PROCESSING && $order->canInvoice()) {
+                $invoiceService = ObjectManager::getInstance()->create(
+                    '\Magento\Sales\Model\Service\InvoiceService'
+                );
+                $transaction = ObjectManager::getInstance()->create(
+                    '\Magento\Framework\DB\Transaction'
+                );
+                // ToDo: Decide whether the invoice should be sent out or not and adapt code accordingly
+//                $invoiceSender = ObjectManager::getInstance()->create(
+//                    '\Magento\Sales\Model\Order\Email\Sender\InvoiceSender'
+//                );
+                $invoice = $invoiceService->prepareInvoice($order);
+                $invoice->register();
+                $invoice->save();
+
+                $transactionSave = $transaction
+                        ->addObject($invoice)
+                        ->addObject($invoice->getOrder());
+                $transactionSave->save();
+
+//                $invoiceSender->send($invoice);
+
+                $order->addCommentToStatusHistory(
+                    __('Notified customer about invoice creation #%1.', $invoice->getId())
+                )->setIsCustomerNotified(true)->save();
+            }
         }
     }
 
