@@ -68,6 +68,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             '\Payrexx\Models\Request\Gateway'
         );
 
+        $gateway->setSkipResultPage(true);
         $gateway->setPsp([]);
         $gateway->setAmount($order->getGrandTotal() * 100);
         $gateway->setCurrency($order->getOrderCurrencyCode());
