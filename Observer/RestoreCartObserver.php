@@ -42,20 +42,27 @@ class RestoreCartObserver implements ObserverInterface
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         try {
-            $lastRealOrder = $this->checkoutSession->getLastRealOrder();
-            if ($lastRealOrder && $lastRealOrder->getPayment()) {
-                $paymentMethod = $lastRealOrder->getPayment()->getMethod();
-                $state = $lastRealOrder->getData('state');
-                if (stripos($paymentMethod, 'payrexx') !== false) {
-                    // restore cart items.
-                    if (in_array($state, [Order::STATE_NEW, Order::STATE_PENDING_PAYMENT])) {
-                        $this->checkoutSession->restoreQuote();
-                    }
-                }
+            $order = $this->checkoutSession->getLastRealOrder();
+            if (!$order || !$order->getPayment()) {
+                return;
             }
+
+            $paymentMethod = $order->getPayment()->getMethod();
+            $state = $order->getState();
+            if (stripos($paymentMethod, 'payrexx') === false) {
+                return;
+            }
+
+            // restore cart items.
+            if (in_array($state, [Order::STATE_NEW, Order::STATE_PENDING_PAYMENT])) {
+                $order->registerCancellation('Order cancelled by customer')->save();
+
+                $this->checkoutSession->restoreQuote();
+            }
+
         } catch (Exception $e) {
             // Nothing to do.
         }
-        return true;
+        return;
     }
 }

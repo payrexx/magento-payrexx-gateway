@@ -19,7 +19,7 @@ use Magento\Sales\Model\Order;
  * Class \Payrexx\PaymentGateway\Controller\Payment\Failure
  * The Failure controller is accessing from frontend
  */
-class Failure extends \Magento\Framework\App\Action\Action
+class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
 {
     /**
      * Execute payment failure.
@@ -33,14 +33,7 @@ class Failure extends \Magento\Framework\App\Action\Action
         $order = $checkoutSession->getLastRealOrder();
 
         if ($order && $order->getState() == Order::STATE_PENDING_PAYMENT) {
-            $order->setState(Order::STATE_CANCELED);
-            $order->setStatus(Order::STATE_CANCELED);
-            $order->save();
-
-            $history = $order->addCommentToStatusHistory(
-                'Order manually cancelled by customer'
-            );
-            $history->save();
+            $this->checkoutHelper->cancelCurrentOrder('Order cancelled by customer');
         }
 
         $quote = $quoteFactory->create()->loadByIdWithoutStore($order->getQuoteId());
