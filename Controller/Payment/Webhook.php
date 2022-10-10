@@ -9,7 +9,6 @@
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
- * @version     1.0.1
  */
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
