@@ -13,6 +13,8 @@
  */
 namespace Payrexx\PaymentGateway\Controller;
 
+use Magento\Store\Model\ScopeInterface;
+
 /**
  * AbstractAction class is base class for Payrexx Payment Getaway
  */
@@ -95,7 +97,8 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     public function getPayrexxConfig()
     {
         return $this->configSettings->getValue(
-            'payment/payrexx_payment'
+            'payment/payrexx_payment',
+            ScopeInterface::SCOPE_STORE
         );
     }
 
