@@ -32,6 +32,7 @@ class Platform implements \Magento\Framework\Data\OptionSourceInterface
             'shop-and-pay.com' => __('Shop and Pay'),
             'ideal-pay.ch' => __('Ideal Pay'),
             'payzzter.com' => __('Payzzter'),
+            'go2flow.finance' => __('Go2Flow'),
         ];
     }
 }
