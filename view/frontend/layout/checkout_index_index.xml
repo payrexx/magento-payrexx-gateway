@@ -3,14 +3,13 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2018 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2018 PAYREXX AG
+ * @copyright   2023 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
- * @version     1.0.0
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
@@ -67,7 +66,7 @@
                                                                         <item name="payrexx_payment_bitcoin" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
-                                                                        <item name="payrexx_payment_sofortueberweisung_de" xsi:type="array">
+                                                                        <item name="payrexx_payment_sofort" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                         <item name="payrexx_payment_billpay" xsi:type="array">
@@ -85,7 +84,7 @@
                                                                         <item name="payrexx_payment_diners_club" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
-                                                                        <item name="payrexx_payment_direct_debit" xsi:type="array">
+                                                                        <item name="payrexx_payment_sepa_direct_debit" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                         <item name="payrexx_payment_discover" xsi:type="array">
@@ -106,10 +105,10 @@
                                                                         <item name="payrexx_payment_paysafecard" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
-                                                                        <item name="payrexx_payment_postfinance_card" xsi:type="array">
+                                                                        <item name="payrexx_payment_post_finance_card" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
-                                                                        <item name="payrexx_payment_postfinance_efinance" xsi:type="array">
+                                                                        <item name="payrexx_payment_post_finance_e_finance" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                         <item name="payrexx_payment_swissbilling" xsi:type="array">

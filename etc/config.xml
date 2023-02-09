@@ -3,14 +3,13 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2018 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2018 PAYREXX AG
+ * @copyright   2023 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
- * @version     1.0.0
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
@@ -104,14 +103,14 @@
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodBitcoin</model>
                 <sort_order>10</sort_order>
             </payrexx_payment_bitcoin>
-            <payrexx_payment_sofortueberweisung_de>
+            <payrexx_payment_sofort>
                 <active>0</active>
                 <title>Sofortueberweisung by Payrexx</title>
                 <payment_action>authorize</payment_action>
                 <order_status>pending_payment</order_status>
-                <model>Payrexx\PaymentGateway\Model\PaymentMethodSofortueberweisungDe</model>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodSofort</model>
                 <sort_order>11</sort_order>
-            </payrexx_payment_sofortueberweisung_de>
+            </payrexx_payment_sofort>
             <payrexx_payment_billpay>
                 <active>0</active>
                 <title>Billpay by Payrexx</title>
@@ -152,14 +151,14 @@
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodDinersClub</model>
                 <sort_order>16</sort_order>
             </payrexx_payment_diners_club>
-            <payrexx_payment_direct_debit>
+            <payrexx_payment_sepa_direct_debit>
                 <active>0</active>
                 <title>Direct Debit by Payrexx</title>
                 <payment_action>authorize</payment_action>
                 <order_status>pending_payment</order_status>
-                <model>Payrexx\PaymentGateway\Model\PaymentMethodDirectDebit</model>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodSepaDirectDebit</model>
                 <sort_order>17</sort_order>
-            </payrexx_payment_direct_debit>
+            </payrexx_payment_sepa_direct_debit>
             <payrexx_payment_discover>
                 <active>0</active>
                 <title>Discover by Payrexx</title>
@@ -208,22 +207,22 @@
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodPaysafeCard</model>
                 <sort_order>23</sort_order>
             </payrexx_payment_paysafecard>
-            <payrexx_payment_postfinance_card>
+            <payrexx_payment_post_finance_card>
                 <active>0</active>
                 <title>Postfinance Card by Payrexx</title>
                 <payment_action>authorize</payment_action>
                 <order_status>pending_payment</order_status>
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodPostfinanceCard</model>
                 <sort_order>24</sort_order>
-            </payrexx_payment_postfinance_card>
-            <payrexx_payment_postfinance_efinance>
+            </payrexx_payment_post_finance_card>
+            <payrexx_payment_post_finance_e_finance>
                 <active>0</active>
                 <title>Postfinance Efinance by Payrexx</title>
                 <payment_action>authorize</payment_action>
                 <order_status>pending_payment</order_status>
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodPostfinanceEfinance</model>
                 <sort_order>25</sort_order>
-            </payrexx_payment_postfinance_efinance>
+            </payrexx_payment_post_finance_e_finance>
             <payrexx_payment_swissbilling>
                 <active>0</active>
                 <title>Swissbilling by Payrexx</title>
