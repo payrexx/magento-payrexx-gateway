@@ -153,7 +153,7 @@
             </payrexx_payment_diners_club>
             <payrexx_payment_sepa_direct_debit>
                 <active>0</active>
-                <title>Direct Debit by Payrexx</title>
+                <title>Sepa Direct Debit by Payrexx</title>
                 <payment_action>authorize</payment_action>
                 <order_status>pending_payment</order_status>
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodSepaDirectDebit</model>
