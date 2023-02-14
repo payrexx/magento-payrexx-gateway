@@ -2,14 +2,13 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2022 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2022 PAYREXX AG
+ * @copyright   2023 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
- * @version     1.0.0
  */
 namespace Payrexx\PaymentGateway\Model;
 
@@ -21,12 +20,12 @@ namespace Payrexx\PaymentGateway\Model;
  * @api
  * @since 100.0.2
  */
-class PaymentMethodDirectDebit extends \Magento\Payment\Model\Method\AbstractMethod
+class PaymentMethodSepaDirectDebit extends \Magento\Payment\Model\Method\AbstractMethod
 {
     /**
      * @var string
      */
-    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_direct_debit';
+    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_sepa_direct_debit';
 
     /**
      * Payment method code

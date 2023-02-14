@@ -3,14 +3,13 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2022 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2022 PAYREXX AG
+ * @copyright   2023 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
- * @version     1.0.0
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -224,21 +223,21 @@
                             <config_path>payment/payrexx_payment_bitcoin/sort_order</config_path>
                         </field>
                     </group>
-                    <group id="payrexx_payment_sofortueberweisung_de" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <group id="payrexx_payment_sofort" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Sofortueberweisung by Payrexx</label>
                         <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                             <label>Enabled</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                            <config_path>payment/payrexx_payment_sofortueberweisung_de/active</config_path>
+                            <config_path>payment/payrexx_payment_sofort/active</config_path>
                         </field>
                         <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                             <label>Title</label>
-                            <config_path>payment/payrexx_payment_sofortueberweisung_de/title</config_path>
+                            <config_path>payment/payrexx_payment_sofort/title</config_path>
                         </field>
                         <field id="sort_order" translate="label" type="text" sortOrder="3" showInDefault="3" showInWebsite="1" showInStore="0">
                             <label>Sort Order</label>
                             <frontend_class>validate-number</frontend_class>
-                            <config_path>payment/payrexx_payment_sofortueberweisung_de/sort_order</config_path>
+                            <config_path>payment/payrexx_payment_sofort/sort_order</config_path>
                         </field>
                     </group>
                     <group id="payrexx_payment_billpay" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -326,21 +325,21 @@
                             <config_path>payment/payrexx_payment_diners_club/sort_order</config_path>
                         </field>
                     </group>
-                    <group id="payrexx_payment_direct_debit" translate="label" type="text" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
-                        <label>Direct Debit by Payrexx</label>
+                    <group id="payrexx_payment_sepa_direct_debit" translate="label" type="text" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Sepa Direct Debit by Payrexx</label>
                         <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                             <label>Enabled</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                            <config_path>payment/payrexx_payment_direct_debit/active</config_path>
+                            <config_path>payment/payrexx_payment_sepa_direct_debit/active</config_path>
                         </field>
                         <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                             <label>Title</label>
-                            <config_path>payment/payrexx_payment_direct_debit/title</config_path>
+                            <config_path>payment/payrexx_payment_sepa_direct_debit/title</config_path>
                         </field>
                         <field id="sort_order" translate="label" type="text" sortOrder="3" showInDefault="3" showInWebsite="1" showInStore="0">
                             <label>Sort Order</label>
                             <frontend_class>validate-number</frontend_class>
-                            <config_path>payment/payrexx_payment_direct_debit/sort_order</config_path>
+                            <config_path>payment/payrexx_payment_sepa_direct_debit/sort_order</config_path>
                         </field>
                     </group>
                     <group id="payrexx_payment_discover" translate="label" type="text" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -462,38 +461,38 @@
                             <config_path>payment/payrexx_payment_paysafecard/sort_order</config_path>
                         </field>
                     </group>
-                    <group id="payrexx_payment_postfinance_card" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <group id="payrexx_payment_post_finance_card" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Postfinance Card by Payrexx</label>
                         <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                             <label>Enabled</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                            <config_path>payment/payrexx_payment_postfinance_card/active</config_path>
+                            <config_path>payment/payrexx_payment_post_finance_card/active</config_path>
                         </field>
                         <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                             <label>Title</label>
-                            <config_path>payment/payrexx_payment_postfinance_card/title</config_path>
+                            <config_path>payment/payrexx_payment_post_finance_card/title</config_path>
                         </field>
                         <field id="sort_order" translate="label" type="text" sortOrder="3" showInDefault="3" showInWebsite="1" showInStore="0">
                             <label>Sort Order</label>
                             <frontend_class>validate-number</frontend_class>
-                            <config_path>payment/payrexx_payment_postfinance_card/sort_order</config_path>
+                            <config_path>payment/payrexx_payment_post_finance_card/sort_order</config_path>
                         </field>
                     </group>
-                    <group id="payrexx_payment_postfinance_efinance" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <group id="payrexx_payment_post_finance_e_finance" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Postfinance Efinance by Payrexx</label>
                         <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                             <label>Enabled</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                            <config_path>payment/payrexx_payment_postfinance_efinance/active</config_path>
+                            <config_path>payment/payrexx_payment_post_finance_e_finance/active</config_path>
                         </field>
                         <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                             <label>Title</label>
-                            <config_path>payment/payrexx_payment_postfinance_efinance/title</config_path>
+                            <config_path>payment/payrexx_payment_post_finance_e_finance/title</config_path>
                         </field>
                         <field id="sort_order" translate="label" type="text" sortOrder="3" showInDefault="3" showInWebsite="1" showInStore="0">
                             <label>Sort Order</label>
                             <frontend_class>validate-number</frontend_class>
-                            <config_path>payment/payrexx_payment_postfinance_efinance/sort_order</config_path>
+                            <config_path>payment/payrexx_payment_post_finance_e_finance/sort_order</config_path>
                         </field>
                     </group>
                     <group id="payrexx_payment_swissbilling" translate="label" type="text" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1">

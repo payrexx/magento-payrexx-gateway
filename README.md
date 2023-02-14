@@ -11,8 +11,8 @@ This module supports Magento versions **2.2.\*** - **2.4.\***
 ## Preparation
 
 The usage of this module requires Payrexx REST API credentials. To obtain Payrexx REST API, please create your account in [Payrexx](https://www.payrexx.com/).
-## 1. Installation
-### Manual installation
+## Integration
+### 1. Installation
 
 ##### Download the module as "zip" archive
 
@@ -26,7 +26,7 @@ The usage of this module requires Payrexx REST API credentials. To obtain Payrex
 
 4. Extract the zip contents to the **PaymentGateway** folder you just created. The README.md and all other files and folders is stored in **PaymentGateway** folder.
 
-## 2. Requirements
+### 2. Requirements
  This extension requires the [Payrexx API library for PHP.](https://github.com/payrexx/payrexx-php)
 
 If you are not using Composer already, then you should read the installation guide http://getcomposer.org/download/
@@ -42,9 +42,9 @@ If Composer needs username and password, refer http://devdocs.magento.com/guides
 
 While running Composer, If you can't login to `repo.magento.com`, rename the file **auth.json.sample** into **auth.json** which is present inside Magento root directory and insert your Public Key & Private Key in the  **auth.json**.
 
-## 3. Magento Setup
+### 3. Magento Setup
 
-#### # Enable Extension Via Admin Web Setup Wizard
+#### Enable Extension Via Admin Web Setup Wizard
 
 Log in to your Magento Admin Panel.
 
@@ -55,7 +55,7 @@ Log in to your Magento Admin Panel.
 3. Complete the Step 1: Readiness Check, Step 2: Create Backup, Step 3: Enable Module  
    Please wait until the process is completed.
 
-#### # Enable Extension via command line.
+#### Enable Extension via command line.
 
 Go to Magento root directory and execute the following commands
 
@@ -69,7 +69,7 @@ $ bin/magento cache:clean
 
 **Note:** It takes sometime for the process to complete.
 
-## 4. Configuration in Magento
+### 4. Configuration in Magento
 
  To configure the module, log in to your Magento Admin panel.
 1. Go to **Stores** -> **Configuration** -> **Sales** -> **Payment methods** 
@@ -81,7 +81,7 @@ $ bin/magento cache:clean
 
 4. Click **Save Config** to save the configuration values.
 
-## 5. Payrexx Configuration
+### 5. Payrexx Configuration
 
  To Configure the webhook URL in Payrexx, Log in your Payrexx account.
 
@@ -90,4 +90,18 @@ $ bin/magento cache:clean
 2. Insert the URL to your shop and add /payrexx/payment/webhook
  (e.g. If your shop url is `http://www.example.com`, the Webhook URL will be `http://www.example.com/payrexx/payment/webhook`)
 
-## Enjoy using Payrexx!!
+## Update
+
+To make use of a new update of the module the following steps need to completed.
+
+1. Upload the module code to the directory app/code/Payrexx/PaymentGateway of your Magento 2 installation
+
+2. Execute the following commands for the update to take affect:
+```
+$ bin/magento setup:upgrade
+
+$ bin/magento setup:di:compile
+
+$ bin/magento cache:clean
+```
+
