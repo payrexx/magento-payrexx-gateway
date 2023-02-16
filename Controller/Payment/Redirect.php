@@ -137,7 +137,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             'company'  => $billingAddress->getCompany(),
             'street'   => implode(',', $billingAddress->getStreet()),
             'postcode' => $billingAddress->getPostcode(),
-            'place'    => $billingAddress->getRegion(),
+            'place'    => $billingAddress->getCity(),
             'country'  => $billingAddress->getCountryId(),
             'phone'    => $billingAddress->getTelephone(),
             'email'    => $billingAddress->getEmail()
