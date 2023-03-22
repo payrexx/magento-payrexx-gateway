@@ -1,10 +1,10 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2018 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2018 PAYREXX AG
+ * @copyright   2023 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
@@ -92,6 +92,13 @@ define(
                 $.mage.redirect(
                     url.build('payrexx/payment/redirect')
                 );
+            },
+
+            /**
+             * @return bool
+             */
+            deviceSupported: function() {
+                return true;
             }
         });
     }

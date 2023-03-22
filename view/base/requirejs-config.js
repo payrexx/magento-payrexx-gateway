@@ -1,9 +1,9 @@
 /**
  * Config to pull in all the relevant JS
- * @type {{paths: {googlePayLibrary: string}}}
+ * @type {{paths: {googlePayLibraryJs: string}}}
  */
 var config = {
     paths: {
-        "googlePayLibrary": "https://pay.google.com/gp/p/js/pay",
+        "googlePayLibraryJs": "https://pay.google.com/gp/p/js/pay",
     }
 };
