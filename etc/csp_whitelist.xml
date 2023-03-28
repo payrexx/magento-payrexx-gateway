@@ -13,15 +13,5 @@
                 <value id="pay_google" type="host">pay.google.com</value>
             </values>
         </policy>
-        <policy id="style-src">
-            <values>
-                <value id="unsafe_inline" type="host">unsafe-inline</value>
-            </values>
-        </policy>
-        <policy id="frame-src">
-            <values>
-                <value id="pay_google" type="host">pay.google.com</value>
-            </values>
-        </policy>
     </policies>
 </csp_whitelist>
