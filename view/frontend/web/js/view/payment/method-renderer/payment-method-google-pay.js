@@ -101,7 +101,6 @@ define(
              * @returns bool
              */
             deviceSupported: function() {
-                console.log('Google Pay support check');
                 try {
                     const baseRequest = {
                         apiVersion: 2,
@@ -127,17 +126,13 @@ define(
                         }
                     );
                     paymentsClient.isReadyToPay(isReadyToPayRequest).then(function(response) {
-                        console.log('response', response);
                         if (response.result) {
-                            return true;
+                            jQuery("#payrexx_payment_google_pay").parent().parent('.payment-method').show();
                         }
-                        return false;
                     }).catch(function(err) {
-                        console.log('isReadyToPay catch', err);
                         return false;
                     });
                 } catch (err) {
-                    console.log('try catch', err);
                     return false;
                 }
             },
