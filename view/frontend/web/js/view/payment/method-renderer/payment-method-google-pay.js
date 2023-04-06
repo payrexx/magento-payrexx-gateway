@@ -131,10 +131,11 @@ define(
                         if (response.result) {
                             return true;
                         }
+                        return false;
                     }).catch(function(err) {
                         console.log('isReadyToPay catch', err);
+                        return false;
                     });
-                    return false;
                 } catch (err) {
                     console.log('try catch', err);
                     return false;
