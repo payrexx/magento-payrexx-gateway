@@ -129,9 +129,8 @@ define(
                     paymentsClient.isReadyToPay(isReadyToPayRequest).then(function(response) {
                         console.log('response', response);
                         if (response.result) {
-                            return true;
+                            jQuery("#payrexx_payment_google_pay").parent().parent('.payment-method').show();
                         }
-                        return false;
                     }).catch(function(err) {
                         console.log('isReadyToPay catch', err);
                         return false;
