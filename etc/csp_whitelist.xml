@@ -11,6 +11,24 @@
         <policy id="script-src">
             <values>
                 <value id="pay_google" type="host">pay.google.com</value>
+                <value id="google" type="host">google.com</value>
+                <value id="any_host_google" type="host">*.google.com</value>
+            </values>
+        </policy>
+        <policy id="frame-src">
+            <values>
+                <value id="pay_google" type="host">*.google.com</value>
+            </values>
+        </policy>
+        <policy id="img-src">
+            <values>
+                <value id="gstatic_google_pay_image" type="host">www.gstatic.com</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="connect_src_google" type="host">google.com</value>
+                <value id="pay_google" type="host">pay.google.com</value>
             </values>
         </policy>
     </policies>

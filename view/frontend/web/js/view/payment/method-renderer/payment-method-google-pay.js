@@ -127,7 +127,10 @@ define(
                     );
                     paymentsClient.isReadyToPay(isReadyToPayRequest).then(function(response) {
                         if (response.result) {
+                            console.log("Payrexx Google Pay supported on this device/browser");
                             jQuery("#payrexx_payment_google_pay").parent().parent('.payment-method').show();
+                        } else {
+                            console.warn("Payrexx Google Pay is not supported on this device/browser");
                         }
                     }).catch(function(err) {
                         return false;
