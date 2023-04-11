@@ -16,6 +16,8 @@ define([
     'Magento_Checkout/js/model/payment/renderer-list'
 ], function (Component, rendererList) {
     var componentJs = 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method';
+    var googlePayComponentJs = 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method-google-pay';
+    var applePayComponentJs = 'Payrexx_PaymentGateway/js/view/payment/method-renderer/payment-method-apple-pay';
     'use strict';
 
     rendererList.push(
@@ -23,7 +25,7 @@ define([
         {type: 'payrexx_payment_masterpass', component: componentJs},
         {type: 'payrexx_payment_mastercard', component: componentJs},
         {type: 'payrexx_payment_visa', component: componentJs},
-        {type: 'payrexx_payment_apple_pay', component: componentJs},
+        {type: 'payrexx_payment_apple_pay', component: applePayComponentJs},
         {type: 'payrexx_payment_maestro', component: componentJs},
         {type: 'payrexx_payment_jcb', component: componentJs},
         {type: 'payrexx_payment_american_express', component: componentJs},
@@ -51,7 +53,7 @@ define([
         {type: 'payrexx_payment_bancontact', component: componentJs},
         {type: 'payrexx_payment_giropay', component: componentJs},
         {type: 'payrexx_payment_eps', component: componentJs},
-        {type: 'payrexx_payment_google_pay', component: componentJs},
+        {type: 'payrexx_payment_google_pay', component: googlePayComponentJs},
         {type: 'payrexx_payment_klarna_paynow', component: componentJs},
         {type: 'payrexx_payment_klarna_paylater', component: componentJs},
         {type: 'payrexx_payment_oney', component: componentJs},

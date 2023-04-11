@@ -20,7 +20,8 @@ define(
         'Magento_Checkout/js/view/payment/default',
         'Magento_Checkout/js/action/place-order',
         'Magento_Checkout/js/model/payment/additional-validators',
-        'mage/url'
+        'mage/url',
+        'googlePayLibraryJs',
     ],
     function (
         $,
@@ -28,13 +29,14 @@ define(
         Component,
         placeOrderAction,
         additionalValidators,
-        url
+        url,
+        googlePayJs
     ) {
         'use strict';
 
         return Component.extend({
             defaults: {
-                template: 'Payrexx_PaymentGateway/payment/payment-method'
+                template: 'Payrexx_PaymentGateway/payment/payment-method',
             },
 
             /**
@@ -48,7 +50,6 @@ define(
                     'additional_data': {}
                 };
             },
-
             /**
              * Place order
              *
@@ -95,11 +96,49 @@ define(
             },
 
             /**
-             * @return bool
+             * Check the device support google pay or not.
+             *
+             * @returns bool
              */
             deviceSupported: function() {
-                return true;
-            }
+                try {
+                    const baseRequest = {
+                        apiVersion: 2,
+                        apiVersionMinor: 0
+                    };
+                    const allowedCardNetworks = ['MASTERCARD', 'VISA'];
+                    const allowedCardAuthMethods = ['CRYPTOGRAM_3DS'];
+                    const baseCardPaymentMethod = {
+                        type: 'CARD',
+                        parameters: {
+                            allowedAuthMethods: allowedCardAuthMethods,
+                            allowedCardNetworks: allowedCardNetworks
+                        }
+                    };
+
+                    const isReadyToPayRequest = Object.assign({}, baseRequest);
+                    isReadyToPayRequest.allowedPaymentMethods = [
+                        baseCardPaymentMethod
+                    ];
+                    const paymentsClient = new google.payments.api.PaymentsClient(
+                        {
+                            environment: 'TEST'
+                        }
+                    );
+                    paymentsClient.isReadyToPay(isReadyToPayRequest).then(function(response) {
+                        if (response.result) {
+                            console.log("Payrexx Google Pay supported on this device/browser");
+                            jQuery("#payrexx_payment_google_pay").parent().parent('.payment-method').show();
+                        } else {
+                            console.warn("Payrexx Google Pay is not supported on this device/browser");
+                        }
+                    }).catch(function(err) {
+                        return false;
+                    });
+                } catch (err) {
+                    return false;
+                }
+            },
         });
     }
 );

@@ -2,17 +2,17 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2018 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2018 PAYREXX AG
+ * @copyright   2023 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
  * @version     1.0.0
  */
 -->
-<div class="payment-method" data-bind="css: {'_active': (getCode() === isChecked())}">
+<div class="payment-method" data-bind="css: {'_active': (getCode() === isChecked())}, visible: deviceSupported()">
     <div class="payment-method-title field choice">
         <input type="radio"
                name="payment[method]"

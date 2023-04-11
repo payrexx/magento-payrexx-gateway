@@ -34,7 +34,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Payrexx_PaymentGateway/payment/payment-method'
+                template: 'Payrexx_PaymentGateway/payment/payment-method',
             },
 
             /**
@@ -48,7 +48,6 @@ define(
                     'additional_data': {}
                 };
             },
-
             /**
              * Place order
              *
@@ -95,11 +94,17 @@ define(
             },
 
             /**
-             * @return bool
+             * Check the device support apple pay or not.
+             *
+             * @returns bool
              */
             deviceSupported: function() {
+                if ((window.ApplePaySession && ApplePaySession.canMakePayments()) !== true) {
+                    console.warn("Payrexx Apple Pay is not supported on this device/browser");
+                    return false;
+                }
                 return true;
-            }
+            },
         });
     }
 );
