@@ -99,6 +99,21 @@ define(
              */
             deviceSupported: function() {
                 return true;
+            },
+
+            /**
+             * Returns payment method logo.
+             *
+             * @return bool|string
+             */
+            getPaymentMethodImage: function() {
+                var paymentMethodCode = this.item.method;
+                if (paymentMethodCode == 'payrexx_payment') {
+                    return false;
+                }
+                console.log(paymentMethodCode);
+                var icon = paymentMethodCode.replace(/payrexx_payment_/, "card_");
+                return require.toUrl('Payrexx_PaymentGateway/images/cardicons/' + icon + '.svg');
             }
         });
     }
