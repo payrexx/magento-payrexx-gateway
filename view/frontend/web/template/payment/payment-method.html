@@ -26,8 +26,13 @@
                visible: isRadioButtonVisible()" />
         <label class="label" data-bind="attr: {'for': getCode()}">
             <span data-bind="text: getTitle()"></span>
-            <!-- ko if: getPaymentMethodImage() -->
-		    <img data-bind="attr: {src: getPaymentMethodImage()}" class="payment-icon" width="55px"/>
+            <!-- ko if: getCode() !== 'payrexx_payment' -->
+            <img data-bind="attr: {
+                    src: require.toUrl('Payrexx_PaymentGateway/images/cardicons/') +
+                    getCode().replace('payrexx_payment_', 'card_') + '.svg'
+                }"
+                class="payment-icon"
+                width="55px"/>
             <!--/ko-->
         </label>
     </div>

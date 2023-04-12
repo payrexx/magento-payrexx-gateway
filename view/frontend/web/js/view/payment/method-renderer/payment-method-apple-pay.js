@@ -105,15 +105,6 @@ define(
                 }
                 return true;
             },
-
-            /**
-             * Returns payment method logo.
-             *
-             * @return string
-             */
-            getPaymentMethodImage: function() {
-                return require.toUrl('Payrexx_PaymentGateway/images/cardicons/card_apple_pay.svg');
-            },
         });
     }
 );

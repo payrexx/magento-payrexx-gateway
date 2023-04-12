@@ -139,15 +139,6 @@ define(
                     return false;
                 }
             },
-
-            /**
-             * Returns payment method logo.
-             *
-             * @return string
-             */
-            getPaymentMethodImage: function() {
-                return require.toUrl('Payrexx_PaymentGateway/images/cardicons/card_google_pay.svg');
-            },
         });
     }
 );
