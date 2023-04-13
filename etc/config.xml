@@ -89,7 +89,7 @@
             </payrexx_payment_wirpay>
             <payrexx_payment_paypal>
                 <active>0</active>
-                <title>Wirpay by Payrexx</title>
+                <title>Paypal by Payrexx</title>
                 <payment_action>authorize</payment_action>
                 <order_status>pending_payment</order_status>
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodPaypal</model>
