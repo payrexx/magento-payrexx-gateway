@@ -57,6 +57,8 @@ define([
         {type: 'payrexx_payment_klarna_paynow', component: componentJs},
         {type: 'payrexx_payment_klarna_paylater', component: componentJs},
         {type: 'payrexx_payment_oney', component: componentJs},
+        {type: 'payrexx_payment_centi', component: componentJs},
+        {type: 'payrexx_payment_heidipay', component: componentJs},
     );
 
     /** Add view logic here if needed */
