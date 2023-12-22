@@ -2,14 +2,13 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2018 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2018 PAYREXX AG
+ * @copyright   2023 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
- * @version     1.0.0
  */
 namespace Payrexx\PaymentGateway\Controller;
 
@@ -61,6 +60,11 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     public $payrexxFactory;
 
     /**
+     * @var \Magento\Sales\Model\Order\Email\Sender\OrderSender
+     */
+    public $orderSender;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\App\Action\Context              $context
@@ -77,7 +81,8 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         \Payrexx\PaymentGateway\Helper\Checkout $checkoutHelper,
         \Magento\Framework\App\Config\ScopeConfigInterface $configSettings,
         \Magento\Framework\Logger\Monolog $logger,
-        \Payrexx\PayrexxFactory $payrexxFactory
+        \Payrexx\PayrexxFactory $payrexxFactory,
+        \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender
     ) {
         parent::__construct($context);
         $this->context         = $context;
@@ -87,6 +92,7 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
         $this->configSettings  = $configSettings;
         $this->logger          = $logger;
         $this->payrexxFactory  = $payrexxFactory;
+        $this->orderSender     = $orderSender;
     }
 
     /**
