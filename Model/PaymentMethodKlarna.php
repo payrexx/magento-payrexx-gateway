@@ -2,10 +2,10 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2024 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2023 PAYREXX AG
+ * @copyright   2024 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
@@ -20,12 +20,12 @@ namespace Payrexx\PaymentGateway\Model;
  * @api
  * @since 100.0.2
  */
-class PaymentMethodSofort extends \Magento\Payment\Model\Method\AbstractMethod
+class PaymentMethodKlarna extends \Magento\Payment\Model\Method\AbstractMethod
 {
     /**
      * @var string
      */
-    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_sofort';
+    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_klarna';
 
     /**
      * Payment method code

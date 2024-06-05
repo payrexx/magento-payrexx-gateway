@@ -32,7 +32,7 @@ define([
         {type: 'payrexx_payment_wirpay', component: componentJs},
         {type: 'payrexx_payment_paypal', component: componentJs},
         {type: 'payrexx_payment_bitcoin', component: componentJs},
-        {type: 'payrexx_payment_sofort', component: componentJs},
+        {type: 'payrexx_payment_klarna', component: componentJs},
         {type: 'payrexx_payment_billpay', component: componentJs},
         {type: 'payrexx_payment_bonus', component: componentJs},
         {type: 'payrexx_payment_cashu', component: componentJs},
