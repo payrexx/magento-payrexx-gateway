@@ -10,7 +10,7 @@ This module supports Magento versions **2.2.\*** - **2.4.\***
 
 ## Preparation
 
-The usage of this module requires Payrexx REST API credentials. To obtain Payrexx REST API, please create your account in [Payrexx](https://www.payrexx.com/).
+The usage of this module requires Payrexx REST API credentials. To obtain Payrexx REST API, please create your account in [Payrexx](https://www.payrexx.com/?ref=magento).
 ## Integration
 ### 1. Installation
 
