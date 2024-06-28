@@ -24,13 +24,6 @@ namespace Payrexx\PaymentGateway\Model;
 class PayrexxBase extends \Magento\Payment\Model\Method\AbstractMethod
 {
     /**
-     * Payment method code
-     *
-     * @var string
-     */
-    protected $_code = self::PAYMENT_METHOD_PAYREXX_CODE;
-
-    /**
      * Run the payment initialize while order place
      *
      * @var bool

@@ -26,5 +26,5 @@ class PaymentMethodBankTransfer extends PayrexxBase
     /**
      * @var string
      */
-    const PAYMENT_METHOD_PAYREXX_CODE = 'payrexx_payment_bank_transfer';
+    protected $_code = 'payrexx_payment_bank_transfer';
 }
