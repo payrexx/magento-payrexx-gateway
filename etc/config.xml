@@ -319,6 +319,14 @@
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodHeidipay</model>
                 <sort_order>37</sort_order>
             </payrexx_payment_heidipay>
+            <payrexx_payment_bank_transfer>
+                <active>0</active>
+                <title>Bank Transter by Payrexx</title>
+                <payment_action>authorize</payment_action>
+                <order_status>pending_payment</order_status>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodBankTransfer</model>
+                <sort_order>38</sort_order>
+            </payrexx_payment_bank_transfer>
         </payment>
     </default>
 </config>
