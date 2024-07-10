@@ -207,22 +207,14 @@
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodPaysafeCard</model>
                 <sort_order>23</sort_order>
             </payrexx_payment_paysafecard>
-            <payrexx_payment_post_finance_card>
+            <payrexx_payment_post_finance_pay>
                 <active>0</active>
-                <title>Postfinance Card by Payrexx</title>
+                <title>Post Finance Pay by Payrexx</title>
                 <payment_action>authorize</payment_action>
                 <order_status>pending_payment</order_status>
-                <model>Payrexx\PaymentGateway\Model\PaymentMethodPostfinanceCard</model>
+                <model>Payrexx\PaymentGateway\Model\PostFinancePay</model>
                 <sort_order>24</sort_order>
-            </payrexx_payment_post_finance_card>
-            <payrexx_payment_post_finance_e_finance>
-                <active>0</active>
-                <title>Postfinance Efinance by Payrexx</title>
-                <payment_action>authorize</payment_action>
-                <order_status>pending_payment</order_status>
-                <model>Payrexx\PaymentGateway\Model\PaymentMethodPostfinanceEfinance</model>
-                <sort_order>25</sort_order>
-            </payrexx_payment_post_finance_e_finance>
+            </payrexx_payment_post_finance_pay>
             <payrexx_payment_swissbilling>
                 <active>0</active>
                 <title>Swissbilling by Payrexx</title>
