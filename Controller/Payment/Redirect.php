@@ -88,8 +88,6 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $this->_url->getUrl('payrexx/payment/failure')
         );
 
-        $billingAddress = $order->getBillingAddress();
-
         // products
         foreach ($order->getAllItems() as $product) {
             $baskets[] = [
@@ -130,6 +128,10 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         if ($basketAmount === $order->getGrandTotal() * 100) {
             $gateway->setBasket($baskets);
         }
+
+        $billingAddress = $order->getBillingAddress();
+        $shippingAddress = $order->getShippingAddress();
+
         // Contact information which should be stored along with payment
         $fields = [
             'forename' => $billingAddress->getFirstname(),
@@ -140,7 +142,14 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             'place'    => $billingAddress->getCity(),
             'country'  => $billingAddress->getCountryId(),
             'phone'    => $billingAddress->getTelephone(),
-            'email'    => $billingAddress->getEmail()
+            'email'    => $billingAddress->getEmail(),
+            'delivery_forename' => $shippingAddress->getFirstname(),
+            'delivery_surname'  => $shippingAddress->getLastname(),
+            'delivery_company'  => $shippingAddress->getCompany(),
+            'delivery_street'   => implode(',', $shippingAddress->getStreet()),
+            'delivery_postcode' => $shippingAddress->getPostcode(),
+            'delivery_place'    => $shippingAddress->getCity(),
+            'delivery_country'  => $shippingAddress->getCountryId(),
         ];
 
         // Add contact information
