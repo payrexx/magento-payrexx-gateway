@@ -105,10 +105,7 @@
                                                                         <item name="payrexx_payment_paysafecard" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
-                                                                        <item name="payrexx_payment_post_finance_card" xsi:type="array">
-                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
-                                                                        </item>
-                                                                        <item name="payrexx_payment_post_finance_e_finance" xsi:type="array">
+                                                                        <item name="payrexx_payment_post_finance_pay" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                         <item name="payrexx_payment_swissbilling" xsi:type="array">
