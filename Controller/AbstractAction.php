@@ -65,6 +65,11 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     public $orderSender;
 
     /**
+     * @var \Payrexx\PaymentGateway\Helper\Checkout
+     */
+    public $checkoutHelper;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\App\Action\Context              $context

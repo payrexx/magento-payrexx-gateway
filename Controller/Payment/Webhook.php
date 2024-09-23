@@ -35,9 +35,9 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         // Check payment getway response
         $post = $this->getRequest()->getPostValue();
 
-        $requestTransaction = $post['transaction'];
-        $requestTransactionStatus = $requestTransaction['status'];
-        $orderId = $requestTransaction['invoice']['referenceId'];
+        $requestTransaction = $post['transaction'] ?? null;
+        $requestTransactionStatus = $requestTransaction['status'] ?? null;
+        $orderId = $requestTransaction['invoice']['referenceId'] ?? null;
 
         if (!$requestTransaction || !$requestTransactionStatus || !$orderId) {
             throw new \Exception('Payrexx Webhook Data incomplete');
