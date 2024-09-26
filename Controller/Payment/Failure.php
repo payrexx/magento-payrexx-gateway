@@ -13,6 +13,7 @@
  */
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
+use Magento\Framework\App\ObjectManager;
 use Magento\Sales\Model\Order;
 
 /**
@@ -34,6 +35,26 @@ class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         if ($order && $order->getState() == Order::STATE_PENDING_PAYMENT) {
             $this->checkoutHelper->cancelCurrentOrder('Order cancelled by customer');
+        }
+
+        // delete gateway if user cancelled the order, prevent to pay later on same gateway.
+        $status = $this->getRequest()->getParam('payrexx_status');
+        if ($status && $status === 'cancel' && $order->getState() === Order::STATE_CANCELED) {
+            $payment   = $order->getPayment();
+            $gatewayId = $payment->getAdditionalInformation(
+                static::PAYMENT_GATEWAY_ID
+            );
+
+            $payrexx = $this->getPayrexxInstance();
+            $gateway = ObjectManager::getInstance()->create(
+                '\Payrexx\Models\Request\Gateway'
+            );
+            $gateway->setId($gatewayId);
+            try {
+                $payrexx->delete($gateway);
+            } catch (\Payrexx\PayrexxException $e) {
+                // no action
+            }
         }
 
         $quote = $quoteFactory->create()->loadByIdWithoutStore($order->getQuoteId());
