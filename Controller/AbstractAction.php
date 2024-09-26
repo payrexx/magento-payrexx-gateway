@@ -45,6 +45,11 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     public $orderFactory;
 
     /**
+     * @var \Payrexx\PaymentGateway\Helper\Checkout
+     */
+    public $checkoutHelper;
+
+    /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     public $configSettings;
@@ -67,12 +72,14 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     /**
      * Constructor
      *
-     * @param \Magento\Framework\App\Action\Context              $context
-     * @param \Magento\Checkout\Model\Session                    $checkoutSession
-     * @param \Magento\Sales\Model\OrderFactory                  $orderFactory
-     * @param \Payrexx\PaymentGateway\Helper\Checkout            $checkoutHelper
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $configSettings
-     * @param \Magento\Framework\Logger\Monolog                  $logger
+     * @param \Magento\Framework\App\Action\Context               $context
+     * @param \Magento\Checkout\Model\Session                     $checkoutSession
+     * @param \Magento\Sales\Model\OrderFactory                   $orderFactory
+     * @param \Payrexx\PaymentGateway\Helper\Checkout             $checkoutHelper
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface  $configSettings
+     * @param \Magento\Framework\Logger\Monolog                   $logger
+     * @param \Payrexx\PayrexxFactory                             $payrexxFactory
+     * @param \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
