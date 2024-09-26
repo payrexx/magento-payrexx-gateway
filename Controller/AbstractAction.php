@@ -45,6 +45,11 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     public $orderFactory;
 
     /**
+     * @var \Payrexx\PaymentGateway\Helper\Checkout
+     */
+    public $checkoutHelper;
+
+    /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     public $configSettings;
@@ -63,11 +68,6 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
      * @var \Magento\Sales\Model\Order\Email\Sender\OrderSender
      */
     public $orderSender;
-
-    /**
-     * @var \Payrexx\PaymentGateway\Helper\Checkout
-     */
-    public $checkoutHelper;
 
     /**
      * Constructor
