@@ -53,8 +53,6 @@ define([
         {type: 'payrexx_payment_giropay', component: componentJs},
         {type: 'payrexx_payment_eps', component: componentJs},
         {type: 'payrexx_payment_google_pay', component: googlePayComponentJs},
-        {type: 'payrexx_payment_klarna_paynow', component: componentJs},
-        {type: 'payrexx_payment_klarna_paylater', component: componentJs},
         {type: 'payrexx_payment_oney', component: componentJs},
         {type: 'payrexx_payment_centi', component: componentJs},
         {type: 'payrexx_payment_heidipay', component: componentJs},
