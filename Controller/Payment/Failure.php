@@ -34,6 +34,7 @@ class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         if ($order && $order->getState() == Order::STATE_PENDING_PAYMENT) {
             $this->checkoutHelper->cancelCurrentOrder('Order cancelled by customer');
+            $this->deleteGatewayId($order);
         }
 
         $quote = $quoteFactory->create()->loadByIdWithoutStore($order->getQuoteId());
@@ -46,5 +47,28 @@ class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
             return $resultRedirect;
         }
         return $this->_redirect('checkout/onepage/failure');
+    }
+
+    private function deleteGatewayId($order)
+    {
+        $payment = $order->getPayment();
+        $gatewayId = $payment->getAdditionalInformation(
+            static::PAYMENT_GATEWAY_ID
+        );
+        $payrexx = $this->getPayrexxInstance();
+        $gateway = ObjectManager::getInstance()->create(
+            '\Payrexx\Models\Request\Gateway'
+        );
+        $gateway->setId($gatewayId);
+
+        $payrexxGateway = $payrexx->getOne($gateway);
+        $invoices = $payrexxGateway->getInvoices();
+        if (count($invoices)) {
+            return;
+        }
+        try {
+            $payrexx->delete($gateway);
+        } catch (\Payrexx\PayrexxException $e) {
+        }
     }
 }
