@@ -2,10 +2,10 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright©2022 PAYREXX AG (https://www.payrexx.com)
+ * Copyright©2024 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2022 PAYREXX AG
+ * @copyright   2024 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
@@ -13,6 +13,7 @@
  */
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
+use Magento\Framework\App\ObjectManager;
 use Magento\Sales\Model\Order;
 
 /**
@@ -26,7 +27,7 @@ class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
      */
     public function execute()
     {
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $objectManager = ObjectManager::getInstance();
         $checkoutSession = $objectManager->create('\Magento\Checkout\Model\Session');
         $quoteFactory = $objectManager->create('\Magento\Quote\Model\QuoteFactory');
 
@@ -49,7 +50,13 @@ class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
         return $this->_redirect('checkout/onepage/failure');
     }
 
-    private function deleteGatewayId($order)
+    /**
+     * Delete the Gateway
+     *
+     * @param Order $order
+     * @return void
+     */
+    private function deleteGatewayId($order): void
     {
         $payment = $order->getPayment();
         $gatewayId = $payment->getAdditionalInformation(
@@ -63,7 +70,7 @@ class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         $payrexxGateway = $payrexx->getOne($gateway);
         $invoices = $payrexxGateway->getInvoices();
-        if (count($invoices)) {
+        if (!empty($invoices)) {
             return;
         }
         try {
