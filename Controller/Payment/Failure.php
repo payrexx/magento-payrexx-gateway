@@ -35,7 +35,7 @@ class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         if ($order && $order->getState() == Order::STATE_PENDING_PAYMENT) {
             $this->checkoutHelper->cancelCurrentOrder('Order cancelled by customer');
-            $this->deleteGatewayId($order);
+            $this->deletePayrexxGateway($order);
         }
 
         $quote = $quoteFactory->create()->loadByIdWithoutStore($order->getQuoteId());
@@ -56,7 +56,7 @@ class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
      * @param Order $order
      * @return void
      */
-    private function deleteGatewayId($order): void
+    private function deletePayrexxGateway($order): void
     {
         $payment = $order->getPayment();
         $gatewayId = $payment->getAdditionalInformation(
