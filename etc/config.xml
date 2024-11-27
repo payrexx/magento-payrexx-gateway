@@ -308,7 +308,7 @@
                 <title>Pay by Bank via Payrexx</title>
                 <payment_action>authorize</payment_action>
                 <order_status>pending_payment</order_status>
-                <model>Payrexx\PaymentGateway\Model\PayByBank</model>
+                <model>Payrexx\PaymentGateway\Model\PaymentMethodPayByBank</model>
                 <sort_order>38</sort_order>
             </payrexx_payment_pay_by_bank>
         </payment>

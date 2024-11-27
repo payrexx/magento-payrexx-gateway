@@ -20,7 +20,7 @@ namespace Payrexx\PaymentGateway\Model;
  * @api
  * @since 100.0.2
  */
-class PayByBank extends PayrexxBase
+class PaymentMethodPayByBank extends PayrexxBase
 {
     /**
      * Payment method code
