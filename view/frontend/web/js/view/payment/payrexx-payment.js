@@ -57,6 +57,7 @@ define([
         {type: 'payrexx_payment_centi', component: componentJs},
         {type: 'payrexx_payment_heidipay', component: componentJs},
         {type: 'payrexx_payment_bank_transfer', component: componentJs},
+        {type: 'payrexx_payment_pay_by_bank', component: componentJs},
     );
 
     /** Add view logic here if needed */
