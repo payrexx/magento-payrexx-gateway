@@ -3,13 +3,13 @@
     "description": "Payrexx Payment Gateway module for Magento 2",
     "require": {
         "php": "~5.5.0|~5.6.0|^7.0|^8.0",
-        "payrexx/payrexx": "1.8.3"
+        "payrexx/payrexx": "^1.8"
     },
     "type": "magento2-module",
     "license": [
         "OSL-3.0"
     ],
-    "version": "1.3.16",
+    "version": "1.3.17",
     "autoload": {
         "files": [
             "registration.php"
