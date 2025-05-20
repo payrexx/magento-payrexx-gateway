@@ -1,15 +1,12 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Payrexx Payment Gateway
+ * Payrexx Payment Gateway Module
  *
- * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
- * See LICENSE.txt for license details.
- *
- * @copyright   2023 PAYREXX AG
- * @author      Payrexx <support@payrexx.com>
- * @package     magento2
- * @subpackage  payrexx_payment_gateway
+ * @category  Payrexx
+ * @package   Payrexx_PaymentGateway
+ * @author    Support <support@payrexx.com>
+ * @copyright PAYREXX AG
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
@@ -145,6 +142,9 @@
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                         <item name="payrexx_payment_powerpay" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                        <item name="payrexx_payment_cembrapay" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                     </item>

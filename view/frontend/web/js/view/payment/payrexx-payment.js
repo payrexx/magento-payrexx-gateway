@@ -1,13 +1,10 @@
 /**
- * Payrexx Payment Gateway
+ * Payrexx Payment Gateway Module
  *
- * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
- * See LICENSE.txt for license details.
- *
- * @copyright   2023 PAYREXX AG
- * @author      Payrexx <support@payrexx.com>
- * @package     magento2
- * @subpackage  payrexx_payment_gateway
+ * @category  Payrexx
+ * @package   Payrexx_PaymentGateway
+ * @author    Support <support@payrexx.com>
+ * @copyright PAYREXX AG
  */
 
 /* @api */
@@ -22,45 +19,50 @@ define([
 
     rendererList.push(
         {type: 'payrexx_payment', component: componentJs},
-        {type: 'payrexx_payment_masterpass', component: componentJs},
-        {type: 'payrexx_payment_mastercard', component: componentJs},
-        {type: 'payrexx_payment_visa', component: componentJs},
         {type: 'payrexx_payment_apple_pay', component: applePayComponentJs},
-        {type: 'payrexx_payment_maestro', component: componentJs},
-        {type: 'payrexx_payment_jcb', component: componentJs},
-        {type: 'payrexx_payment_american_express', component: componentJs},
-        {type: 'payrexx_payment_wirpay', component: componentJs},
-        {type: 'payrexx_payment_paypal', component: componentJs},
-        {type: 'payrexx_payment_bitcoin', component: componentJs},
-        {type: 'payrexx_payment_klarna', component: componentJs},
-        {type: 'payrexx_payment_billpay', component: componentJs},
-        {type: 'payrexx_payment_bonus', component: componentJs},
-        {type: 'payrexx_payment_cashu', component: componentJs},
-        {type: 'payrexx_payment_cb', component: componentJs},
-        {type: 'payrexx_payment_diners_club', component: componentJs},
-        {type: 'payrexx_payment_sepa_direct_debit', component: componentJs},
-        {type: 'payrexx_payment_discover', component: componentJs},
-        {type: 'payrexx_payment_elv', component: componentJs},
-        {type: 'payrexx_payment_ideal', component: componentJs},
-        {type: 'payrexx_payment_invoice', component: componentJs},
-        {type: 'payrexx_payment_myone', component: componentJs},
-        {type: 'payrexx_payment_paysafecard', component: componentJs},
-        {type: 'payrexx_payment_post_finance_pay', component: componentJs},
-        {type: 'payrexx_payment_swissbilling', component: componentJs},
-        {type: 'payrexx_payment_twint', component: componentJs},
-        {type: 'payrexx_payment_barzahlen', component: componentJs},
-        {type: 'payrexx_payment_bancontact', component: componentJs},
-        {type: 'payrexx_payment_giropay', component: componentJs},
-        {type: 'payrexx_payment_eps', component: componentJs},
         {type: 'payrexx_payment_google_pay', component: googlePayComponentJs},
-        {type: 'payrexx_payment_oney', component: componentJs},
-        {type: 'payrexx_payment_centi', component: componentJs},
-        {type: 'payrexx_payment_heidipay', component: componentJs},
-        {type: 'payrexx_payment_bank_transfer', component: componentJs},
-        {type: 'payrexx_payment_pay_by_bank', component: componentJs},
-        {type: 'payrexx_payment_powerpay', component: componentJs},
     );
+    const payrexxPaymentMethods = [
+        'masterpass',
+        'mastercard',
+        'visa',
+        'maestro',
+        'jcb',
+        'american_express',
+        'wirpay',
+        'paypal',
+        'bitcoin',
+        'klarna',
+        'billpay',
+        'bonus',
+        'cashu',
+        'cb',
+        'diners_club',
+        'sepa_direct_debit',
+        'discover',
+        'elv',
+        'ideal',
+        'invoice',
+        'myone',
+        'paysafecard',
+        'post_finance_pay',
+        'swissbilling',
+        'twint',
+        'barzahlen',
+        'bancontact',
+        'giropay',
+        'eps',
+        'oney',
+        'centi',
+        'heidipay',
+        'bank_transfer',
+        'pay_by_bank',
+        'powerpay',
+        'cembrapay',
+    ];
+    payrexxPaymentMethods.forEach(pm => {
+        rendererList.push({ type: 'payrexx_payment_' + pm, component: componentJs });
+    });
 
-    /** Add view logic here if needed */
     return Component.extend({});
 });

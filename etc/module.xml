@@ -1,20 +1,16 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Payrexx Payment Gateway
+ * Payrexx Payment Gateway Module
  *
- * Copyright © 2025 PAYREXX AG (https://www.payrexx.com)
- * See LICENSE.txt for license details.
- *
- * @copyright   2025 PAYREXX AG
- * @author      Payrexx <support@payrexx.com>
- * @package     magento2
- * @subpackage  payrexx_payment_gateway
- * @version     1.0.0
+ * @category  Payrexx
+ * @package   Payrexx_PaymentGateway
+ * @author    Support <support@payrexx.com>
+ * @copyright PAYREXX AG
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Payrexx_PaymentGateway" setup_version="1.3.18">
+    <module name="Payrexx_PaymentGateway" setup_version="1.3.19">
         <sequence>
             <module name="Magento_Sales"/>
             <module name="Magento_Payment"/>
