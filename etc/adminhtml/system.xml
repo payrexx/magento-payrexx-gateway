@@ -1,15 +1,12 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Payrexx Payment Gateway
+ * Payrexx Payment Gateway Module
  *
- * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
- * See LICENSE.txt for license details.
- *
- * @copyright   2023 PAYREXX AG
- * @author      Payrexx <support@payrexx.com>
- * @package     magento2
- * @subpackage  payrexx_payment_gateway
+ * @category  Payrexx
+ * @package   Payrexx_PaymentGateway
+ * @author    Support <support@payrexx.com>
+ * @copyright PAYREXX AG
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -697,6 +694,23 @@
                             <label>Sort Order</label>
                             <frontend_class>validate-number</frontend_class>
                             <config_path>payment/payrexx_payment_powerpay/sort_order</config_path>
+                        </field>
+                    </group>
+                    <group id="payrexx_payment_cembrapay" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>CembraPay via Payrexx</label>
+                        <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                            <label>Enabled</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>payment/payrexx_payment_cembrapay/active</config_path>
+                        </field>
+                        <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                            <label>Title</label>
+                            <config_path>payment/payrexx_payment_cembrapay/title</config_path>
+                        </field>
+                        <field id="sort_order" translate="label" type="text" sortOrder="3" showInDefault="3" showInWebsite="1" showInStore="0">
+                            <label>Sort Order</label>
+                            <frontend_class>validate-number</frontend_class>
+                            <config_path>payment/payrexx_payment_cembrapay/sort_order</config_path>
                         </field>
                     </group>
                 </group>
