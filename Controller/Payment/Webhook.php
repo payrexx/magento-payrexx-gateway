@@ -2,10 +2,10 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2022 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2025 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2022 PAYREXX AG
+ * @copyright   Payrexx AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
@@ -15,6 +15,7 @@ namespace Payrexx\PaymentGateway\Controller\Payment;
 use Magento\Framework\App\ObjectManager;
 use Magento\Sales\Model\Order;
 use Payrexx\Models\Response\Transaction;
+use Magento\Framework\Controller\ResultFactory;
 
 /**
  * class \Payrexx\PaymentGateway\Controller\Payment\Webhook
@@ -40,12 +41,12 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $orderId = $requestTransaction['invoice']['referenceId'] ?? null;
 
         if (!$requestTransaction || !$requestTransactionStatus || !$orderId) {
-            throw new \Exception('Payrexx Webhook Data incomplete');
+            return $this->getErrorResponse('Payrexx Webhook Data incomplete');
         }
 
         $order = $this->getOrderDetailByOrderId($orderId);
         if (!$order) {
-            throw new \Exception('No order found with ID ' . $orderId);
+            return $this->getErrorResponse('No order found with ID ' . $orderId);
         }
 
         $payment   = $order->getPayment();
@@ -60,7 +61,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $order->setState(Order::STATUS_FRAUD);
             $order->setStatus(Order::STATUS_FRAUD);
             $order->save();
-            throw new \Exception('Payment hash incorreect. Fraud suspect');
+            return $this->getErrorResponse('Payment hash incorrect. Fraud suspect', 400);
         }
 
         try {
@@ -79,11 +80,14 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
             $status = $transaction['status'];
         } catch (\Payrexx\PayrexxException $e) {
-            throw new \Exception('No Payrexx Gateway found with ID: ' . $gatewayId);
+            return $this->getErrorResponse(
+                'No Payrexx Gateway found with ID: ' . $gatewayId .' '. $e->getMessage(),
+                500 
+            );
         }
 
         if ($status !== $requestTransactionStatus) {
-            throw new \Exception('Corrupt webhook status');
+            return $this->getErrorResponse('Corrupt webhook status');
         }
 
         $state = '';
@@ -120,10 +124,10 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 break;
         }
         if (empty($state)) {
-            return;
+            return $this->getErrorResponse('Empty state');
         }
         if (!$this->isAllowedToChangeState($order->getState(), $state)) {
-            return;
+            return $this->getErrorResponse('Unable to change state');
         }
         $order->setState($state);
         $order->setStatus($state);
@@ -157,6 +161,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $order->save();
             $this->orderSender->send($order, true);
         }
+        return $this->getSuccessResponse('webook processed');
     }
 
     /**
@@ -213,5 +218,35 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 ]);
         }
         return false;
+    }
+
+    private function getSuccessResponse(?string $message = null)
+    {
+        $result = $this->getResultFactory()->create(ResultFactory::TYPE_JSON);
+
+        $data = ['success' => true];
+
+        if ($message) {
+           $data['message'] = $message;
+        }
+        $result->setData($data);
+        $result->setHttpResponseCode(200);
+
+        return $result;
+    }
+
+    private function getErrorResponse(?string $message = null, int $code = 200)
+    {
+        $result = $this->getResultFactory()->create(ResultFactory::TYPE_JSON);
+
+        $data = ['error' => true];
+
+        if ($message) {
+           $data['message'] = $message;
+        }
+        $result->setData($data);
+        $result->setHttpResponseCode($code);
+
+        return $result;
     }
 }

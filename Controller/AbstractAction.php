@@ -170,4 +170,9 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
             'apiBaseDomain' => $platform,
         ]);
     }
+
+    public function getResultFactory()
+    {
+        return $this->context->getResultFactory();
+    }
 }
