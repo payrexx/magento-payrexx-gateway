@@ -14,6 +14,7 @@
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
 use Magento\Framework\App\ObjectManager;
+use Magento\Sales\Model\Order;
 use Payrexx\PaymentGateway\Model\PaymentMethod;
 
 /**
@@ -88,38 +89,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $this->_url->getUrl('payrexx/payment/failure')
         );
 
-        // products
-        foreach ($order->getAllItems() as $product) {
-            $baskets[] = [
-                'name' => $product->getName(),
-                'description' => $product->getDescription(),
-                'quantity' => $product->getQtyOrdered(),
-                'amount' => $product->getPrice() * 100,
-                'sku' => $product->getSku(),
-            ];
-        }
-
-        // Shipping
-        $baskets[] = [
-            'name' => 'Shipping',
-            'quantity' => 1,
-            'amount' => $order->getShippingAmount() * 100,
-        ];
-
-        // Discount
-        $baskets[] = [
-            'name' => 'Discount',
-            'quantity' => 1,
-            'amount' => abs($order->getDiscountAmount()) * -100,
-        ];
-
-        // Tax
-        $baskets[] = [
-            'name' => 'Tax',
-            'quantity' => 1,
-            'amount' => $order->getTaxAmount() * 100,
-        ];
-
+        $baskets = $this->getBaskets($order);
         // verify basket items amount equal to grand total
         $basketAmount = 0;
         foreach ($baskets as $basket) {
@@ -165,9 +135,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $gateway->setPm([$pm]);
         }
         try {
-            // Create payrexx instance
             $payrexx = $this->getPayrexxInstance();
-            // Create payrexx gateway
             return $payrexx->create($gateway);
         } catch (\Payrexx\PayrexxException $e) {
             $this->logger->addError(
@@ -229,5 +197,46 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $hash
         );
         $payment->save();
+    }
+
+    private function getBaskets(Order $order): array
+    {
+        foreach ($order->getAllItems() as $product) {
+            $baskets[] = [
+                'name' => $product->getName(),
+                'description' => $product->getDescription(),
+                'quantity' => (int) $product->getQtyOrdered(),
+                'amount' => (float) $product->getPrice() * 100,
+                'sku' => $product->getSku(),
+            ];
+        }
+
+        $shippingAmount = (float) $order->getShippingAmount();
+        if ($shippingAmount > 0) {
+            $baskets[] = [
+                'name' => 'Shipping',
+                'quantity' => 1,
+                'amount' => $shippingAmount * 100,
+            ];
+        }
+
+        $discountAmount = abs((float) $order->getDiscountAmount());
+        if ($discountAmount > 0) {
+            $baskets[] = [
+                'name' => 'Discount',
+                'quantity' => 1,
+                'amount' => $discountAmount * -100,
+            ];
+        }
+
+        $taxAmount = (float) $order->getTaxAmount();
+        if ($taxAmount > 0) {
+            $baskets[] = [
+                'name' => 'Tax',
+                'quantity' => 1,
+                'amount' => $taxAmount * 100,
+            ];
+        }
+        return $baskets;
     }
 }
