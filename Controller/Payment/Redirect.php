@@ -134,11 +134,9 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $gateway->setPm([$pm]);
         }
         try {
+            // Create payrexx instance
             $payrexx = $this->getPayrexxInstance();
-            $metaData = $this->getMetaData();
-            if (!empty($metaData)) {
-                $payrexx->setHttpHeaders($metaData);
-            }
+            // Create payrexx gateway
             return $payrexx->create($gateway);
         } catch (\Payrexx\PayrexxException $e) {
             $this->logger->addError(
