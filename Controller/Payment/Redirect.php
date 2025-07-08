@@ -1,19 +1,17 @@
 <?php
 /**
- * Payrexx Payment Gateway
+ * Payrexx Payment Gateway Module
  *
- * Copyright © 2018 PAYREXX AG (https://www.payrexx.com)
- * See LICENSE.txt for license details.
- *
- * @copyright   2018 PAYREXX AG
- * @author      Payrexx <support@payrexx.com>
- * @package     magento2
- * @subpackage  payrexx_payment_gateway
- * @version     1.0.0
+ * @category  Payrexx
+ * @package   Payrexx_PaymentGateway
+ * @author    Support <support@payrexx.com>
+ * @copyright PAYREXX AG
  */
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
 use Magento\Framework\App\ObjectManager;
+use Magento\Framework\App\ProductMetadataInterface;
+use Magento\Framework\Module\ModuleListInterface;
 use Payrexx\PaymentGateway\Model\PaymentMethod;
 
 /**
@@ -165,9 +163,11 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $gateway->setPm([$pm]);
         }
         try {
-            // Create payrexx instance
             $payrexx = $this->getPayrexxInstance();
-            // Create payrexx gateway
+            $metaData = $this->getMetaData();
+            if (!empty($metaData)) {
+                $payrexx->setHttpHeaders($metaData);
+            }
             return $payrexx->create($gateway);
         } catch (\Payrexx\PayrexxException $e) {
             $this->logger->addError(
@@ -229,5 +229,22 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $hash
         );
         $payment->save();
+    }
+
+    private function getMetaData(): array
+    {
+        $objectManager = ObjectManager::getInstance();
+        try {
+            $productMetadata = $objectManager->get(ProductMetadataInterface::class);
+            $moduleList = $objectManager->get(ModuleListInterface::class);
+            $moduleName = 'Payrexx_PaymentGateway';
+            $info = $moduleList->getOne($moduleName);
+            return [
+                'X-Shop-Version'   => (string) $productMetadata->getVersion(),
+                'X-Plugin-Version' => (string) $info['setup_version'],
+            ];
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 }
