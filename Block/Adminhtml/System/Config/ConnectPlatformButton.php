@@ -14,7 +14,7 @@ use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
 /**
- * Renders a button with JavaScript to populate the API key field.
+ * Renders a button with JavaScript to populate the API secret and instance name field.
  */
 class ConnectPlatformButton extends Field
 {
