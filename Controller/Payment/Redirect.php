@@ -2,10 +2,10 @@
 /**
  * Payrexx Payment Gateway Module
  *
- * @category  Payrexx
- * @package   Payrexx_PaymentGateway
- * @author    Support <support@payrexx.com>
- * @copyright PAYREXX AG
+ * @author      Payrexx <support@payrexx.com>
+ * @copyright   Payrexx AG
+ * @package     magento2
+ * @subpackage  payrexx_payment_gateway
  */
 namespace Payrexx\PaymentGateway\Controller\Payment;
 
@@ -68,6 +68,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
 
         $gateway->setSkipResultPage(true);
         $gateway->setPsp([]);
+        $gateway->setValidity(15);
         $gateway->setAmount($order->getGrandTotal() * 100);
         $gateway->setCurrency($order->getOrderCurrencyCode());
 

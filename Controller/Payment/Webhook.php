@@ -2,11 +2,8 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2022 PAYREXX AG (https://www.payrexx.com)
- * See LICENSE.txt for license details.
- *
- * @copyright   2022 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
+ * @copyright   Payrexx AG
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
  */
@@ -125,13 +122,14 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         if (!$this->isAllowedToChangeState($order->getState(), $state)) {
             return;
         }
-        $order->setState($state);
-        $order->setStatus($state);
-        $order->save();
-        $history = $order->addCommentToStatusHistory(
-            'Status updated by Payrexx Webhook'
-        );
-        $history->save();
+        if ($state === Order::STATE_CANCELED && $order->canCancel()) {
+            $order->registerCancellation('Order was canceled via Payrexx webhook')->save();
+        } else {
+            $order->setState($state);
+            $order->setStatus($state);
+            $order->addCommentToStatusHistory('Order Status updated via Payrexx Webhook');
+            $order->save();
+        }
 
         // Create Invoice
         if ($state === Order::STATE_PROCESSING && $order->canInvoice()) {
