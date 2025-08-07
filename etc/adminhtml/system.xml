@@ -22,11 +22,15 @@
                         <source_model>Payrexx\PaymentGateway\Model\Config\Source\Platform</source_model>
                         <config_path>payment/payrexx_payment/platform</config_path>
                     </field>
-                    <field id="instance_name" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="connect_platform_button" translate="label" type="button" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Connect To Platform</label>
+                        <frontend_model>Payrexx\PaymentGateway\Block\Adminhtml\System\Config\ConnectPlatformButton</frontend_model>
+                    </field>
+                    <field id="instance_name" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
                         <label>Instance Name</label>
                         <config_path>payment/payrexx_payment/instance_name</config_path>
                     </field>
-                    <field id="api_secret" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="api_secret" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
                         <label>API Secret Key</label>
                         <config_path>payment/payrexx_payment/api_secret</config_path>
                     </field>
