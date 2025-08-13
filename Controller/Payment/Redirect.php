@@ -226,6 +226,9 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
     {
         $baskets = [];
         foreach ($order->getAllItems() as $product) {
+            if ($product->getPrice() <= 0) {
+                continue;
+            }
             $baskets[] = [
                 'name' => $product->getName(),
                 'description' => $product->getDescription(),
@@ -264,10 +267,10 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         return $baskets;
     }
 
-    private function createPurposeByBasket(array $basket): string
+    private function createPurposeByBasket(array $products): string
     {
         $desc = [];
-        foreach ($basket as $product) {
+        foreach ($products as $product) {
             $desc[] = implode(' ', [
                 $product['name'],
                 $product['quantity'],
