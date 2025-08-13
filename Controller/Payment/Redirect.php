@@ -12,6 +12,7 @@ namespace Payrexx\PaymentGateway\Controller\Payment;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\Module\ModuleListInterface;
+use Magento\Sales\Model\Order;
 use Payrexx\PaymentGateway\Model\PaymentMethod;
 
 /**
@@ -69,7 +70,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $gateway->setSkipResultPage(true);
         $gateway->setPsp([]);
         $gateway->setValidity(15);
-        $gateway->setAmount($order->getGrandTotal() * 100);
+        $gateway->setAmount((int) ($order->getGrandTotal() * 100));
         $gateway->setCurrency($order->getOrderCurrencyCode());
 
         // Set order id as the reference id
@@ -87,38 +88,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $this->_url->getUrl('payrexx/payment/failure')
         );
 
-        // products
-        foreach ($order->getAllItems() as $product) {
-            $baskets[] = [
-                'name' => $product->getName(),
-                'description' => $product->getDescription(),
-                'quantity' => $product->getQtyOrdered(),
-                'amount' => $product->getPrice() * 100,
-                'sku' => $product->getSku(),
-            ];
-        }
-
-        // Shipping
-        $baskets[] = [
-            'name' => 'Shipping',
-            'quantity' => 1,
-            'amount' => $order->getShippingAmount() * 100,
-        ];
-
-        // Discount
-        $baskets[] = [
-            'name' => 'Discount',
-            'quantity' => 1,
-            'amount' => abs($order->getDiscountAmount()) * -100,
-        ];
-
-        // Tax
-        $baskets[] = [
-            'name' => 'Tax',
-            'quantity' => 1,
-            'amount' => $order->getTaxAmount() * 100,
-        ];
-
+        $baskets = $this->getBaskets($order);
         // verify basket items amount equal to grand total
         $basketAmount = 0;
         foreach ($baskets as $basket) {
@@ -126,6 +96,9 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         }
         if ($basketAmount === $order->getGrandTotal() * 100) {
             $gateway->setBasket($baskets);
+        } else {
+            $purpose = $this->createPurposeByBasket($baskets);
+            $gateway->setPurpose($purpose);
         }
 
         $billingAddress = $order->getBillingAddress();
@@ -247,5 +220,64 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         } catch (\Exception $e) {
             return [];
         }
+    }
+
+    private function getBaskets(Order $order): array
+    {
+        $baskets = [];
+        foreach ($order->getAllItems() as $product) {
+            if ($product->getPrice() <= 0) {
+                continue;
+            }
+            $baskets[] = [
+                'name' => $product->getName(),
+                'description' => $product->getDescription(),
+                'quantity' => $product->getQtyOrdered(),
+                'amount' => $product->getPrice() * 100,
+                'sku' => $product->getSku(),
+            ];
+        }
+
+        $shippingAmount = $order->getShippingAmount();
+        if ($shippingAmount > 0) {
+            $baskets[] = [
+                'name' => 'Shipping',
+                'quantity' => 1,
+                'amount' => $shippingAmount * 100,
+            ];
+        }
+
+        $discountAmount = abs($order->getDiscountAmount());
+        if ($discountAmount > 0) {
+            $baskets[] = [
+                'name' => 'Discount',
+                'quantity' => 1,
+                'amount' => $discountAmount * -100,
+            ];
+        }
+
+        $taxAmount = $order->getTaxAmount();
+        if ($taxAmount > 0) {
+            $baskets[] = [
+                'name' => 'Tax',
+                'quantity' => 1,
+                'amount' => $taxAmount * 100,
+            ];
+        }
+        return $baskets;
+    }
+
+    private function createPurposeByBasket(array $products): string
+    {
+        $desc = [];
+        foreach ($products as $product) {
+            $desc[] = implode(' ', [
+                $product['name'],
+                $product['quantity'],
+                'x',
+                number_format($product['amount'] / 100, 2, '.'),
+            ]);
+        }
+        return implode('; ', $desc);
     }
 }
