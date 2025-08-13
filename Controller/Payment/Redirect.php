@@ -96,6 +96,9 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         }
         if ($basketAmount === $order->getGrandTotal() * 100) {
             $gateway->setBasket($baskets);
+        } else {
+            $purpose = $this->createPurposeByBasket($baskets);
+            $gateway->setPurpose($purpose);
         }
 
         $billingAddress = $order->getBillingAddress();
@@ -259,5 +262,19 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             ];
         }
         return $baskets;
+    }
+
+    private function createPurposeByBasket(array $basket): string
+    {
+        $desc = [];
+        foreach ($basket as $product) {
+            $desc[] = implode(' ', [
+                $product['name'],
+                $product['quantity'],
+                'x',
+                number_format($product['amount'] / 100, 2, '.'),
+            ]);
+        }
+        return implode('; ', $desc);
     }
 }
