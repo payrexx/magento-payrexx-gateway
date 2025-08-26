@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Payrexx Payment Gateway Module
+ * Payrexx Payment Gateway
  *
- * @category  Payrexx
- * @package   Payrexx_PaymentGateway
- * @author    Support <support@payrexx.com>
- * @copyright PAYREXX AG
+ * @author      Payrexx <support@payrexx.com>
+ * @copyright   Payrexx AG
+ * @package     magento2
+ * @subpackage  payrexx_payment_gateway
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
@@ -145,6 +145,9 @@
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                         <item name="payrexx_payment_cembrapay" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                        <item name="payrexx_payment_crypto" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                     </item>
