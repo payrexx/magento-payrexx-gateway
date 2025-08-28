@@ -12,10 +12,6 @@ namespace Payrexx\PaymentGateway\Model;
 /**
  * PaymentMethod model for Payrexx
  *
- * @method \Magento\Quote\Api\Data\PaymentMethodExtensionInterface getExtensionAttributes()
- *
- * @api
- * @since 100.0.2
  */
 class PaymentMethodCrypto extends PayrexxBase
 {
