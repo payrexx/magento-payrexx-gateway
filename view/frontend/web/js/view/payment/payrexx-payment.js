@@ -1,10 +1,10 @@
 /**
- * Payrexx Payment Gateway Module
+ * Payrexx Payment Gateway
  *
- * @category  Payrexx
- * @package   Payrexx_PaymentGateway
- * @author    Support <support@payrexx.com>
- * @copyright PAYREXX AG
+ * @author      Payrexx <support@payrexx.com>
+ * @copyright   Payrexx AG
+ * @package     magento2
+ * @subpackage  payrexx_payment_gateway
  */
 
 /* @api */
@@ -59,6 +59,7 @@ define([
         'pay_by_bank',
         'powerpay',
         'cembrapay',
+        'crypto',
     ];
     payrexxPaymentMethods.forEach(pm => {
         rendererList.push({ type: 'payrexx_payment_' + pm, component: componentJs });
