@@ -330,7 +330,7 @@
                 <payment_action>authorize</payment_action>
                 <order_status>pending_payment</order_status>
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodCrypto</model>
-                <sort_order>41</sort_order>
+                <sort_order>42</sort_order>
             </payrexx_payment_crypto>
             <payrexx_payment_verd_cash>
                 <active>0</active>
@@ -338,7 +338,7 @@
                 <payment_action>authorize</payment_action>
                 <order_status>pending_payment</order_status>
                 <model>Payrexx\PaymentGateway\Model\PaymentMethodVerdCash</model>
-                <sort_order>41</sort_order>
+                <sort_order>43</sort_order>
             </payrexx_payment_verd_cash>
         </payment>
     </default>
