@@ -144,10 +144,10 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             }
             return $payrexx->create($gateway);
         } catch (\Payrexx\PayrexxException $e) {
-            $this->logger->addError(
+            $this->logger->error(
                 'Payrexx Gateway creation : ' . json_encode($e->getMessage())
             );
-            return;
+            return null;
         }
     }
 

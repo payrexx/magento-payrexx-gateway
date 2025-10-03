@@ -60,6 +60,7 @@ define([
         'powerpay',
         'cembrapay',
         'crypto',
+        'verd_cash',
     ];
     payrexxPaymentMethods.forEach(pm => {
         rendererList.push({ type: 'payrexx_payment_' + pm, component: componentJs });

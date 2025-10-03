@@ -150,6 +150,9 @@
                                                                         <item name="payrexx_payment_crypto" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
+                                                                        <item name="payrexx_payment_verd_cash" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
                                                                     </item>
                                                                 </item>
                                                             </item>
