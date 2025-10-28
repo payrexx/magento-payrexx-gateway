@@ -701,7 +701,7 @@
                         </field>
                     </group>
                     <group id="payrexx_payment_cembrapay" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="1">
-                        <label>Purchase on Account</label>
+                        <label>Purchase on Account (CembraPay)</label>
                         <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                             <label>Enabled</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
