@@ -43,9 +43,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $response = $this->createPayrexxGateway($order);
         if ($response) {
             $this->setPaymentAdditionalInfo($order->getPayment(), $response);
-            // Fix the redirect URL
-            $payrexxUrl = $this->resolvePayrexxUrl($response->getLink());
-            $this->_redirect($payrexxUrl);
+            $this->_redirect($response->getLink());
             return;
         }
 
@@ -70,7 +68,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $gateway->setSkipResultPage(true);
         $gateway->setPsp([]);
         $gateway->setValidity(15);
-        $gateway->setAmount((int) ($order->getGrandTotal() * 100));
+        $gateway->setAmount((int)(string)($order->getGrandTotal() * 100));
         $gateway->setCurrency($order->getOrderCurrencyCode());
 
         // Set order id as the reference id
@@ -136,6 +134,11 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $pm = str_replace('_', '-', $pm);
             $gateway->setPm([$pm]);
         }
+        $lang = $this->getLang();
+        if (!empty($lang)) {
+            $gateway->setLanguage($lang);
+        }
+
         try {
             $payrexx = $this->getPayrexxInstance();
             $metaData = $this->getMetaData();
@@ -152,12 +155,11 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
     }
 
     /**
-     * Get language based URL.
+     * Get language.
      *
-     * @param  string $url payment link
      * @return string
      */
-    private function resolvePayrexxUrl($url)
+    private function getLang(): string
     {
         $resolver = ObjectManager::getInstance()->get(
             '\Magento\Framework\Locale\ResolverInterface'
@@ -167,14 +169,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         if (empty($locale)) {
             $locale = $resolver->getDefaultLocale();
         }
-        $lang = strstr($resolver->getLocale(), '_', true);
-
-        // Add current/default language into URL
-        return preg_replace(
-            '/^(https:\/\/[a-z0-9.\-]+)\/(.*)$/',
-            '$1/'. $lang .'/$2',
-            $url
-        );
+        return strstr($resolver->getLocale(), '_', true);
     }
 
     /**
