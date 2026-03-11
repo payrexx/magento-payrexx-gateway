@@ -42,7 +42,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         // Create payrexx gateway using Payrexx Api
         $response = $this->createPayrexxGateway($order);
         if ($response) {
-            $this->setPaymentAdditionalInfo($order->getPayment(), $response);
+            $this->setPaymentAdditionalInfo($order->getPayment(), $response, $order->getStoreId());
             $this->_redirect($response->getLink());
             return;
         }
@@ -140,7 +140,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
         }
 
         try {
-            $payrexx = $this->getPayrexxInstance();
+            $payrexx = $this->getPayrexxInstance($order->getStoreId());
             $metaData = $this->getMetaData();
             if (!empty($metaData)) {
                 $payrexx->setHttpHeaders($metaData);
@@ -177,14 +177,15 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
      *
      * @param \Magento\Payment\Model\Info       $payment Payment related info
      * @param \Payrexx\Models\Response\Gateway  $gateway Payrexx gateway
+     * @param int                               $storeId
      */
-    private function setPaymentAdditionalInfo($payment, $gateway)
+    private function setPaymentAdditionalInfo($payment, $gateway, $storeId)
     {
         // Generate security hash based on hash alogorithm.
         $hash = hash_hmac(
             'sha1',
             $gateway->getHash(),
-            $this->getPayrexxConfig()['api_secret'],
+            $this->getPayrexxConfig($storeId)['api_secret'],
             false
         );
 

@@ -2,10 +2,10 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright©2024 PAYREXX AG (https://www.payrexx.com)
+ * Copyright©2026 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2024 PAYREXX AG
+ * @copyright   2026 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
@@ -62,7 +62,7 @@ class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $gatewayId = $payment->getAdditionalInformation(
             static::PAYMENT_GATEWAY_ID
         );
-        $payrexx = $this->getPayrexxInstance();
+        $payrexx = $this->getPayrexxInstance($order->getStoreId());
         $gateway = ObjectManager::getInstance()->create(
             '\Payrexx\Models\Request\Gateway'
         );

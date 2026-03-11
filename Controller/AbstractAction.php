@@ -2,10 +2,10 @@
 /**
  * Payrexx Payment Gateway
  *
- * Copyright © 2023 PAYREXX AG (https://www.payrexx.com)
+ * Copyright © 2026 PAYREXX AG (https://www.payrexx.com)
  * See LICENSE.txt for license details.
  *
- * @copyright   2023 PAYREXX AG
+ * @copyright   2026 PAYREXX AG
  * @author      Payrexx <support@payrexx.com>
  * @package     magento2
  * @subpackage  payrexx_payment_gateway
@@ -107,11 +107,12 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
      *
      * @return \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    public function getPayrexxConfig()
+    public function getPayrexxConfig($storeId = null)
     {
         return $this->configSettings->getValue(
             'payment/payrexx_payment',
-            ScopeInterface::SCOPE_STORE
+            ScopeInterface::SCOPE_STORE,
+            $storeId
         );
     }
 
@@ -157,12 +158,13 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
 
     /**
      * Creates Payrexx Instance from the given credentials
+     * @param int|null storeId 
      *
      * @return \Payrexx\Payrexx
      */
-    public function getPayrexxInstance()
+    public function getPayrexxInstance($storeId = null)
     {
-        $config = $this->getPayrexxConfig();
+        $config = $this->getPayrexxConfig($storeId);
         $platform = !empty($config['platform']) ? $config['platform'] : '';
         return $this->payrexxFactory->create([
             'instance'  => $config['instance_name'],
