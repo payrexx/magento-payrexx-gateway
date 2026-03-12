@@ -135,7 +135,7 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $gateway->setPm([$pm]);
         }
         $lang = $this->getLang();
-        if (!empty($lang)) {
+        if (!empty($lang) && method_exists($gateway, 'setLanguage')) {
             $gateway->setLanguage($lang);
         }
 
