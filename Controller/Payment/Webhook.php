@@ -52,7 +52,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         $paymentHash = $payment->getAdditionalInformation(
             static::PAYMENT_SECURITY_HASH
         );
-        if (!$this->isValidHash($requestTransaction, $paymentHash)) {
+        if (!$this->isValidHash($requestTransaction, $paymentHash, $order->getStoreId())) {
             // Set the fraud status when payment is frauded.
             $order->setState(Order::STATUS_FRAUD);
             $order->setStatus(Order::STATUS_FRAUD);
@@ -61,7 +61,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         }
 
         try {
-            $payrexx = $this->getPayrexxInstance();
+            $payrexx = $this->getPayrexxInstance($order->getStoreId());
             $gateway = ObjectManager::getInstance()->create(
                 '\Payrexx\Models\Request\Gateway'
             );
@@ -162,12 +162,13 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
      *
      * @param  array   $transaction Post Values
      * @param  string  $paymentHash Saved hash value
+     * @param  int     $storeId
      * @return boolean True if the hash values is equal, false otherwise
      */
-    private function isValidHash($transaction, $paymentHash)
+    private function isValidHash($transaction, $paymentHash, $storeId)
     {
         $postHash = $transaction['invoice']['paymentLink']['hash'];
-        $config   = $this->getPayrexxConfig();
+        $config   = $this->getPayrexxConfig($storeId);
         $hash     = hash_hmac('sha1', $postHash, $config['api_secret'], false);
         // Check hash value difference
         if (strcasecmp($hash, $paymentHash) === 0) {
