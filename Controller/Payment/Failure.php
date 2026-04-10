@@ -15,6 +15,8 @@ namespace Payrexx\PaymentGateway\Controller\Payment;
 
 use Magento\Framework\App\ObjectManager;
 use Magento\Sales\Model\Order;
+use Payrexx\Models\Response\Gateway;
+use Payrexx\Models\Response\Transaction;
 
 /**
  * Class \Payrexx\PaymentGateway\Controller\Payment\Failure
@@ -67,15 +69,40 @@ class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
             '\Payrexx\Models\Request\Gateway'
         );
         $gateway->setId($gatewayId);
-
-        $payrexxGateway = $payrexx->getOne($gateway);
-        $invoices = $payrexxGateway->getInvoices();
-        if (!empty($invoices)) {
+        try {
+            $payrexxGateway = $payrexx->getOne($gateway);
+        } catch (\Payrexx\PayrexxException $e) {
             return;
         }
-        try {
-            $payrexx->delete($gateway);
-        } catch (\Payrexx\PayrexxException $e) {
+        if ($payrexxGateway) {
+            $transaction = $this->getTransactionByGateway($payrexxGateway);
+            if ($transaction == null) {
+                try {
+                    $payrexx->delete($payrexxGateway);
+                } catch (\Payrexx\PayrexxException $e) {
+                    // no action.
+                }
+            }
         }
+    }
+
+    public function getTransactionByGateway(Gateway $payrexxGateway): ?array
+    {
+        if (!in_array($payrexxGateway->getStatus(), [Transaction::CONFIRMED, Transaction::WAITING])) {
+            return null;
+        }
+        $invoices = $payrexxGateway->getInvoices();
+        if (!$invoices || !$invoice = end($invoices)) {
+            return null;
+        }
+
+        if (!$transactions = $invoice['transactions']) {
+            return null;
+        }
+        $payrexxTransaction = end($transactions);
+        if (!in_array($payrexxTransaction['status'], [Transaction::CONFIRMED, Transaction::WAITING])) {
+            return null;
+        }
+        return $payrexxTransaction;
     }
 }
