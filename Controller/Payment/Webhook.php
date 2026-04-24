@@ -132,6 +132,7 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         }
 
         // Create Invoice
+        $magentoInvoice = null;
         if ($state === Order::STATE_PROCESSING && $order->canInvoice()) {
             $invoiceService = ObjectManager::getInstance()->create(
                 '\Magento\Sales\Model\Service\InvoiceService'
@@ -141,12 +142,14 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             );
             $invoice = $invoiceService->prepareInvoice($order);
             $invoice->register();
+            $invoice->pay();
             $invoice->save();
 
             $transactionSave = $transaction
                     ->addObject($invoice)
                     ->addObject($invoice->getOrder());
             $transactionSave->save();
+            $magentoInvoice = $invoice;
         }
 
         // Send order confirmation mail
@@ -154,6 +157,25 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             $order->setCanSendNewEmailFlag(true);
             $order->save();
             $this->orderSender->send($order, true);
+        }
+
+        // Send invoice email
+        if (
+            $magentoInvoice
+            && $state === Order::STATE_PROCESSING
+            && !$magentoInvoice->getEmailSent()
+        ) {
+            $invoiceSender = ObjectManager::getInstance()->create(
+                '\Magento\Sales\Model\Order\Email\Sender\InvoiceSender'
+            );
+            try {
+                $invoiceSender->send($magentoInvoice);
+                $magentoInvoice->setEmailSent(true);
+                $magentoInvoice->save();
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+                exit;
+            }
         }
     }
 
