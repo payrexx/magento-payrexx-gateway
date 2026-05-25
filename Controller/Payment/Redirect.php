@@ -229,12 +229,12 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 'name' => $product->getName(),
                 'description' => $product->getDescription(),
                 'quantity' => $product->getQtyOrdered(),
-                'amount' => $product->getPrice() * 100,
+                'amount' => $product->getPriceInclTax() * 100,
                 'sku' => $product->getSku(),
             ];
         }
 
-        $shippingAmount = $order->getShippingAmount();
+        $shippingAmount = $order->getShippingInclTax();
         if ($shippingAmount > 0) {
             $baskets[] = [
                 'name' => 'Shipping',
@@ -252,14 +252,15 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
             ];
         }
 
-        $taxAmount = $order->getTaxAmount();
-        if ($taxAmount > 0) {
-            $baskets[] = [
-                'name' => 'Tax',
-                'quantity' => 1,
-                'amount' => $taxAmount * 100,
-            ];
-        }
+        // Price already included the tax.
+        // $taxAmount = $order->getTaxAmount();
+        // if ($taxAmount > 0) {
+        //     $baskets[] = [
+        //         'name' => 'Tax',
+        //         'quantity' => 1,
+        //         'amount' => $taxAmount * 100,
+        //     ];
+        // }
         return $baskets;
     }
 
