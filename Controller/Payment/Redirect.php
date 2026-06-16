@@ -251,16 +251,6 @@ class Redirect extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 'amount' => $discountAmount * -100,
             ];
         }
-
-        // Price already included the tax.
-        // $taxAmount = $order->getTaxAmount();
-        // if ($taxAmount > 0) {
-        //     $baskets[] = [
-        //         'name' => 'Tax',
-        //         'quantity' => 1,
-        //         'amount' => $taxAmount * 100,
-        //     ];
-        // }
         return $baskets;
     }
 
