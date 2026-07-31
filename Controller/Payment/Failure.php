@@ -80,7 +80,10 @@ class Failure extends \Payrexx\PaymentGateway\Controller\AbstractAction
                 try {
                     $payrexx->delete($payrexxGateway);
                 } catch (\Payrexx\PayrexxException $e) {
-                    // no action.
+                    $this->logger->warning(
+                        'Payrexx Gateway deletion failed. Gateway ID: ' . $gatewayId
+                        . ' - ' . $e->getMessage()
+                    );
                 }
             }
         }

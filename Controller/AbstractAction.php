@@ -30,6 +30,21 @@ abstract class AbstractAction extends \Magento\Framework\App\Action\Action
     const PAYMENT_SECURITY_HASH = 'payrexx_security_hash';
 
     /**
+     * Uses additional_information as storage
+     */
+    const PAYMENT_TRANSACTION_ID = 'payrexx_transaction_id';
+
+    /**
+     * Uses additional_information as storage
+     */
+    const PAYMENT_TRANSACTION_UUID = 'payrexx_transaction_uuid';
+
+    /**
+     * Uses additional_information as storage
+     */
+    const PAYMENT_CANCELED_ORDER_NOTICE = 'payrexx_canceled_order_notice';
+
+    /**
      * @var \Magento\Framework\App\Action\Context
      */
     public $context;

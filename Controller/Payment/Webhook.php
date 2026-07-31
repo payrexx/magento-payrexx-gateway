@@ -122,6 +122,60 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
         if (!$this->isAllowedToChangeState($order->getState(), $state)) {
             return;
         }
+        // Forcing a canceled order to processing lets Magento close it, which is terminal.
+        if ($order->isCanceled()
+            && in_array($state, [Order::STATE_PROCESSING, Order::STATE_PENDING_PAYMENT], true)
+        ) {
+            $transactionId = isset($transaction['id']) ? (string) $transaction['id'] : '';
+            $noticeKey = $transactionId . '-' . $status;
+            $knownNoticeKey = (string) $payment->getAdditionalInformation(
+                static::PAYMENT_CANCELED_ORDER_NOTICE
+            );
+            if ($transactionId !== '' && $noticeKey === $knownNoticeKey) {
+                return;
+            }
+
+            $this->logger->warning(
+                'Payrexx Webhook: ' . $status . ' transaction received for the canceled order '
+                . $order->getIncrementId() . '. Gateway ID: ' . $gatewayId
+                . ', transaction ID: ' . $transactionId
+            );
+
+            if ($transactionId !== '') {
+                $payment->setAdditionalInformation(
+                    static::PAYMENT_TRANSACTION_ID,
+                    $transactionId
+                );
+                $payment->setAdditionalInformation(
+                    static::PAYMENT_CANCELED_ORDER_NOTICE,
+                    $noticeKey
+                );
+            }
+            if (!empty($transaction['uuid'])) {
+                $payment->setAdditionalInformation(
+                    static::PAYMENT_TRANSACTION_UUID,
+                    $transaction['uuid']
+                );
+            }
+            $payment->save();
+
+            if ($state === Order::STATE_PROCESSING) {
+                $comment = 'Payrexx: payment confirmed for an already canceled order. The order was '
+                    . 'left canceled - please refund the payment in Payrexx or create a new order '
+                    . 'manually.';
+            } else {
+                $comment = 'Payrexx: waiting payment update received for an already canceled order. '
+                    . 'The order was left canceled.';
+            }
+
+            if ($transactionId !== '') {
+                $comment .= ' Transaction ID: ' . $transactionId . '.';
+            }
+
+            $order->addCommentToStatusHistory($comment);
+            $order->save();
+            return;
+        }
         if ($state === Order::STATE_CANCELED && $order->canCancel()) {
             $order->registerCancellation('Order was canceled via Payrexx webhook')->save();
         } else {
