@@ -53,11 +53,9 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
             static::PAYMENT_SECURITY_HASH
         );
         if (!$this->isValidHash($requestTransaction, $paymentHash, $order->getStoreId())) {
-            // Set the fraud status when payment is frauded.
-            $order->setState(Order::STATUS_FRAUD);
-            $order->setStatus(Order::STATUS_FRAUD);
-            $order->save();
-            throw new \Exception('Payment hash incorreect. Fraud suspect');
+            // The order is looked up by request data, so a mismatch must not change it.
+            $this->logger->warning('Payrexx Webhook: payment hash does not match order ' . $orderId);
+            throw new \Exception('Payment hash incorrect');
         }
 
         try {
@@ -243,11 +241,11 @@ class Webhook extends \Payrexx\PaymentGateway\Controller\AbstractAction
      */
     private function isValidHash($transaction, $paymentHash, $storeId)
     {
-        $postHash = $transaction['invoice']['paymentLink']['hash'];
+        $postHash = (string) ($transaction['invoice']['paymentLink']['hash'] ?? '');
         $config   = $this->getPayrexxConfig($storeId);
         $hash     = hash_hmac('sha1', $postHash, $config['api_secret'], false);
         // Check hash value difference
-        if (strcasecmp($hash, $paymentHash) === 0) {
+        if (strcasecmp($hash, (string) $paymentHash) === 0) {
             return true;
         }
         return false;
