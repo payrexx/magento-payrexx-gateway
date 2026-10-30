@@ -29,7 +29,6 @@ define([
         'maestro',
         'jcb',
         'american_express',
-        'wirpay',
         'paypal',
         'bitcoin',
         'klarna',
